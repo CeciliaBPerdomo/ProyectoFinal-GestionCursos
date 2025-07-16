@@ -40,7 +40,7 @@ Para iniciar un servidor de desarrollo local, ejecutá:
 ng serve
 ```
 
-<p>Una vez que el servidor esté en funcionamiento, abrí tu navegador y navegá a `http://localhost:4200/`.</p>
+<p>Una vez que el servidor esté en funcionamiento, abrí tu navegador y navegá a <strong>http://localhost:4200/</strong>.</p>
 La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
 
 
@@ -54,5 +54,5 @@ ng add @angular/material
 Para obtener más información sobre cómo usar Angular CLI, incluyendo una referencia detallada de los comandos, visitá la página [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
 
 ## 👩‍💻 Desarrollo
-<p>Hecho con 💻, 🧉 y un toque de magia por [Cecilia Perdomo](https://www.linkedin.com/in/cecilia-perdomo/).</p>
+<p>Hecho con 💻, 🧉 y un toque de magia por <a href="https://www.linkedin.com/in/cecilia-perdomo/" style="color: black; text-decoration: none;">Cecilia Perdomo</a>.</p>
 🗓️ Proyecto iniciado el 16 de julio de 2025
