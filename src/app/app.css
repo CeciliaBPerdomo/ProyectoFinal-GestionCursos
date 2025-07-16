@@ -1,0 +1,26 @@
+.app-background {
+  position: relative;
+  background-image: url('../assets/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* overlay blanco/transparente */
+.app-background::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%; width: 100%;
+  background: rgba(255, 255, 255, 0.4); /* blanco con 40% opacity */
+  pointer-events: none; /* para no bloquear clicks */
+  z-index: 1;
+}
+
+/* asegurate que el contenido esté arriba del overlay */
+.app-background > * {
+  position: relative;
+  z-index: 2;
+}

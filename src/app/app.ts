@@ -12,8 +12,10 @@ import { Navbar } from './layout/navbar/navbar';
     Navbar,
   ],
   template: `
-    <app-navbar></app-navbar>
-    <router-outlet></router-outlet>
+    <div class="app-background">
+      <app-navbar></app-navbar>
+      <router-outlet></router-outlet>
+    </div>
   `, 
   styleUrls: ['./app.css']
 })
