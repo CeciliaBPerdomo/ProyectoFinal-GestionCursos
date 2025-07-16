@@ -43,10 +43,9 @@ ng serve
 Una vez que el servidor esté en funcionamiento, abrí tu navegador y navegá a `http://localhost:4200/`.
 La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
 
-
 ## ​​📑​ Recursos adicionales
 Para obtener más información sobre cómo usar Angular CLI, incluyendo una referencia detallada de los comandos, visitá la página [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
 
 ## 👩‍💻 Desarrollo
-Hecho con 💻, 🧉 y un toque de magia por [Cecilia Perdomo](https://www.linkedin.com/in/cecilia-perdomo/).
+<p>Hecho con 💻, 🧉 y un toque de magia por [Cecilia Perdomo](https://www.linkedin.com/in/cecilia-perdomo/).</p>
 🗓️ Proyecto iniciado el 16 de julio de 2025
