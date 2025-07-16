@@ -33,7 +33,7 @@ El objetivo de esta entrega es desarrollar un proyecto frontend utilizando Angul
 ## ​💻​ Proyecto
 Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
 
-## Home page
+### Home page
 ![Home page](image-2.png)
 
 
