@@ -1,0 +1,76 @@
+mat-toolbar,
+mat-toolbar button,
+mat-toolbar .navbar-title {
+  color: white !important;
+}
+
+mat-toolbar mat-icon {
+  color: white !important;
+}
+
+
+mat-toolbar {
+  position: relative;
+  background-color: #3f51b5;
+  color: white;
+  padding: 0 16px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+}
+
+/* Contenedor para izquierda (Inicio) */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Contenedor para derecha (Alumnos, Administración) */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Título centrado absoluto */
+.navbar-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 20px;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+
+::ng-deep .mat-menu-panel {
+  background-color: #3949ab !important;
+  color: white !important;
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 180px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+::ng-deep .mat-menu-item {
+  padding: 10px 24px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  color: white !important;
+}
+
+::ng-deep .mat-menu-item:hover,
+::ng-deep .mat-menu-item.cdk-focused,
+::ng-deep .mat-menu-item.cdk-program-focused {
+  background-color: #5c6bc0 !important;
+  color: white !important;
+}
+
+::ng-deep .mat-menu-item .mat-icon {
+  color: white !important;
+  margin-right: 16px;
+}

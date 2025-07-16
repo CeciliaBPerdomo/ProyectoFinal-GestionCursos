@@ -1,0 +1,25 @@
+<!-- app/layout/navbar/navbar.html -->
+<mat-toolbar color="primary">
+  <div class="navbar-left">
+    <button mat-button routerLink="/">Inicio</button>
+  </div>
+
+  <div class="navbar-title">
+    <app-toolbar></app-toolbar>
+  </div>
+
+  <div class="navbar-right">
+    <button mat-button [matMenuTriggerFor]="alumnosMenu">Alumnos</button>
+    <mat-menu #alumnosMenu="matMenu">
+      <button mat-menu-item routerLink="/datos-personales">Datos personales</button>
+      <button mat-menu-item routerLink="/cursos">Cursos</button>
+    </mat-menu>
+
+    <button mat-button [matMenuTriggerFor]="adminMenu">Administración</button>
+    <mat-menu #adminMenu="matMenu">
+      <button mat-menu-item routerLink="/abm-alumno">Alumnos</button>
+      <button mat-menu-item routerLink="/abm-curso">Cursos</button>
+      <button mat-menu-item routerLink="/abm-inscripciones">Inscripciones</button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

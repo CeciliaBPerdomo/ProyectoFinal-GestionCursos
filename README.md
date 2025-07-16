@@ -37,7 +37,7 @@ Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angul
 Para iniciar un servidor de desarrollo local, ejecutá:
 
 ```bash
-ng serve
+ng s
 ```
 
 <p>Una vez que el servidor esté en funcionamiento, abrí tu navegador y navegá a <strong>http://localhost:4200/</strong>.</p>
@@ -55,4 +55,6 @@ Para obtener más información sobre cómo usar Angular CLI, incluyendo una refe
 
 ## 👩‍💻 Desarrollo
 <p>Hecho con 💻, 🧉 y un toque de magia por <a href="https://www.linkedin.com/in/cecilia-perdomo/" style="color: black; text-decoration: none;">Cecilia Perdomo</a>.</p>
-🗓️ Proyecto iniciado el 16 de julio de 2025
+🗓️ Proyecto iniciado el <strong>16 de julio de 2025</strong>.
+
+![Angular](image.png)
