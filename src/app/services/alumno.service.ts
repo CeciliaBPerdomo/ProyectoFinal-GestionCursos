@@ -1,5 +1,4 @@
 // src/app/services/alumno.service.ts
-
 import { Injectable } from '@angular/core';
 import { Alumno } from '../models/alumno.model';
 
@@ -9,9 +8,10 @@ import { Alumno } from '../models/alumno.model';
 export class AlumnoService {
   // Datos simulados (hardcodeados)
   private alumnos: Alumno[] = [
-    { id: 1, nombre: 'Cecilia Perdomo', email: 'ceci@mail.com', cursoId: 1 },
-    { id: 2, nombre: 'Juan Pérez', email: 'juan@mail.com', cursoId: 2 },
-    { id: 3, nombre: 'Lucía Gómez', email: 'lucia@mail.com', cursoId: 1 }
+    { id: 1, nombre: 'Cecilia Perdomo', email: 'cecilia.perdomo@mail.com', cursoId: 1 },
+    { id: 2, nombre: 'Juan Pérez', email: 'juan.perez@mail.com', cursoId: 2 },
+    { id: 3, nombre: 'Lucía Gómez', email: 'lucia.gomez@mail.com', cursoId: 3 },
+    { id: 4, nombre: 'Carlos López', email: 'carlos.lopez@mail.com', cursoId: 3 },
   ];
 
   // Devuelve todos los alumnos

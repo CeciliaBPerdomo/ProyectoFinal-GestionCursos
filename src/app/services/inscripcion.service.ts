@@ -24,7 +24,7 @@ export class InscripcionService {
     },
     {
       id: 3,
-      alumnoId: 1,
+      alumnoId: 4,
       cursoId: 3,
       fechaInscripcion: new Date('2025-07-23'),
       estado: 'cancelada'

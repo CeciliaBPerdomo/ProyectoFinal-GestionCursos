@@ -1,0 +1,57 @@
+<h2>Listado de Alumnos</h2>
+
+<div class="tabla-contenedor">
+    <table mat-table [dataSource]="alumnos" class="mat-elevation-z8 full-width-table">
+        <!-- ID -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef class="encabezado"> ID </th>
+            <td mat-cell *matCellDef="let alumno" class="info"> {{ alumno.id }} </td>
+        </ng-container>
+
+        <!-- Nombre -->
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef class="encabezado"> Nombre </th>
+            <td mat-cell *matCellDef="let alumno" class="data"> {{ alumno.nombre }} </td>
+        </ng-container>
+
+        <!-- Email -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef class="encabezado"> Email </th>
+            <td mat-cell *matCellDef="let alumno" class="data"> {{ alumno.email }} </td>
+        </ng-container>
+
+        <!-- Curso Nombre -->
+        <ng-container matColumnDef="cursoNombre">
+            <th mat-header-cell *matHeaderCellDef class="encabezado"> Curso </th>
+            <td mat-cell *matCellDef="let alumno" class="data">
+                <div class="curso-nombre">{{ getCursoNombre(alumno.cursoId) }}</div>
+                <div class="estado-etiqueta" [ngClass]="{
+       'estado-activa': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'activa',
+       'estado-cancelada': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'cancelada',
+       'estado-sin': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'Sin inscripción'
+     }">
+                    {{ getEstadoInscripcion(alumno.id, alumno.cursoId) }}
+                </div>
+
+            </td>
+        </ng-container>
+
+
+
+        <!-- Acciones -->
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef class="encabezado"> Acciones </th>
+            <td mat-cell *matCellDef="let alumno" class="data">
+                <button mat-icon-button color="accent" aria-label="Editar">
+                    <mat-icon class="editar">edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" aria-label="Eliminar">
+                    <mat-icon class="eliminar">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

@@ -6,6 +6,7 @@ import { Curso } from '../models/curso.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class CursoService {
   private cursos: Curso[] = [
     {

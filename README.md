@@ -38,13 +38,15 @@ Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angul
 
 
 - Menú **Alumnos**
-    - Perfil
-    - Cursos
+    - Mi perfil
+    - Listdo de alumnos 
+    - Mis cursos
 - Menú **Administrador**
     - Alumnnos
     - Cursos
     - Inscripciones
 
+![Alumnos](image-1.png)
 
 ### 📦 Estructura de componentes
 ```bash
