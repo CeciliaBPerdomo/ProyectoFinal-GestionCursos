@@ -33,7 +33,16 @@ El objetivo de esta entrega es desarrollar un proyecto frontend utilizando Angul
 ## ​💻​ Proyecto
 Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
 
-### Home page
+### ​​📑​ Recursos adicionales
+Para obtener más información sobre cómo usar Angular CLI, incluyendo una referencia detallada de los comandos, visitá la página [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
+
+### 🎨 Angular Material
+```bash
+ng add @angular/material
+```
+**Documentación oficial**: https://material.angular.dev/guide/getting-started
+
+## Gestión de cursos: Home page
 ![Home page](image-2.png)
 
 
@@ -156,15 +165,6 @@ ng s
 <p>Una vez que el servidor esté en funcionamiento, abrí tu navegador y navegá a <strong>http://localhost:4200/</strong>.</p>
 La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
 
-
-## 🎨 Angular Material
-```bash
-ng add @angular/material
-```
-**Documentación oficial**: https://material.angular.dev/guide/getting-started
-
-## ​​📑​ Recursos adicionales
-Para obtener más información sobre cómo usar Angular CLI, incluyendo una referencia detallada de los comandos, visitá la página [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
 
 ## 👩‍💻 Desarrollo
 <p>Hecho con 💻, 🧉 y un toque de magia por <a href="https://www.linkedin.com/in/cecilia-perdomo/" style="color: black; text-decoration: none;">Cecilia Perdomo</a>.</p>
