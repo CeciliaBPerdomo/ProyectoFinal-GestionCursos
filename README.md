@@ -37,13 +37,73 @@ Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angul
 ![Home page](image-2.png)
 
 
-- Menú **Alumno**
+- Menú **Alumnos**
     - Perfil
     - Cursos
 - Menú **Administrador**
     - Alumnnos
     - Cursos
     - Inscripciones
+
+
+### 📦 Estructura de componentes
+```bash
+src/
+├── app/
+│   ├── app.ts                      # componente raíz
+│   ├── app.routes.ts               # rutas principales
+│
+│   ├── layout/
+│   │   ├── navbar/
+│   │   │   ├── navbar.ts
+│   │   │   ├── navbar.html
+│   │   │   └── navbar.css
+│   │   └── toolbar/
+│   │       ├── toolbar.ts
+│   │       ├── toolbar.html
+│   │       └── toolbar.css
+│
+│   ├── pages/
+│   │   ├── dashboard/
+│   │   │   ├── dashboard.ts
+│   │   │   ├── dashboard.html
+│   │   │   └── dashboard.css
+│   │   │
+│   │   ├── alumnos/
+│   │   │   ├── lista-alumnos.ts
+│   │   │   ├── lista-alumnos.html
+│   │   │   ├── perfil-alumno.ts
+│   │   │   ├── perfil-alumno.html
+│   │   │   └── perfil-alumno.css
+│   │   │
+│   │   ├── cursos/
+│   │   │   ├── lista-cursos.ts
+│   │   │   ├── abm-curso.ts
+│   │   │   └── abm-curso.html
+│   │   │
+│   │   ├── inscripciones/
+│   │   │   ├── mis-inscripciones.ts
+│   │   │   ├── abm-inscripciones.ts
+│   │   │   └── abm-inscripciones.html
+│   │   │
+│   │   └── admin/
+│   │       ├── abm-alumno.ts
+│   │       └── abm-alumno.html
+│
+│   ├── services/
+│   │   ├── alumno.service.ts
+│   │   ├── curso.service.ts
+│   │   └── inscripcion.service.ts
+│
+│   ├── models/
+│   │   ├── alumno.model.ts
+│   │   ├── curso.model.ts
+│   │   └── inscripcion.model.ts
+│
+│   └── shared/
+│       └── material.ts             # módulo compartido Angular Material
+
+```
 
 ## ​​💣​ Servidor de desarrollo
 Para iniciar un servidor de desarrollo local, ejecutá:
