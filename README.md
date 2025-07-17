@@ -140,7 +140,7 @@ src/
 | estado            | 'activa' \| 'cancelada' \| 'finalizada' | Estado actual de la inscripción       |
 
 
-#### 🛠 Services:
+### 🛠 Services:
 - Son clases que encapsulan lógica relacionada con datos.
 - Como no se utiliza base de datos aún, los services devuelven arrays simulados.
 
