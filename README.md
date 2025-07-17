@@ -47,8 +47,8 @@ ng add @angular/material
 
 
 - Menú **Alumnos**
-    - Mi perfil
-    - Listdo de alumnos 
+    - Listado de alumnos 
+    - Inscripciones
     - Mis cursos
 - Menú **Administrador**
     - Alumnnos
