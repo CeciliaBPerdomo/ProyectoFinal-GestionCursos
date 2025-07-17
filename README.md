@@ -105,6 +105,13 @@ src/
 
 ```
 
+#### 📦 Models:
+Interfaces o clases que definen la forma de los datos.
+
+#### 🛠 Services:
+Son clases que encapsulan lógica relacionada con datos.
+Como no se utiliza base de datos aún, los services devuelven arrays simulados.
+
 ## ​​💣​ Servidor de desarrollo
 Para iniciar un servidor de desarrollo local, ejecutá:
 
