@@ -105,12 +105,44 @@ src/
 
 ```
 
-#### 📦 Models:
-Interfaces o clases que definen la forma de los datos.
+### 📦 Models:
+- Interfaces o clases que definen la forma de los datos.
+
+#### 🧑‍🎓 Modelo: Alumno
+
+| Campo   | Tipo     | Descripción                        |
+|---------|----------|------------------------------------|
+| id      | number   | Identificador único del alumno     |
+| nombre  | string   | Nombre completo del alumno         |
+| email   | string   | Correo electrónico del alumno      |
+| cursoId | number   | ID del curso al que está inscrito  |
+
+
+#### 📘 Modelo: Curso
+
+| Campo        | Tipo   | Descripción                                 |
+|--------------|--------|---------------------------------------------|
+| id           | number | Identificador único del curso               |
+| nombre       | string | Nombre del curso                            |
+| descripcion  | string | Detalle breve del contenido del curso       |
+| fechaInicio  | Date   | Fecha de inicio del curso                   |
+| duracion     | number | Duración del curso (en horas)        |
+
+
+#### 📝 Modelo: Inscripción
+
+| Campo             | Tipo                       | Descripción                                         |
+|-------------------|----------------------------|-----------------------------------------------------|
+| id                | number                     | Identificador único de la inscripción               |
+| alumnoId          | number                     | ID del alumno inscrito                              |
+| cursoId           | number                     | ID del curso al que se inscribe                     |
+| fechaInscripcion  | Date                       | Fecha en la que se realizó la inscripción           |
+| estado            | 'activa' \| 'cancelada' \| 'finalizada' | Estado actual de la inscripción       |
+
 
 #### 🛠 Services:
-Son clases que encapsulan lógica relacionada con datos.
-Como no se utiliza base de datos aún, los services devuelven arrays simulados.
+- Son clases que encapsulan lógica relacionada con datos.
+- Como no se utiliza base de datos aún, los services devuelven arrays simulados.
 
 ## ​​💣​ Servidor de desarrollo
 Para iniciar un servidor de desarrollo local, ejecutá:
