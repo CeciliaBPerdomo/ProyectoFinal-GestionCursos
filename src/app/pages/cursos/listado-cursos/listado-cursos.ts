@@ -7,6 +7,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 // Models y Services
 import { Curso } from '../../../models/curso.model';
@@ -22,6 +25,9 @@ import { CursoService } from '../../../services/curso.service';
     MatIconModule,
     MatButtonModule,
     MatSnackBarModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './listado-cursos.html',
   styleUrls: ['./listado-cursos.css']
@@ -29,6 +35,8 @@ import { CursoService } from '../../../services/curso.service';
 
 export class ListadoCursos implements OnInit {
   cursos: Curso[] = [];
+  cursoEditandoId: number | null = null;
+  cursoEditado: Partial<Curso> = {};
 
   constructor(
     private cursoService: CursoService,
@@ -41,11 +49,31 @@ export class ListadoCursos implements OnInit {
   }
 
   editarCurso(curso: Curso): void {
-    // Navegación a la ruta de edición
-    // Podés ajustarlo según tu estructura
-    console.log('Editar curso:', curso);
-    // this.router.navigate(['/cursos/editar', curso.id]);
+    this.cursoEditandoId = curso.id;
+    this.cursoEditado = { ...curso };
   }
+
+  guardarCursoEditado(): void {
+    if (this.cursoEditandoId !== null) {
+      this.cursoService.actualizarCurso(this.cursoEditado as Curso);
+      this.cursos = [...this.cursoService.getCursos()];
+      this.cursoEditandoId = null;
+      this.cursoEditado = {};
+
+      this.snackBar.open('Curso actualizado correctamente', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: 'snackbar-exito'
+      });
+    }
+  }
+
+  cancelarEdicion(): void {
+    this.cursoEditandoId = null;
+    this.cursoEditado = {};
+  }
+
 
   eliminarCurso(id: number): void {
     if (confirm('¿Seguro que querés eliminar este curso?')) {

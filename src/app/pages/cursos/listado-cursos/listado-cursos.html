@@ -9,20 +9,48 @@
 
 <div class="cursos-container">
   <mat-card *ngFor="let curso of cursos" class="curso-card">
-    <mat-card-title>{{ curso.nombre }}</mat-card-title>
-    
+    <mat-card-title>
+      <ng-container *ngIf="cursoEditandoId !== curso.id; else editandoTitulo">
+        {{ curso.nombre }}
+      </ng-container>
+      <ng-template #editandoTitulo>
+        <input matInput [(ngModel)]="cursoEditado.nombre" placeholder="Nombre del curso" />
+      </ng-template>
+    </mat-card-title>
+
     <mat-card-content>
       <p><strong>ID:</strong> {{ curso.id }}</p>
-      <p><strong>Descripción:</strong> {{ curso.descripcion || 'Sin descripción' }}</p>
+
+      <div *ngIf="cursoEditandoId !== curso.id; else editandoDescripcion">
+        <p><strong>Descripción:</strong> {{ curso.descripcion || 'Sin descripción' }}</p>
+      </div>
+      <ng-template #editandoDescripcion>
+        <mat-form-field appearance="fill" class="textarea-fullwidth">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput [(ngModel)]="cursoEditado.descripcion"></textarea>
+        </mat-form-field>
+      </ng-template>
     </mat-card-content>
 
     <mat-card-actions class="acciones-card">
-      <button mat-icon-button color="accent" (click)="editarCurso(curso)" class="editar">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button color="warn" (click)="eliminarCurso(curso.id)" class="eliminar">
-        <mat-icon>delete</mat-icon>
-      </button>
+      <ng-container *ngIf="cursoEditandoId === curso.id; else botonesNormales">
+        <button mat-icon-button color="primary" (click)="guardarCursoEditado()" class="editar">
+          <mat-icon>check</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="cancelarEdicion()" class="eliminar">
+          <mat-icon>close</mat-icon>
+        </button>
+      </ng-container>
+
+      <ng-template #botonesNormales>
+        <button mat-icon-button color="accent" (click)="editarCurso(curso)" class="editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="eliminarCurso(curso.id)" class="eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </ng-template>
     </mat-card-actions>
+
   </mat-card>
 </div>
