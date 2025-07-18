@@ -1,0 +1,28 @@
+<h2>Listado de Cursos</h2>
+
+<div class="acciones-superiores">
+  <button mat-raised-button color="primary" routerLink="/cursos/alta">
+    <mat-icon>add</mat-icon>
+    Nuevo Curso
+  </button>
+</div>
+
+<div class="cursos-container">
+  <mat-card *ngFor="let curso of cursos" class="curso-card">
+    <mat-card-title>{{ curso.nombre }}</mat-card-title>
+    
+    <mat-card-content>
+      <p><strong>ID:</strong> {{ curso.id }}</p>
+      <p><strong>Descripción:</strong> {{ curso.descripcion || 'Sin descripción' }}</p>
+    </mat-card-content>
+
+    <mat-card-actions class="acciones-card">
+      <button mat-icon-button color="accent" (click)="editarCurso(curso)" class="editar">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="eliminarCurso(curso.id)" class="eliminar">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

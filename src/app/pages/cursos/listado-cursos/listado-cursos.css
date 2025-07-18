@@ -1,0 +1,39 @@
+.cursos-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.curso-card {
+    width: 350px;
+    padding: 12px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.acciones-superiores {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+    width: 95vw;
+}
+
+.acciones-card {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 8px;
+}
+
+.editar {
+    color: #4caf50;
+}
+
+.eliminar {
+    color: #f44336;
+}

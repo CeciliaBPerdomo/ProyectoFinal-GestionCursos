@@ -42,7 +42,7 @@ ng add @angular/material
 ```
 **Documentación oficial**: https://material.angular.dev/guide/getting-started
 
-### Animaciones
+### 🤡​ Animaciones
 ```bash
 npm install @angular/animations@20.1.0 --legacy-peer-deps
 ```
@@ -54,7 +54,6 @@ npm install @angular/animations@20.1.0 --legacy-peer-deps
 
 - Menú **Alumnos**
     - Listado de alumnos 
-    - Inscripciones
     - Mis cursos
 - Menú **Administrador**
     - Alumnnos
@@ -77,20 +76,12 @@ src/
 │   │       ├── toolbar.ts /.html /.css
 │
 │   ├── pages/
-│   │   ├── dashboard/
-│   │   │   ├── dashboard.ts
-│   │   │   ├── dashboard.html
-│   │   │   └── dashboard.css
-│   │   │
 │   │   ├── alumnos/
 │   │   │   ├── lista-alumnos.ts / .html / .css
 │   │   │   ├── alta-alumno.ts / html / .css
-│   │   │   ├── perfil-alumno.ts
-│   │   │   ├── perfil-alumno.html
-│   │   │   └── perfil-alumno.css
 │   │   │
 │   │   ├── cursos/
-│   │   │   ├── lista-cursos.ts
+│   │   │   ├── lista-cursos.ts / .html / .css
 │   │   │   ├── abm-curso.ts
 │   │   │   └── abm-curso.html
 │   │   │
@@ -98,10 +89,6 @@ src/
 │   │   │   ├── mis-inscripciones.ts
 │   │   │   ├── abm-inscripciones.ts
 │   │   │   └── abm-inscripciones.html
-│   │   │
-│   │   └── admin/
-│   │       ├── abm-alumno.ts
-│   │       └── abm-alumno.html
 │
 │   ├── services/
 │   │   ├── alumno.service.ts
@@ -161,6 +148,7 @@ src/
 - Para iniciar un servidor de desarrollo local, ejecutá: `ng s`
 - Una vez que el servidor esté en funcionamiento, abrí tu navegador y navegá a `http://localhost:4200/`.
 - La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
+- Para compilar el proyecto, ejecutá: `ng build`
 
 ## 👩‍💻 Desarrollo
 <p>Hecho con 💻, 🧉 y un toque de magia por <a href="https://www.linkedin.com/in/cecilia-perdomo/" style="color: black; text-decoration: none;">Cecilia Perdomo</a>.</p>

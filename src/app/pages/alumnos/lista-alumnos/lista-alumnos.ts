@@ -51,7 +51,7 @@ export class ListaAlumnos implements OnInit {
     private inscripcionService: InscripcionService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const modoRuta = this.route.snapshot.data['modo'];
@@ -82,15 +82,17 @@ export class ListaAlumnos implements OnInit {
 
   guardarAlumnoEditado(): void {
     if (this.alumnoEditandoId != null) {
-    this.alumnoService.actualizarAlumno(this.alumnoEditado as Alumno);
-    this.alumnos = [...this.alumnoService.getAlumnos()];
-    this.alumnoEditandoId = null;
-    this.alumnoEditado = {};
-    this.snackBar.open('Alumno actualizado correctamente', 'Cerrar', {
-      duration: 3000,
-      panelClass: 'snackbar-exito'
-    });
-  }
+      this.alumnoService.actualizarAlumno(this.alumnoEditado as Alumno);
+      this.alumnos = [...this.alumnoService.getAlumnos()];
+      this.alumnoEditandoId = null;
+      this.alumnoEditado = {};
+      this.snackBar.open('Alumno actualizado correctamente', 'Cerrar', {
+        duration: 3000,
+        panelClass: 'snackbar-exito',
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      });
+    }
   }
 
   cancelarEdicion(): void {
@@ -101,10 +103,12 @@ export class ListaAlumnos implements OnInit {
   eliminarAlumno(id: number): void {
     if (confirm('¿Estás segura/o de que querés eliminar este alumno?')) {
       this.alumnoService.eliminarAlumno(id);
-      this.alumnos = this.alumnoService.getAlumnos(); 
-      this.snackBar.open('Alumno eliminado', 'Cerrar', {
+      this.alumnos = this.alumnoService.getAlumnos();
+      this.snackBar.open('Alumno eliminado 🗑️ correctamente', 'Cerrar', {
         duration: 3000,
-        panelClass: 'snackbar-exito'
+        panelClass: 'snackbar-exito',
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
       });
     }
   }
