@@ -9,7 +9,7 @@ El objetivo de esta entrega es desarrollar un proyecto frontend utilizando `Angu
     - Cada uno tendrá acceso a diferentes secciones y funcionalidades específicas.
 
 ## 🔌​ Requisitos Generales
-- Creación de un proyecto Angular CLI.
+- Creación de un proyecto `Angular CLI`.
 - Creación de componentes de layout, incluyendo un navbar para el menú lateral y un toolbar para el título de la aplicación.
 - Componentes de la aplicación:
     - Lista de Alumnos: Visualización de los alumnos inscritos en los cursos.
@@ -42,11 +42,13 @@ ng add @angular/material
 ```
 **Documentación oficial**: https://material.angular.dev/guide/getting-started
 
+### Animaciones
 ```bash
 npm install @angular/animations@20.1.0 --legacy-peer-deps
 ```
 
-## Gestión de cursos: Home page
+## Gestión de cursos 
+### Home page
 ![Home page](image-2.png)
 
 
@@ -156,15 +158,9 @@ src/
 - Como no se utiliza base de datos aún, los services devuelven arrays simulados.
 
 ## ​​💣​ Servidor de desarrollo
-Para iniciar un servidor de desarrollo local, ejecutá:
-
-```bash
-ng s
-```
-
-<p>Una vez que el servidor esté en funcionamiento, abrí tu navegador y navegá a <strong>http://localhost:4200/</strong>.</p>
-La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
-
+- Para iniciar un servidor de desarrollo local, ejecutá: `ng s`
+- Una vez que el servidor esté en funcionamiento, abrí tu navegador y navegá a `http://localhost:4200/`.
+- La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
 
 ## 👩‍💻 Desarrollo
 <p>Hecho con 💻, 🧉 y un toque de magia por <a href="https://www.linkedin.com/in/cecilia-perdomo/" style="color: black; text-decoration: none;">Cecilia Perdomo</a>.</p>

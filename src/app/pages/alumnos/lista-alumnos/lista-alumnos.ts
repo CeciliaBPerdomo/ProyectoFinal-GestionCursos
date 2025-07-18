@@ -65,4 +65,14 @@ export class ListaAlumnos implements OnInit {
       .find(i => i.alumnoId === alumnoId && i.cursoId === cursoId);
     return inscripcion ? inscripcion.estado : 'Sin inscripción';
   }
+
+  eliminarAlumno(id: number): void {
+  const confirmacion = confirm('¿Estás segura de que querés eliminar este alumno?');
+
+  if (confirmacion) {
+    this.alumnoService.eliminarAlumno(id);
+    this.alumnos = this.alumnoService.getAlumnos(); 
+  }
+}
+
 }
