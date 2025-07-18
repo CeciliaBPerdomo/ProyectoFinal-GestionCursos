@@ -82,13 +82,10 @@ src/
 │   │   │
 │   │   ├── cursos/
 │   │   │   ├── lista-cursos.ts / .html / .css
-│   │   │   ├── abm-curso.ts
-│   │   │   └── abm-curso.html
+│   │   │   ├── alta-curso.ts /.html / .css
 │   │   │
 │   │   ├── inscripciones/
-│   │   │   ├── mis-inscripciones.ts
-│   │   │   ├── abm-inscripciones.ts
-│   │   │   └── abm-inscripciones.html
+│   │   │   ├── listado-inscripciones.ts /.html /.css
 │
 │   ├── services/
 │   │   ├── alumno.service.ts

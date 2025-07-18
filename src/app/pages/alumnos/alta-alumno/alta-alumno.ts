@@ -28,7 +28,7 @@ import { Curso } from '../../../models/curso.model';
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
-     MatSelectModule 
+    MatSelectModule
   ],
   templateUrl: './alta-alumno.html',
   styleUrls: ['./alta-alumno.css']
