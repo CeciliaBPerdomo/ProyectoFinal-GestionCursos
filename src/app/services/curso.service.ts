@@ -41,8 +41,20 @@ export class CursoService {
   }
 
   agregarCurso(curso: Curso): void {
+    curso.id = this.generarNuevoId();
     this.cursos.push(curso);
   }
+
+  private generarNuevoId(): number {
+  const ids = this.cursos
+    .map(c => c.id)
+    .filter((id): id is number => id !== undefined); // filtramos undefined
+
+  return ids.length > 0
+    ? Math.max(...ids) + 1
+    : 1;
+}
+
 
   actualizarCurso(cursoActualizado: Curso): void {
     const index = this.cursos.findIndex(c => c.id === cursoActualizado.id);

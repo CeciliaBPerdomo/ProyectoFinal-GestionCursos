@@ -5,7 +5,7 @@ p {
 
 .formulario-alta {
   max-width: 400px;
-  width: 100%;  /* para que sea responsive */
+  width: 100%; 
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -39,7 +39,6 @@ p {
   width: 100%;
 }
 
-/* Botón al 100% */
 button {
   width: 100%;
 }   

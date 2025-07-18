@@ -1,0 +1,32 @@
+<h2>Agregar nuevo curso</h2>
+<p>Formulario para dar de alta un nuevo curso.</p>
+
+<div class="alta-curso-form">
+    <form class="form-curso" (ngSubmit)="guardar()" class="formulario-alta">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre del curso</mat-label>
+            <input matInput [(ngModel)]="nuevoCurso.nombre" name="nombre" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput [(ngModel)]="nuevoCurso.descripcion" name="descripcion"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Fecha de inicio</mat-label>
+            <input matInput type="date" [(ngModel)]="nuevoCurso.fechaInicio" name="fechaInicio" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Duración (horas)</mat-label>
+            <input matInput type="number" [(ngModel)]="nuevoCurso.duracion" name="duracion" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">
+            Guardar Curso
+        </button>
+    </form>
+
+</div>

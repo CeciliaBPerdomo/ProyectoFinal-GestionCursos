@@ -49,7 +49,7 @@ export class ListadoCursos implements OnInit {
   }
 
   editarCurso(curso: Curso): void {
-    this.cursoEditandoId = curso.id;
+    this.cursoEditandoId = curso.id!;
     this.cursoEditado = { ...curso };
   }
 

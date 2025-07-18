@@ -1,7 +1,7 @@
 <h2>Listado de Cursos</h2>
 
 <div class="acciones-superiores">
-  <button mat-raised-button color="primary" routerLink="/cursos/alta">
+  <button mat-raised-button color="primary" routerLink="/alta-curso">
     <mat-icon>add</mat-icon>
     Nuevo Curso
   </button>
@@ -46,7 +46,7 @@
         <button mat-icon-button color="accent" (click)="editarCurso(curso)" class="editar">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="eliminarCurso(curso.id)" class="eliminar">
+        <button mat-icon-button color="warn" (click)="eliminarCurso(curso.id!)" class="eliminar">
           <mat-icon>delete</mat-icon>
         </button>
       </ng-template>
