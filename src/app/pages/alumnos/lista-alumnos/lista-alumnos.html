@@ -1,4 +1,14 @@
+<!-- app/pages/alumnos/lista-alumnos/lista-alumnos.html -->
 <h2>Listado de Alumnos</h2>
+
+<!-- Boton Agregar nuevo Alumno -->
+<div class="acciones-superiores" *ngIf="modo === 'admin'">
+    <button routerLink="/alta-alumno" mat-raised-button color="primary">
+        <mat-icon>person_add</mat-icon>
+        Nuevo Alumno
+    </button>
+</div>
+
 
 <div class="tabla-contenedor">
     <table mat-table [dataSource]="alumnos" class="mat-elevation-z8 full-width-table">

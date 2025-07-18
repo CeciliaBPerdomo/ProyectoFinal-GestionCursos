@@ -4,6 +4,6 @@ export interface Alumno {
     id: number;
     nombre: string;
     email: string;
-    cursoId: number;
+    cursoId: number | null;
 }
 

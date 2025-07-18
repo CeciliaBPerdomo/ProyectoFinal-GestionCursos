@@ -1,6 +1,7 @@
 // app/pages/alumnos/lista-alumnos/lista-alumnos.ts
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 //Material UI 
 import { CommonModule } from '@angular/common';
@@ -22,7 +23,8 @@ import { InscripcionService } from '../../../services/inscripcion.service';
     CommonModule,
     MatTableModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    RouterModule,
   ],
   templateUrl: './lista-alumnos.html',
   styleUrls: ['./lista-alumnos.css']

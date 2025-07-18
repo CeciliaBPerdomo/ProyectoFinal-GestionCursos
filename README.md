@@ -2,7 +2,7 @@
 **Creación de un proyecto frontend basado en `Angular` para gestionar los asistentes a una serie de cursos.**
 
 ## 🖥️ Descripción General
-El objetivo de esta entrega es desarrollar un proyecto frontend utilizando Angular CLI que permita la gestión de asistentes a diversos cursos. 
+El objetivo de esta entrega es desarrollar un proyecto frontend utilizando `Angular CLI` que permita la gestión de asistentes a diversos cursos. 
 
 - El sistema debe contar con funcionalidades diferenciadas según el tipo de usuario: 
     - Administrador y Usuario. 
@@ -42,6 +42,10 @@ ng add @angular/material
 ```
 **Documentación oficial**: https://material.angular.dev/guide/getting-started
 
+```bash
+npm install @angular/animations@20.1.0 --legacy-peer-deps
+```
+
 ## Gestión de cursos: Home page
 ![Home page](image-2.png)
 
@@ -66,13 +70,9 @@ src/
 │
 │   ├── layout/
 │   │   ├── navbar/
-│   │   │   ├── navbar.ts
-│   │   │   ├── navbar.html
-│   │   │   └── navbar.css
+│   │   │   ├── navbar.ts / .html / .css
 │   │   └── toolbar/
-│   │       ├── toolbar.ts
-│   │       ├── toolbar.html
-│   │       └── toolbar.css
+│   │       ├── toolbar.ts /.html /.css
 │
 │   ├── pages/
 │   │   ├── dashboard/
@@ -81,8 +81,8 @@ src/
 │   │   │   └── dashboard.css
 │   │   │
 │   │   ├── alumnos/
-│   │   │   ├── lista-alumnos.ts
-│   │   │   ├── lista-alumnos.html
+│   │   │   ├── lista-alumnos.ts / .html / .css
+│   │   │   ├── alta-alumno.ts / html / .css
 │   │   │   ├── perfil-alumno.ts
 │   │   │   ├── perfil-alumno.html
 │   │   │   └── perfil-alumno.css

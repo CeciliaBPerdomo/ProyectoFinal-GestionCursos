@@ -1,0 +1,32 @@
+<!-- alta-alumno.html -->
+<h2>Alta de Alumno</h2>
+<p>Formulario para dar de alta un nuevo alumno.</p>
+
+<div class="alta-alumno-form"> 
+<form [formGroup]="alumnoForm" (ngSubmit)="onSubmit()" class="formulario-alta">
+  <mat-form-field appearance="fill" class="form-field">
+    <mat-label>Nombre</mat-label>
+    <input matInput placeholder="Nombre completo" formControlName="nombre" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="form-field">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" placeholder="Email" formControlName="email" />
+  </mat-form-field>
+
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>Curso</mat-label>
+  <mat-select formControlName="cursoId">
+    <mat-option [value]="null">Sin curso</mat-option>
+    <mat-option *ngFor="let curso of cursos" [value]="curso.id">
+      {{ curso.nombre }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="alumnoForm.invalid">
+    Guardar Alumno
+  </button>
+</form>
+</div>

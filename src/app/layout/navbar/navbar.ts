@@ -1,3 +1,4 @@
+// app/pages/layout/navbar/navbar.ts
 import { Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';

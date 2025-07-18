@@ -26,7 +26,14 @@ export class AlumnoService {
 
   // Agrega un nuevo alumno
   agregarAlumno(alumno: Alumno): void {
+    alumno.id = this.generarNuevoId();;
     this.alumnos.push(alumno);
+  }
+
+  private generarNuevoId(): number {
+    return this.alumnos.length > 0
+      ? Math.max(...this.alumnos.map(a => a.id)) + 1
+      : 1;
   }
 
   // Modifica un alumno existente

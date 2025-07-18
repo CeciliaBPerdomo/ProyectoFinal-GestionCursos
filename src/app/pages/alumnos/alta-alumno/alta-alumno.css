@@ -1,0 +1,45 @@
+h2,
+p {
+    text-align: center;
+}
+
+.formulario-alta {
+  max-width: 400px;
+  width: 100%;  /* para que sea responsive */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 20px;
+  background-color: white;
+}
+
+.form-field {
+    width: 100%;
+}
+
+.snackbar-exito {
+    background-color: #4caf50;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.alta-alumno-form {
+  display: flex;
+  justify-content: center; 
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.form-field,
+.full-width {
+  width: 100%;
+}
+
+/* Botón al 100% */
+button {
+  width: 100%;
+}   
