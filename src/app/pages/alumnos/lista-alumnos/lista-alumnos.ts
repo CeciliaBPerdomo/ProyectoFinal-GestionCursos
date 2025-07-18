@@ -1,18 +1,21 @@
-// app/pages/alumnos/lista-alumnos/lista-alumnos.ts
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
-//Material UI 
+// Angular y Material
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
-// Services y models 
+// Services y Models
 import { AlumnoService } from '../../../services/alumno.service';
 import { Alumno } from '../../../models/alumno.model';
-
 import { CursoService } from '../../../services/curso.service';
 import { InscripcionService } from '../../../services/inscripcion.service';
 
@@ -21,27 +24,34 @@ import { InscripcionService } from '../../../services/inscripcion.service';
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
+    FormsModule,
     MatTableModule,
     MatIconModule,
     MatButtonModule,
-    RouterModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSnackBarModule,
   ],
   templateUrl: './lista-alumnos.html',
-  styleUrls: ['./lista-alumnos.css']
+  styleUrls: ['./lista-alumnos.css'],
 })
-
 export class ListaAlumnos implements OnInit {
   @Input() modo: 'admin' | 'alumno' = 'admin';
 
   alumnos: Alumno[] = [];
   displayedColumns: string[] = ['id', 'nombre', 'email', 'cursoNombre'];
+  alumnoEditandoId: number | null = null;
+  alumnoEditado: Partial<Alumno> = {};
 
   constructor(
     private alumnoService: AlumnoService,
     private cursoService: CursoService,
     private inscripcionService: InscripcionService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     const modoRuta = this.route.snapshot.data['modo'];
@@ -56,23 +66,50 @@ export class ListaAlumnos implements OnInit {
 
   getCursoNombre(id: number): string {
     const curso = this.cursoService.getCursoPorId(id);
-    return curso ? curso.nombre : 'Desconocido';
+    return curso ? curso.nombre : 'Sin curso';
   }
 
   getEstadoInscripcion(alumnoId: number, cursoId: number): string {
-    // Buscamos la inscripción que corresponda al alumno y curso
     const inscripcion = this.inscripcionService.getInscripciones()
       .find(i => i.alumnoId === alumnoId && i.cursoId === cursoId);
     return inscripcion ? inscripcion.estado : 'Sin inscripción';
   }
 
-  eliminarAlumno(id: number): void {
-  const confirmacion = confirm('¿Estás segura de que querés eliminar este alumno?');
-
-  if (confirmacion) {
-    this.alumnoService.eliminarAlumno(id);
-    this.alumnos = this.alumnoService.getAlumnos(); 
+  editarAlumno(alumno: Alumno): void {
+    this.alumnoEditandoId = alumno.id;
+    this.alumnoEditado = { ...alumno };
   }
-}
 
+  guardarAlumnoEditado(): void {
+    if (this.alumnoEditandoId != null) {
+    this.alumnoService.actualizarAlumno(this.alumnoEditado as Alumno);
+    this.alumnos = [...this.alumnoService.getAlumnos()];
+    this.alumnoEditandoId = null;
+    this.alumnoEditado = {};
+    this.snackBar.open('Alumno actualizado correctamente', 'Cerrar', {
+      duration: 3000,
+      panelClass: 'snackbar-exito'
+    });
+  }
+  }
+
+  cancelarEdicion(): void {
+    this.alumnoEditandoId = null;
+    this.alumnoEditado = {};
+  }
+
+  eliminarAlumno(id: number): void {
+    if (confirm('¿Estás segura/o de que querés eliminar este alumno?')) {
+      this.alumnoService.eliminarAlumno(id);
+      this.alumnos = this.alumnoService.getAlumnos(); 
+      this.snackBar.open('Alumno eliminado', 'Cerrar', {
+        duration: 3000,
+        panelClass: 'snackbar-exito'
+      });
+    }
+  }
+
+  get cursos() {
+    return this.cursoService.getCursos();
+  }
 }

@@ -1,7 +1,6 @@
-<!-- app/pages/alumnos/lista-alumnos/lista-alumnos.html -->
 <h2>Listado de Alumnos</h2>
 
-<!-- Boton Agregar nuevo Alumno -->
+<!-- Botón Agregar nuevo Alumno (solo para admin) -->
 <div class="acciones-superiores" *ngIf="modo === 'admin'">
     <button routerLink="/alta-alumno" mat-raised-button color="primary">
         <mat-icon>person_add</mat-icon>
@@ -9,58 +8,86 @@
     </button>
 </div>
 
-
 <div class="tabla-contenedor">
     <table mat-table [dataSource]="alumnos" class="mat-elevation-z8 full-width-table">
+
         <!-- ID -->
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef class="encabezado"> ID </th>
-            <td mat-cell *matCellDef="let alumno" class="info"> {{ alumno.id }} </td>
+            <th mat-header-cell *matHeaderCellDef class="encabezado">ID</th>
+            <td mat-cell *matCellDef="let alumno" class="info">{{ alumno.id }}</td>
         </ng-container>
 
         <!-- Nombre -->
         <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef class="encabezado"> Nombre </th>
-            <td mat-cell *matCellDef="let alumno" class="data"> {{ alumno.nombre }} </td>
+            <th mat-header-cell *matHeaderCellDef class="encabezado">Nombre</th>
+            <td mat-cell *matCellDef="let alumno" class="data">
+                <ng-container *ngIf="alumnoEditandoId !== alumno.id; else editarNombre">
+                    {{ alumno.nombre }}
+                </ng-container>
+                <ng-template #editarNombre>
+                    <input matInput [(ngModel)]="alumnoEditado.nombre" />
+                </ng-template>
+            </td>
         </ng-container>
 
         <!-- Email -->
         <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef class="encabezado"> Email </th>
-            <td mat-cell *matCellDef="let alumno" class="data"> {{ alumno.email }} </td>
+            <th mat-header-cell *matHeaderCellDef class="encabezado">Email</th>
+            <td mat-cell *matCellDef="let alumno" class="data">
+                <ng-container *ngIf="alumnoEditandoId !== alumno.id; else editarEmail">
+                    {{ alumno.email }}
+                </ng-container>
+                <ng-template #editarEmail>
+                    <input matInput [(ngModel)]="alumnoEditado.email" />
+                </ng-template>
+            </td>
         </ng-container>
 
         <!-- Curso Nombre -->
         <ng-container matColumnDef="cursoNombre">
-            <th mat-header-cell *matHeaderCellDef class="encabezado"> Curso </th>
+            <th mat-header-cell *matHeaderCellDef class="encabezado">Curso</th>
             <td mat-cell *matCellDef="let alumno" class="data">
-                <div class="curso-nombre">{{ getCursoNombre(alumno.cursoId) }}</div>
+                <div class="curso-nombre">
+                    {{ getCursoNombre(alumno.cursoId) }}
+                </div>
                 <div class="estado-etiqueta" [ngClass]="{
-       'estado-activa': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'activa',
-       'estado-cancelada': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'cancelada',
-       'estado-sin': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'Sin inscripción'
-     }">
+          'estado-activa': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'activa',
+          'estado-cancelada': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'cancelada',
+          'estado-sin': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'Sin inscripción'
+        }">
                     {{ getEstadoInscripcion(alumno.id, alumno.cursoId) }}
                 </div>
-
             </td>
         </ng-container>
-
 
         <!-- Acciones -->
         <ng-container *ngIf="modo === 'admin'" matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef class="encabezado"> Acciones </th>
+            <th mat-header-cell *matHeaderCellDef class="encabezado">Acciones</th>
             <td mat-cell *matCellDef="let alumno" class="data">
-                <button mat-icon-button color="accent" aria-label="Editar">
-                    <mat-icon class="editar">edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" aria-label="Eliminar" (click)="eliminarAlumno(alumno.id)">
-                    <mat-icon class="eliminar">delete</mat-icon>
-                </button>
+
+                <!-- Mostrar Editar/Guardar/Cancelar según el estado -->
+                <ng-container *ngIf="alumnoEditandoId === alumno.id; else botonesEditar">
+                    <button mat-icon-button color="primary" (click)="guardarAlumnoEditado()" class="editar">
+                        <mat-icon>check</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="cancelarEdicion()" class="eliminar">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </ng-container>
+
+                <ng-template #botonesEditar>
+                    <button mat-icon-button color="accent" (click)="editarAlumno(alumno)" class="editar">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="eliminarAlumno(alumno.id)" class="eliminar">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </ng-template>
+
             </td>
         </ng-container>
 
-
+        <!-- Filas -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
