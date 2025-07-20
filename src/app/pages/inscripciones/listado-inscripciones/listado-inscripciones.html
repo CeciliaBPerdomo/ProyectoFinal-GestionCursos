@@ -1,5 +1,13 @@
 <h2>Listado de Inscripciones</h2>
 
+<!-- Botón Agregar nueva Inscripción (solo para admin) -->
+<div class="acciones-superiores" *ngIf="modo === 'admin'">
+    <button routerLink="/alta-inscripcion" mat-raised-button color="primary">
+        <mat-icon>person_add</mat-icon>
+        Nueva Inscripción
+    </button>
+</div>
+
 <div class="inscripciones">
     <table mat-table [dataSource]="inscripciones" class="mat-elevation-z8 full-width-table">
 

@@ -83,10 +83,11 @@ src/
 │   │   │
 │   │   ├── cursos/
 │   │   │   ├── lista-cursos.ts / .html / .css
-│   │   │   ├── alta-curso.ts /.html / .css
+│   │   │   └── alta-curso.ts /.html / .css
 │   │   │
 │   │   ├── inscripciones/
 │   │   │   ├── listado-inscripciones.ts /.html /.css
+│   │   │   └── alta-inscripcion.ts / .html / .css
 │
 │   ├── services/
 │   │   ├── alumno.service.ts
@@ -135,7 +136,7 @@ src/
 | alumnoId          | number                     | ID del alumno inscrito                              |
 | cursoId           | number                     | ID del curso al que se inscribe                     |
 | fechaInscripcion  | Date                       | Fecha en la que se realizó la inscripción           |
-| estado            | 'activa' \| 'cancelada' \| 'finalizada' | Estado actual de la inscripción       |
+| estado            | 'activa', 'cancelada', 'finalizada', 'sin inscripcion'| Estado actual de la inscripción       |
 
 
 ### 🛠 Services:

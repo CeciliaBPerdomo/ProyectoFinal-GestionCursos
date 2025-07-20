@@ -1,0 +1,79 @@
+/* Contenedor general */
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Título */
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+/* Etiquetas e inputs */
+label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #555;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+input:focus,
+select:focus {
+  border-color: #3f51b5;
+  outline: none;
+}
+
+/* Mensajes de error */
+div[style*="color:red"] {
+  font-size: 0.85rem;
+  color: #d32f2f;
+  margin-top: 0.3rem;
+}
+
+/* Botón */
+button[type="submit"] {
+  background-color: #3f51b5;
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: #303f9f;
+}
+
+@media (max-width: 600px) {
+  form {
+    padding: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}

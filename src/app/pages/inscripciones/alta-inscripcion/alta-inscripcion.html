@@ -1,0 +1,53 @@
+<!-- src/app/pages/inscripciones/alta-inscripcion/alta-inscripcion.component.html -->
+
+<h2>Alta de Nueva Inscripción</h2>
+
+<form [formGroup]="inscripcionForm" (ngSubmit)="onSubmit()">
+
+    <div>
+        <label for="cursoId">Curso:</label>
+        <select id="cursoId" formControlName="cursoId">
+            <option value="" disabled selected>Selecciona un curso</option>
+            <option *ngFor="let curso of cursos" [value]="curso.id">
+                {{ curso.nombre }}
+            </option>
+        </select>
+        <div *ngIf="inscripcionForm.get('cursoId')?.invalid && inscripcionForm.get('cursoId')?.touched"
+            style="color:red">
+            Debes seleccionar un curso.
+        </div>
+    </div>
+
+    <div>
+        <label for="alumnoId">Alumno:</label>
+        <select id="alumnoId" formControlName="alumnoId">
+            <option value="" disabled selected>Selecciona un alumno</option>
+            <option *ngFor="let alumno of alumnos" [value]="alumno.id">
+                {{ alumno.nombre }}
+            </option>
+        </select>
+        <div *ngIf="inscripcionForm.get('alumnoId')?.invalid && inscripcionForm.get('alumnoId')?.touched"
+            style="color:red">
+            Debes seleccionar un alumno.
+        </div>
+    </div>
+
+
+    <div>
+        <label for="fechaInscripcion">Fecha de Inscripción:</label>
+        <input type="date" id="fechaInscripcion" formControlName="fechaInscripcion" />
+        <div *ngIf="inscripcionForm.get('fechaInscripcion')?.invalid && inscripcionForm.get('fechaInscripcion')?.touched"
+            style="color:red">
+            La fecha de inscripción es obligatoria.
+        </div>
+    </div>
+
+    <div>
+        <label for="estado">Estado:</label>
+        <select id="estado" formControlName="estado">
+            <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+        </select>
+    </div>
+
+    <button type="submit">Guardar Inscripción</button>
+</form>

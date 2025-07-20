@@ -24,7 +24,7 @@ import { AlumnoService } from '../../../services/alumno.service';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-      MatSelectModule,
+    MatSelectModule,
     MatFormFieldModule
   ],
   templateUrl: './listado-inscripciones.html',
@@ -96,5 +96,5 @@ export class ListadoInscripciones implements OnInit {
     }
   }
 
-  
+
 }
