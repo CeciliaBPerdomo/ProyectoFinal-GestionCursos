@@ -79,6 +79,7 @@ src/
 │   │   ├── alumnos/
 │   │   │   ├── lista-alumnos.ts / .html / .css
 │   │   │   ├── alta-alumno.ts / html / .css
+│   │   │   └── mis-cursos.ts / .html / .css
 │   │   │
 │   │   ├── cursos/
 │   │   │   ├── lista-cursos.ts / .html / .css

@@ -1,0 +1,91 @@
+/* src/app/pages/alumnos/mis-cursos/mis-cursos.css */
+.saludo {
+    text-align: right;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+
+h2 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.cursos-container {
+    display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.curso-card {
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+    transition: transform 0.3s ease;
+}
+
+.curso-card:hover {
+    transform: scale(1.02);
+}
+
+.descripcion {
+    font-size: 0.95rem;
+    color: #424242;
+    margin-bottom: 12px;
+}
+
+mat-card-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #3f51b5;
+}
+
+.estado-etiqueta {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.estado-activa {
+    background-color: #4caf50;
+}
+
+.estado-cancelada {
+    background-color: #f44336;
+}
+
+.estado-finalizada {
+    background-color: #3f51b5;
+}
+
+.estado-inscripcion {
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.estado-sin-inscripcion {
+    background-color: grey;
+    color: white;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end; 
+  padding: 0 16px 16px 16px;
+}

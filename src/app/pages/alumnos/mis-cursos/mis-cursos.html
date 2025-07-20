@@ -1,0 +1,33 @@
+<!-- src/app/pages/alumnos/mis-cursos/mis-cursos.html -->
+
+<div class="saludo">
+    Hola, {{ alumno?.nombre }} 👋
+</div>
+
+<h2>Mis cursos</h2>
+
+<div class="cursos-container">
+    <mat-card *ngFor="let curso of cursosDelAlumno" class="curso-card">
+        <mat-card-header>
+            <mat-card-title>{{ curso.nombre }}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <p><strong>Descripción:</strong></p>
+            <p class="descripcion">{{ curso.descripcion }}</p>
+            <p><strong>Duración:</strong> {{ curso.duracion }} horas</p>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <span class="estado-etiqueta" 
+             [ngClass]="{
+      'estado-activa': curso.estado === 'activa',
+      'estado-cancelada': curso.estado === 'cancelada',
+      'estado-finalizada': curso.estado === 'finalizada',
+      'estado-sin-inscripcion': curso.estado === 'sin inscripcion'
+    }">
+                {{ curso.estado | titlecase }}
+            </span>
+        </mat-card-actions>
+    </mat-card>
+</div>

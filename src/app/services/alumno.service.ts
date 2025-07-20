@@ -6,7 +6,6 @@ import { Alumno } from '../models/alumno.model';
   providedIn: 'root' // hace que el servicio esté disponible globalmente
 })
 export class AlumnoService {
-  // Datos simulados (hardcodeados)
   private alumnos: Alumno[] = [
     { id: 1, nombre: 'Cecilia Perdomo', email: 'cecilia.perdomo@mail.com', cursoId: 1 },
     { id: 2, nombre: 'Juan Pérez', email: 'juan.perez@mail.com', cursoId: 2 },

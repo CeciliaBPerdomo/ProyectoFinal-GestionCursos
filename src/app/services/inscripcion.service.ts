@@ -28,7 +28,14 @@ export class InscripcionService {
       cursoId: 3,
       fechaInscripcion: new Date('2025-07-23'),
       estado: 'cancelada'
-    }
+    },
+    {
+      id: 4,
+      alumnoId: 1,
+      cursoId: 2,
+      fechaInscripcion: new Date('2025-07-20'),
+      estado: 'cancelada'
+    },
   ];
 
   getInscripciones(): Inscripcion[] {
