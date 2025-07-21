@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { RouterModule, Router, NavigationEnd } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 // Material UI
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 // Models y services
 import { InscripcionService } from '../../../services/inscripcion.service';
-import { Inscripcion } from '../../../models/inscripcion.model';
+import { Inscripcion, EstadoInscripcion } from '../../../models/inscripcion.model';
 
 import { CursoService } from '../../../services/curso.service';
 import { Curso } from '../../../models/curso.model';
@@ -43,26 +43,21 @@ export class ListadoInscripciones implements OnInit {
   cursos: Curso[] = [];
   displayedColumns: string[] = ['id', 'alumno', 'curso', 'fecha', 'estado', 'acciones'];
 
+  estados: string[] = ['activa', 'cancelada', 'finalizada', 'sin'];
+
+  estadoEditandoId: number | null = null;
+  estadoSeleccionado: EstadoInscripcion = 'activa';
+
   constructor(
     private inscripcionService: InscripcionService,
     private alumnoService: AlumnoService,
-    private cursoService: CursoService,
-    private cdr: ChangeDetectorRef,
-    private router: Router
+    private cursoService: CursoService
   ) { }
 
   ngOnInit(): void {
     this.alumnos = this.alumnoService.getAlumnos();
     this.cursos = this.cursoService.getCursos();
     this.cargarInscripciones();
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.alumnos = this.alumnoService.getAlumnos();
-        this.cursos = this.cursoService.getCursos();
-        this.cargarInscripciones();
-        this.cdr.detectChanges();
-      }
-    });
   }
 
   cargarInscripciones(): void {
@@ -96,16 +91,44 @@ export class ListadoInscripciones implements OnInit {
   }
 
   getAlumnoNombre(id: number): string {
-    const idNum = Number(id);
-    const alumno = this.alumnos.find(a => a.id === idNum);
+    const alumno = this.alumnos.find(a => a.id === id);
     return alumno ? alumno.nombre : 'Desconocido';
   }
 
   getCursoNombre(id: number): string {
-    const idNum = Number(id);
-    if (idNum === -1) return 'Sin curso';
-    const curso = this.cursos.find(c => c.id === idNum);
+    if (id === -1) return 'Sin curso';
+    const curso = this.cursos.find(c => c.id === id);
     return curso ? curso.nombre : 'Desconocido';
+  }
+
+  editarEstado(inscripcionId: number, estadoActual: EstadoInscripcion): void {
+    this.estadoEditandoId = inscripcionId;
+    this.estadoSeleccionado = estadoActual;
+  }
+
+  cancelarEdicion(): void {
+    this.estadoEditandoId = null;
+  }
+
+  guardarEstado(inscripcionId: number): void {
+    if (this.estadoEditandoId === null) return;
+
+    const inscripcion = this.inscripciones.find(i => i.id === inscripcionId);
+    if (!inscripcion) return;
+
+    inscripcion.estado = this.estadoSeleccionado;
+
+    // Si el estado cambia y es distinto de 'sin', y el id es negativo, asigno nuevo id positivo
+    if (this.estadoSeleccionado !== 'sin inscripcion' && inscripcion.id < 0) {
+      const maxId = this.inscripcionService.getInscripciones().reduce((max, i) => i.id > max ? i.id : max, 0);
+      inscripcion.id = maxId + 1;
+      this.inscripcionService.agregarInscripcion(inscripcion);
+    } else {
+      this.inscripcionService.actualizarInscripcion(inscripcion);
+    }
+    
+    this.estadoEditandoId = null;
+    this.cargarInscripciones();
   }
 
   eliminarInscripcion(id: number): void {
@@ -113,13 +136,7 @@ export class ListadoInscripciones implements OnInit {
 
     if (confirm('¿Seguro que querés eliminar esta inscripción?')) {
       this.inscripcionService.eliminarInscripcion(id);
-      this.cargarInscripciones(); // Recalcular todo
-    }
-  }
-
-  ngAfterViewInit(): void {
-    setTimeout(() => {
       this.cargarInscripciones();
-    });
+    }
   }
 }

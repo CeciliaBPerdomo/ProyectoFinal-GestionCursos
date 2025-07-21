@@ -68,8 +68,8 @@ export class AltaInscripcionComponent implements OnInit {
 
     const nuevaInscripcion: Inscripcion = {
       id: nuevaId,
-      alumnoId: this.inscripcionForm.value.alumnoId,
-      cursoId: this.inscripcionForm.value.cursoId,
+      alumnoId: Number(this.inscripcionForm.value.alumnoId),
+      cursoId: Number(this.inscripcionForm.value.cursoId),
       fechaInscripcion: new Date(this.inscripcionForm.value.fechaInscripcion),
       estado: this.inscripcionForm.value.estado
     };

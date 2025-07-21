@@ -69,3 +69,37 @@ h2 {
   width: 140px;
   font-size: 13px;
 }
+
+.estado-select {
+  width: 140px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.estado-select .mat-form-field-infix {
+  padding: 0 12px;
+}
+
+.estado-select .mat-select-trigger {
+  color: #34495e; 
+  font-weight: 600;
+}
+
+.estado-select .mat-select-panel {
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+}
+
+.estado-select .mat-option {
+  font-size: 14px;
+  padding: 8px 20px;
+  transition: background-color 0.25s ease;
+}
+
+.estado-select .mat-option:hover,
+.estado-select .mat-option.mat-selected {
+  background-color: #1abc9c; 
+  color: white;
+}
+
