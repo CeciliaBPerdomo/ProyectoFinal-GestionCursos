@@ -71,9 +71,9 @@ src/
 │
 │   ├── layout/
 │   │   ├── navbar/
-│   │   │   ├── navbar.ts / .html / .css
+│   │   │   └── navbar.ts / .html / .css
 │   │   └── toolbar/
-│   │       ├── toolbar.ts /.html /.css
+│   │       └── toolbar.ts /.html /.css
 │
 │   ├── pages/
 │   │   ├── alumnos/

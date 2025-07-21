@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 
 // Material UI
 import { CommonModule } from '@angular/common';
@@ -12,8 +12,12 @@ import { MatSelectModule } from '@angular/material/select';
 // Models y services
 import { InscripcionService } from '../../../services/inscripcion.service';
 import { Inscripcion } from '../../../models/inscripcion.model';
+
 import { CursoService } from '../../../services/curso.service';
+import { Curso } from '../../../models/curso.model';
+
 import { AlumnoService } from '../../../services/alumno.service';
+import { Alumno } from '../../../models/alumno.model';
 
 @Component({
   selector: 'app-listado-inscripciones',
@@ -31,31 +35,46 @@ import { AlumnoService } from '../../../services/alumno.service';
   styleUrls: ['./listado-inscripciones.css']
 })
 export class ListadoInscripciones implements OnInit {
+
   @Input() modo: 'admin' | 'alumno' = 'admin';
 
   inscripciones: Inscripcion[] = [];
+  alumnos: Alumno[] = [];
+  cursos: Curso[] = [];
   displayedColumns: string[] = ['id', 'alumno', 'curso', 'fecha', 'estado', 'acciones'];
 
   constructor(
     private inscripcionService: InscripcionService,
     private alumnoService: AlumnoService,
-    private cursoService: CursoService
+    private cursoService: CursoService,
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.alumnos = this.alumnoService.getAlumnos();
+    this.cursos = this.cursoService.getCursos();
     this.cargarInscripciones();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.alumnos = this.alumnoService.getAlumnos();
+        this.cursos = this.cursoService.getCursos();
+        this.cargarInscripciones();
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   cargarInscripciones(): void {
+    this.alumnos = this.alumnoService.getAlumnos();
+    this.cursos = this.cursoService.getCursos();
     const todasInscripciones = this.inscripcionService.getInscripciones();
-    const todosAlumnos = this.alumnoService.getAlumnos();
-
     const alumnosConInscripciones = new Set(todasInscripciones.map(i => i.alumnoId));
 
-    const sinInscripcion: Inscripcion[] = todosAlumnos
+    const sinInscripcion: Inscripcion[] = this.alumnos
       .filter(alumno => !alumnosConInscripciones.has(alumno.id))
       .map(alumno => ({
-        id: -alumno.id, // ⚠️ para evitar colisiones con IDs reales
+        id: -alumno.id,
         alumnoId: alumno.id,
         cursoId: alumno.cursoId ?? -1,
         fechaInscripcion: new Date(),
@@ -77,13 +96,15 @@ export class ListadoInscripciones implements OnInit {
   }
 
   getAlumnoNombre(id: number): string {
-    const alumno = this.alumnoService.getAlumnoPorId(id);
+    const idNum = Number(id);
+    const alumno = this.alumnos.find(a => a.id === idNum);
     return alumno ? alumno.nombre : 'Desconocido';
   }
 
   getCursoNombre(id: number): string {
-    if (id === -1) return 'Sin curso';
-    const curso = this.cursoService.getCursoPorId(id);
+    const idNum = Number(id);
+    if (idNum === -1) return 'Sin curso';
+    const curso = this.cursos.find(c => c.id === idNum);
     return curso ? curso.nombre : 'Desconocido';
   }
 
@@ -96,5 +117,9 @@ export class ListadoInscripciones implements OnInit {
     }
   }
 
-
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.cargarInscripciones();
+    });
+  }
 }

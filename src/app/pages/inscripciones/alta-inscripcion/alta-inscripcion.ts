@@ -1,11 +1,12 @@
 // src/app/pages/inscripciones/alta-inscripcion/alta-inscripcion.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 // Material UI
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Models y services
 import { InscripcionService } from '../../../services/inscripcion.service';
@@ -23,6 +24,7 @@ import { Alumno } from '../../../models/alumno.model';
     CommonModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatSnackBarModule,
   ],
   templateUrl: './alta-inscripcion.html',
   styleUrls: ['./alta-inscripcion.css']
@@ -39,12 +41,14 @@ export class AltaInscripcionComponent implements OnInit {
     private fb: FormBuilder,
     private inscripcionService: InscripcionService,
     private cursoService: CursoService,
-      private alumnoService: AlumnoService
-  ) {}
+    private alumnoService: AlumnoService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.cursos = this.cursoService.getCursos();
-      this.alumnos = this.alumnoService.getAlumnos();
+    this.alumnos = this.alumnoService.getAlumnos();
 
     this.inscripcionForm = this.fb.group({
       cursoId: [null, [Validators.required]],
@@ -72,12 +76,12 @@ export class AltaInscripcionComponent implements OnInit {
 
     this.inscripcionService.agregarInscripcion(nuevaInscripcion);
 
-    alert('Inscripción creada con éxito 🎉');
-
-    // Solo reseteás, no recreás el form
-    this.inscripcionForm.reset({
-      fechaInscripcion: new Date().toISOString().substring(0, 10),
-      estado: 'activa'
+    this.snackBar.open('Inscripción creada con éxito 🎉', 'Cerrar', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
     });
+
+    this.router.navigate(['/inscripciones-admin']);
   }
 }
