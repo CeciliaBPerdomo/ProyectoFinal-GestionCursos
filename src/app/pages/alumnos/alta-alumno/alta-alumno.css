@@ -1,44 +1,61 @@
-h2,
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
+}
+
+h2 {
+  font-weight: 700;
+  color: #222;
+}
+
 p {
-    text-align: center;
+  color: #555;
+  margin-bottom: 2rem;
 }
 
-.formulario-alta {
-  max-width: 400px;
-  width: 100%; 
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  border-radius: 8px;
-  padding: 20px;
-  background-color: white;
+.mat-form-field {
+  margin-bottom: 1.2rem;
 }
 
-.form-field {
-    width: 100%;
+button.mat-raised-button {
+  min-width: 160px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
-.snackbar-exito {
-    background-color: #4caf50;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    border-radius: 4px;
+button.mat-raised-button:hover:not(:disabled) {
+  background-color: #1565c0; 
 }
 
-.alta-alumno-form {
-  display: flex;
-  justify-content: center; 
-  padding: 20px;
-  box-sizing: border-box;
+button.mat-raised-button:disabled {
+  background-color: #90caf9 !important;
+  color: #555 !important;
+  cursor: not-allowed;
 }
 
-.form-field,
-.full-width {
-  width: 100%;
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: white !important;
+  border-radius: 4px;
 }
 
-button {
-  width: 100%;
-}   
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border-color: #ccc;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+  border-color: #3f51b5;
+  border-width: 2px;
+}
+
+.mat-input-element {
+  background-color: white !important;
+  color: #222;
+}
+
+.mat-form-field-appearance-fill.mat-focused .mat-form-field-flex {
+  box-shadow: 0 0 5px rgba(63,81,181,0.5);
+}

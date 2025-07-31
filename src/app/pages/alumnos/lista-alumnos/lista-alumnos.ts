@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
@@ -19,6 +19,7 @@ import { Alumno } from '../../../models/alumno.model';
 import { CursoService } from '../../../services/curso.service';
 import { InscripcionService } from '../../../services/inscripcion.service';
 
+declare var bootstrap: any;
 @Component({
   selector: 'app-lista-alumnos',
   standalone: true,
@@ -37,6 +38,7 @@ import { InscripcionService } from '../../../services/inscripcion.service';
   templateUrl: './lista-alumnos.html',
   styleUrls: ['./lista-alumnos.css'],
 })
+
 export class ListaAlumnos implements OnInit {
   @Input() modo: 'admin' | 'alumno' = 'admin';
 
@@ -44,6 +46,11 @@ export class ListaAlumnos implements OnInit {
   displayedColumns: string[] = ['id', 'nombre', 'email', 'cursoNombre'];
   alumnoEditandoId: number | null = null;
   alumnoEditado: Partial<Alumno> = {};
+
+
+  // Para eliminar con modal coquet
+  alumnoIdAEliminar: number | null = null;
+  modal: any;
 
   constructor(
     private alumnoService: AlumnoService,
@@ -100,17 +107,38 @@ export class ListaAlumnos implements OnInit {
     this.alumnoEditado = {};
   }
 
-  eliminarAlumno(id: number): void {
-    if (confirm('¿Estás segura/o de que querés eliminar este alumno?')) {
-      this.alumnoService.eliminarAlumno(id);
-      this.alumnos = this.alumnoService.getAlumnos();
-      this.snackBar.open('Alumno eliminado 🗑️ correctamente', 'Cerrar', {
-        duration: 3000,
-        panelClass: 'snackbar-exito',
-        horizontalPosition: 'center',
-        verticalPosition: 'top'
-      });
+  ngAfterViewInit() {
+    const modalElement = document.getElementById('confirmDeleteModal');
+    if (modalElement) {
+      this.modal = new bootstrap.Modal(modalElement);
+      // Escucho el click del botón "Eliminar" del modal
+      const confirmBtn = document.getElementById('confirmDeleteBtn');
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+          if (this.alumnoIdAEliminar !== null) {
+            this.eliminarAlumnoConfirmado(this.alumnoIdAEliminar);
+          }
+        });
+      }
     }
+  }
+
+  mostrarModalEliminar(id: number) {
+    this.alumnoIdAEliminar = id;
+    this.modal.show();
+  }
+
+
+  eliminarAlumnoConfirmado(id: number) {
+    this.alumnoService.eliminarAlumno(id);
+    this.alumnos = this.alumnoService.getAlumnos();
+    this.snackBar.open('Alumno eliminado 🗑️ correctamente', 'Cerrar', {
+      duration: 3000,
+      panelClass: 'snackbar-exito',
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
+    this.modal.hide();
   }
 
   get cursos() {

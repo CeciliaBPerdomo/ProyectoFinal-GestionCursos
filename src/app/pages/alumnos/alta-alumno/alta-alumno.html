@@ -1,13 +1,16 @@
-<div class="container mt-4">
-  <h2 class="mb-3 text-center text-md-start">Alta de Alumno</h2>
-  <p class="mb-4 text-center text-md-start">Formulario para dar de alta un nuevo alumno.</p>
+<div class="container mt-5">
+  <h2 class="mb-2 text-center text-md-start">Alta de Alumno</h2>
+  <p class="mb-4 text-center text-md-start text-muted">Formulario para dar de alta un nuevo alumno.</p>
 
-  <form [formGroup]="alumnoForm" (ngSubmit)="onSubmit()" class="row g-3">
+  <form [formGroup]="alumnoForm" (ngSubmit)="onSubmit()" class="row g-4">
 
     <div class="col-12 col-md-6">
       <mat-form-field appearance="fill" class="w-100">
         <mat-label>Nombre</mat-label>
         <input matInput placeholder="Nombre completo" formControlName="nombre" />
+        <mat-error *ngIf="alumnoForm.get('nombre')?.invalid && alumnoForm.get('nombre')?.touched">
+          El nombre es obligatorio
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -15,6 +18,9 @@
       <mat-form-field appearance="fill" class="w-100">
         <mat-label>Email</mat-label>
         <input matInput type="email" placeholder="Email" formControlName="email" />
+        <mat-error *ngIf="alumnoForm.get('email')?.invalid && alumnoForm.get('email')?.touched">
+          Email inválido o vacío
+        </mat-error>
       </mat-form-field>
     </div>
 

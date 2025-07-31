@@ -90,7 +90,7 @@
             <button mat-icon-button class="editar" (click)="editarAlumno(alumno)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button class="eliminar" (click)="eliminarAlumno(alumno.id)">
+            <button mat-icon-button class="eliminar" (click)="mostrarModalEliminar(alumno.id)">
               <mat-icon>delete</mat-icon>
             </button>
           </ng-template>
@@ -101,5 +101,24 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-light"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+  </div>
+</div>
+
+<!-- Modal Confirmación Eliminar -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="confirmDeleteLabel">Confirmar eliminación</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás segura/o de que querés eliminar este alumno?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Eliminar</button>
+      </div>
+    </div>
   </div>
 </div>
