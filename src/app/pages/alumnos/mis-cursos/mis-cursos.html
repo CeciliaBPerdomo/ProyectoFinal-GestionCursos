@@ -1,33 +1,39 @@
-<!-- src/app/pages/alumnos/mis-cursos/mis-cursos.html -->
+<div class="container mt-4">
 
-<div class="saludo">
-    Hola, {{ alumno?.nombre }} 👋
+  <div class="mb-4 fs-4 text-center text-md-end">
+  Hola, {{ alumno?.nombre }} 👋
 </div>
+    <p class="text-center text-md-start">Aquí puedes ver los cursos en los que estás inscrito, o en que estado se encuentran.</p>
+  <h2 class="mb-4">Mis cursos</h2>
 
-<h2>Mis cursos</h2>
+  <div class="row g-4">
+    <div *ngFor="let curso of cursosDelAlumno" class="col-12 col-md-6 col-lg-4">
 
-<div class="cursos-container">
-    <mat-card *ngFor="let curso of cursosDelAlumno" class="curso-card">
-        <mat-card-header>
-            <mat-card-title>{{ curso.nombre }}</mat-card-title>
-        </mat-card-header>
+      <div class="card h-100 shadow-sm">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{ curso.nombre }}</h5>
+        </div>
 
-        <mat-card-content>
-            <p><strong>Descripción:</strong></p>
-            <p class="descripcion">{{ curso.descripcion }}</p>
-            <p><strong>Duración:</strong> {{ curso.duracion }} horas</p>
-        </mat-card-content>
+        <div class="card-body">
+          <p><strong>Descripción:</strong></p>
+          <p class="text-muted">{{ curso.descripcion }}</p>
+          <p><strong>Duración:</strong> {{ curso.duracion }} horas</p>
+        </div>
 
-        <mat-card-actions>
-            <span class="estado-etiqueta" 
-             [ngClass]="{
-      'estado-activa': curso.estado === 'activa',
-      'estado-cancelada': curso.estado === 'cancelada',
-      'estado-finalizada': curso.estado === 'finalizada',
-      'estado-sin-inscripcion': curso.estado === 'sin inscripcion'
-    }">
-                {{ curso.estado | titlecase }}
-            </span>
-        </mat-card-actions>
-    </mat-card>
+        <div class="card-footer">
+          <span class="badge"
+            [ngClass]="{
+              'bg-success': curso.estado === 'activa',
+              'bg-danger': curso.estado === 'cancelada',
+              'bg-primary': curso.estado === 'finalizada',
+              'bg-secondary': curso.estado === 'sin inscripcion'
+            }">
+            {{ curso.estado | titlecase }}
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
