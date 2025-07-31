@@ -1,6 +1,5 @@
 // src/app/models/inscripcion.model.ts
-
-export type EstadoInscripcion = 'activa' | 'cancelada' | 'finalizada' | 'sin inscripcion';
+export type EstadoInscripcion = 'activa' | 'cancelada' | 'finalizada' | 'sin inscripcion' | 'sin';
 
 export interface Inscripcion {
   id: number;

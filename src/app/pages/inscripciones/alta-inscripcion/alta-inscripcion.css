@@ -1,15 +1,15 @@
 /* Contenedor general */
 form {
-  max-width: 500px;
+  width: 75%;
   margin: 0 auto;
   padding: 2rem;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+}
+
+.container {
+  padding: 2rem;
 }
 
 /* Título */
@@ -67,6 +67,12 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #303f9f;
 }
+
+button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 
 @media (max-width: 600px) {
   form {

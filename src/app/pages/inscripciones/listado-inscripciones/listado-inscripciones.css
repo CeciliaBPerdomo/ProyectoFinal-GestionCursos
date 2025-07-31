@@ -61,10 +61,6 @@ h2 {
     background-color: #f44336;
 }
 
-.estado-sin {
-    background-color: #9e9e9e;
-}
-
 .estado-form {
   width: 140px;
   font-size: 13px;
@@ -103,3 +99,8 @@ h2 {
   color: white;
 }
 
+
+.estado-sin {
+  background-color: #6c757d !important; 
+  text-transform: uppercase;
+}

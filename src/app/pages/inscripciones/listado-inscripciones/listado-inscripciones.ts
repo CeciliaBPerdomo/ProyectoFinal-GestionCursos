@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 // Models y services
 import { InscripcionService } from '../../../services/inscripcion.service';
@@ -19,6 +20,7 @@ import { Curso } from '../../../models/curso.model';
 import { AlumnoService } from '../../../services/alumno.service';
 import { Alumno } from '../../../models/alumno.model';
 
+declare var bootstrap: any;
 @Component({
   selector: 'app-listado-inscripciones',
   standalone: true,
@@ -29,7 +31,8 @@ import { Alumno } from '../../../models/alumno.model';
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FormsModule,
   ],
   templateUrl: './listado-inscripciones.html',
   styleUrls: ['./listado-inscripciones.css']
@@ -43,10 +46,14 @@ export class ListadoInscripciones implements OnInit {
   cursos: Curso[] = [];
   displayedColumns: string[] = ['id', 'alumno', 'curso', 'fecha', 'estado', 'acciones'];
 
-  estados: string[] = ['activa', 'cancelada', 'finalizada', 'sin'];
+  estados: EstadoInscripcion[] = ['activa', 'cancelada', 'finalizada', 'sin inscripcion', 'sin'];
 
   estadoEditandoId: number | null = null;
   estadoSeleccionado: EstadoInscripcion = 'activa';
+
+  estadoSin: EstadoInscripcion = 'sin inscripcion';
+  inscripcionIdAEliminar: number | null = null;
+  modal: any;
 
   constructor(
     private inscripcionService: InscripcionService,
@@ -106,6 +113,18 @@ export class ListadoInscripciones implements OnInit {
     this.estadoSeleccionado = estadoActual;
   }
 
+  public esEstadoSinInscripcion(estado: string): boolean {
+    const estadoNormalizado = estado?.trim().toLowerCase();
+    return estadoNormalizado === 'sin inscripcion' || estadoNormalizado === 'sin';
+  }
+
+  public mostrarEstadoNormalizado(estado: EstadoInscripcion | string): string {
+    if (!estado) return '';
+    const e = estado.trim().toLowerCase();
+    if (e === 'sin' || e === 'sin inscripcion') return 'Sin inscripción';
+    return estado.toUpperCase();
+  }
+
   cancelarEdicion(): void {
     this.estadoEditandoId = null;
   }
@@ -126,9 +145,26 @@ export class ListadoInscripciones implements OnInit {
     } else {
       this.inscripcionService.actualizarInscripcion(inscripcion);
     }
-    
+
     this.estadoEditandoId = null;
     this.cargarInscripciones();
+  }
+
+  mostrarModalEliminar(id: number): void {
+    this.inscripcionIdAEliminar = id;
+    const modalElement = document.getElementById('confirmDeleteModal');
+    if (modalElement) {
+      this.modal = new bootstrap.Modal(modalElement);
+      this.modal.show();
+    }
+  }
+
+  confirmarEliminacion(): void {
+    if (this.inscripcionIdAEliminar !== null) {
+      this.inscripcionService.eliminarInscripcion(this.inscripcionIdAEliminar);
+      this.cargarInscripciones();
+      this.modal.hide();
+    }
   }
 
   eliminarInscripcion(id: number): void {
