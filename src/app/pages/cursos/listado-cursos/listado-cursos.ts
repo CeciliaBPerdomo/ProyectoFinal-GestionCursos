@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -14,6 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 // Models y Services
 import { Curso } from '../../../models/curso.model';
 import { CursoService } from '../../../services/curso.service';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-listado-cursos',
@@ -35,6 +37,11 @@ import { CursoService } from '../../../services/curso.service';
 
 export class ListadoCursos implements OnInit {
   cursos: Curso[] = [];
+
+  // Modal para borrar
+  cursoIdAEliminar: number | null = null;
+  modal: any;
+
   cursoEditandoId: number | null = null;
   cursoEditado: Partial<Curso> = {};
 
@@ -74,18 +81,35 @@ export class ListadoCursos implements OnInit {
     this.cursoEditado = {};
   }
 
+  ngAfterViewInit(): void {
+    const modalElement = document.getElementById('confirmDeleteCursoModal');
+    if (modalElement) {
+      this.modal = new bootstrap.Modal(modalElement);
 
-  eliminarCurso(id: number): void {
-    if (confirm('¿Seguro que querés eliminar este curso?')) {
-      this.cursoService.eliminarCurso(id);
-      this.snackBar.open('Curso eliminado 🗑️ correctamente', 'Cerrar', {
-        duration: 3000,
-        panelClass: 'snackbar-exito',
-        horizontalPosition: 'center',
-        verticalPosition: 'top'
-      });
-      this.cursos = [...this.cursoService.getCursos()];
-
+      const confirmBtn = document.getElementById('confirmDeleteCursoBtn');
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+          if (this.cursoIdAEliminar !== null) {
+            this.eliminarCursoConfirmado(this.cursoIdAEliminar);
+          }
+        });
+      }
     }
+  }
+
+  mostrarModalEliminar(id: number): void {
+    this.cursoIdAEliminar = id;
+    this.modal?.show();
+  }
+  eliminarCursoConfirmado(id: number): void {
+    this.cursoService.eliminarCurso(id);
+    this.cursos = [...this.cursoService.getCursos()];
+    this.snackBar.open('Curso eliminado 🗑️ correctamente', 'Cerrar', {
+      duration: 3000,
+      panelClass: 'snackbar-exito',
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
+    this.modal?.hide();
   }
 }

@@ -144,7 +144,7 @@ src/
 - Una vez que el servidor esté en funcionamiento, abrí tu navegador y navegá a `http://localhost:4200/`.
 - La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
 - Para compilar el proyecto, ejecutá: `ng build`
-    - Puedes ver la versión en vivo en: `https://angular-2da-entrega.vercel.app/`
+- Puedes ver la versión en vivo en: `https://angular-2da-entrega.vercel.app/`
 
 ## 👩‍💻 Desarrollo
 <p>Hecho con 💻, 🧉 y un toque de magia por <a href="https://www.linkedin.com/in/cecilia-perdomo/" style="color: black; text-decoration: none;">Cecilia Perdomo</a>.</p>

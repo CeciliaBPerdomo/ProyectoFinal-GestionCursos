@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,7 +16,7 @@ import { Curso } from '../../../models/curso.model';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     MatFormFieldModule,
     MatInputModule,
@@ -26,41 +26,44 @@ import { Curso } from '../../../models/curso.model';
   templateUrl: './alta-curso.html',
   styleUrls: ['./alta-curso.css']
 })
-
-export class AltaCurso {
-  nuevoCurso: Curso = {
-    id: undefined,
-    nombre: '',
-    descripcion: '',
-    fechaInicio: new Date(),
-    duracion: 0
-  };
+export class AltaCurso implements OnInit {
+  cursoForm!: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private cursoService: CursoService,
     private router: Router,
     private snackBar: MatSnackBar
   ) { }
 
+  ngOnInit(): void {
+    this.cursoForm = this.fb.group({
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      fechaInicio: ['', Validators.required],
+      duracion: [null, [Validators.required, Validators.min(1)]]
+    });
+  }
+
   guardar(): void {
-    if (!this.nuevoCurso.nombre.trim()) {
-      this.snackBar.open('El nombre del curso es obligatorio', 'Cerrar', {
-        duration: 3000,
-        verticalPosition: 'top',
-        horizontalPosition: 'center',
-        panelClass: 'snackbar-error'
-      });
+    if (this.cursoForm.invalid) {
+      this.cursoForm.markAllAsTouched(); // muestra todos los errores
       return;
     }
 
-    this.cursoService.agregarCurso(this.nuevoCurso);
+    const nuevoCurso: Curso = this.cursoForm.value;
+    this.cursoService.agregarCurso(nuevoCurso);
     this.snackBar.open('Curso agregado correctamente ✅', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top',
       horizontalPosition: 'center',
       panelClass: 'snackbar-exito'
     });
-
     this.router.navigate(['/cursos-admin']);
+  }
+
+  campoInvalido(campo: string): boolean {
+    const control = this.cursoForm.get(campo);
+    return !!(control && control.invalid && control.touched);
   }
 }

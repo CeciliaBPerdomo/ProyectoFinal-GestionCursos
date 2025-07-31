@@ -30,3 +30,7 @@ p {
   padding: 20px;
   box-sizing: border-box;
 }
+
+.white-input .mat-form-field-flex {
+  background-color: white !important;
+}
