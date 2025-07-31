@@ -1,34 +1,23 @@
-# <img src="Angular.png" style="width: 3%"> Primera Entrega Angular <img src="Angular.png" style="width: 3%">
+![CeciliaPerdomo](image-3.png)
+
+# <img src="Angular.png" style="width: 3%"> Segunda entrega Angular <img src="Angular.png" style="width: 3%">
 **Creación de un proyecto frontend basado en `Angular` para gestionar los asistentes a una serie de cursos.**
 
-## 🖥️ Descripción General
-El objetivo de esta entrega es desarrollar un proyecto frontend utilizando `Angular CLI` que permita la gestión de asistentes a diversos cursos. 
+## 🖥️ Consigna
+Creación de un proyecto frontend basado en `Angular` para gestionar los asistentes a una serie de cursos.
 
-- El sistema debe contar con funcionalidades diferenciadas según el tipo de usuario: 
-    - Administrador y Usuario. 
-    - Cada uno tendrá acceso a diferentes secciones y funcionalidades específicas.
-
-## 🔌​ Requisitos Generales
-- Creación de un proyecto `Angular CLI`.
-- Creación de componentes de layout, incluyendo un navbar para el menú lateral y un toolbar para el título de la aplicación.
-- Componentes de la aplicación:
-    - Lista de Alumnos: Visualización de los alumnos inscritos en los cursos.
-    - ABM de Alumnos: Alta, Baja y Modificación de alumnos.
-- Uso de Formularios Reactivos para la creación y modificación de alumnos.
-- Estructuración de datos y lógica:
-    - Implementar la representación de los datos en listas.
-    - Tablas dinámicas con Angular Material, que tomen los datos desde arrays y funciones de TypeScript.
-
-## ​👥​ Roles de usuario
-- **Perfil Administrador**: El usuario con rol de administrador podrá realizar las siguientes acciones:
-    - **Listar**: Consultar los listados de alumnos, cursos e inscripciones.
-    - **Alta y baja**: Crear nuevos registros y eliminar alumnos, cursos e inscripciones.
-    - **Modificación**: Modificar los datos de los alumnos, los cursos y las inscripciones.
-    - **Gestión de usuarios**: Crear y modificar usuarios.
-- **Perfil Usuario**: El usuario con rol de usuario tendrá las siguientes funcionalidades:
-    - **Listar**: Consultar los listados de alumnos y cursos.
-    - **Gestión de inscripciones**: Agregar o eliminar inscripciones de alumnos en los cursos.
-    - **Restricciones**: No podrá modificar la información de los alumnos, los cursos ni los usuarios.
+### Requisitos:
+- Proyecto Angular publicado en GitHub.
+- Menú lateral con las opciones de:
+    - Alumnos
+    - Cursos
+    - Inscripciones
+- Feature Modules:
+    - Feature Module de Alumnos: Incluye componentes y servicios.
+    - Feature Module de Cursos: Incluye componentes y servicios.
+    - Feature Module de Inscripciones: Incluye componentes y servicios.
+- Rutas: Implementación de rutas para acceder a cada uno de los feature modules.
+- Operaciones de ABM (Altas, Bajas y Modificaciones) completas para cada opción, mostrando los datos utilizando el componente Table de Angular Material.
 
 ## ​💻​ Proyecto
 Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
@@ -49,7 +38,7 @@ npm install @angular/animations@20.1.0 --legacy-peer-deps
 
 ## Gestión de cursos 
 ### Home page
-![Home page](image-2.png)
+![Home](image-4.png)
 
 
 - Menú **Alumnos**
@@ -60,7 +49,7 @@ npm install @angular/animations@20.1.0 --legacy-peer-deps
     - Cursos
     - Inscripciones
 
-![Alumnos](image-1.png)
+![AlumnosAdmin](image-5.png)
 
 ### 📦 Estructura de componentes
 ```bash
@@ -104,12 +93,16 @@ src/
 
 ```
 
-### 📦 Models:
-- Interfaces o clases que definen la forma de los datos.
+### 📦 Models y services
+- **Models**: 
+    - Interfaces o clases que definen la forma de los datos.
+- **Services**:
+    - Son clases que encapsulan lógica relacionada con datos.
+    - Como no se utiliza base de datos aún, los services devuelven arrays simulados.
 
 #### 🧑‍🎓 Modelo: Alumno
 
-| Campo   | Tipo     | Descripción                        |
+| **Campo**   | **Tipo**     | **Descripción**                        |
 |---------|----------|------------------------------------|
 | id      | number   | Identificador único del alumno     |
 | nombre  | string   | Nombre completo del alumno         |
@@ -119,7 +112,7 @@ src/
 
 #### 📘 Modelo: Curso
 
-| Campo        | Tipo   | Descripción                                 |
+| **Campo**        | **Tipo**   | **Descripción**                                 |
 |--------------|--------|---------------------------------------------|
 | id           | number | Identificador único del curso               |
 | nombre       | string | Nombre del curso                            |
@@ -130,25 +123,28 @@ src/
 
 #### 📝 Modelo: Inscripción
 
-| Campo             | Tipo                       | Descripción                                         |
+| **Campo**             | **Tipo**                       | **Descripción**                                         |
 |-------------------|----------------------------|-----------------------------------------------------|
 | id                | number                     | Identificador único de la inscripción               |
 | alumnoId          | number                     | ID del alumno inscrito                              |
 | cursoId           | number                     | ID del curso al que se inscribe                     |
 | fechaInscripcion  | Date                       | Fecha en la que se realizó la inscripción           |
-| estado            | 'activa', 'cancelada', 'finalizada', 'sin inscripcion'| Estado actual de la inscripción       |
+| estado            | - activa <br> - cancelada <br> - finalizada <br> - sin inscripcion| Estado actual de la inscripción       |
 
 
-### 🛠 Services:
-- Son clases que encapsulan lógica relacionada con datos.
-- Como no se utiliza base de datos aún, los services devuelven arrays simulados.
+## 🛠️ Tecnologías utilizadas para el proyecto
+
+| 🛠️ Tecnologías Utilizadas |
+|----------------------------|
+| ![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![Material UI](https://img.shields.io/badge/Material--UI-007FFF?style=flat&logo=mui&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white) |
+
 
 ## ​​💣​ Servidor de desarrollo
 - Para iniciar un servidor de desarrollo local, ejecutá: `ng s`
 - Una vez que el servidor esté en funcionamiento, abrí tu navegador y navegá a `http://localhost:4200/`.
 - La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
 - Para compilar el proyecto, ejecutá: `ng build`
-    - Puedes ver la versión en vivo en: `angular-primera-entrega.vercel.app`
+    - Puedes ver la versión en vivo en: `https://angular-2da-entrega.vercel.app/`
 
 ## 👩‍💻 Desarrollo
 <p>Hecho con 💻, 🧉 y un toque de magia por <a href="https://www.linkedin.com/in/cecilia-perdomo/" style="color: black; text-decoration: none;">Cecilia Perdomo</a>.</p>

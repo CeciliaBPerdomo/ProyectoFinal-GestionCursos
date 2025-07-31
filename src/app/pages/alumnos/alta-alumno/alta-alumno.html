@@ -1,32 +1,40 @@
-<!-- alta-alumno.html -->
-<h2>Alta de Alumno</h2>
-<p>Formulario para dar de alta un nuevo alumno.</p>
+<div class="container mt-4">
+  <h2 class="mb-3 text-center text-md-start">Alta de Alumno</h2>
+  <p class="mb-4 text-center text-md-start">Formulario para dar de alta un nuevo alumno.</p>
 
-<div class="alta-alumno-form">
-  <form [formGroup]="alumnoForm" (ngSubmit)="onSubmit()" class="formulario-alta">
-    <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Nombre completo" formControlName="nombre" />
-    </mat-form-field>
+  <form [formGroup]="alumnoForm" (ngSubmit)="onSubmit()" class="row g-3">
 
-    <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Email</mat-label>
-      <input matInput type="email" placeholder="Email" formControlName="email" />
-    </mat-form-field>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre completo" formControlName="nombre" />
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Curso</mat-label>
-      <mat-select formControlName="cursoId">
-        <mat-option [value]="null">Sin curso</mat-option>
-        <mat-option *ngFor="let curso of cursos" [value]="curso.id">
-          {{ curso.nombre }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="Email" formControlName="email" />
+      </mat-form-field>
+    </div>
 
+    <div class="col-12">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Curso</mat-label>
+        <mat-select formControlName="cursoId">
+          <mat-option [value]="null">Sin curso</mat-option>
+          <mat-option *ngFor="let curso of cursos" [value]="curso.id">
+            {{ curso.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="alumnoForm.invalid">
-      Guardar Alumno
-    </button>
+    <div class="col-12 text-center text-md-end">
+      <button mat-raised-button color="primary" type="submit" [disabled]="alumnoForm.invalid">
+        Guardar Alumno
+      </button>
+    </div>
+
   </form>
 </div>
