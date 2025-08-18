@@ -12,14 +12,14 @@
     <button mat-button [matMenuTriggerFor]="alumnosMenu">Alumnos</button>
     <mat-menu #alumnosMenu="matMenu">
       <button mat-menu-item routerLink="/alumnos">Listado de alumnos</button>
-      <button mat-menu-item routerLink="/mis-cursos">Mis cursos</button>
+      <button mat-menu-item routerLink="/alumnos/mis-cursos">Mis cursos</button>
     </mat-menu>
 
     <button mat-button [matMenuTriggerFor]="adminMenu">Administrador</button>
     <mat-menu #adminMenu="matMenu">
-      <button mat-menu-item routerLink="/alumnos-admin">Alumnos</button>
-      <button mat-menu-item routerLink="/cursos-admin">Cursos</button>
-      <button mat-menu-item routerLink="/inscripciones-admin">Inscripciones</button>
+      <button mat-menu-item routerLink="/alumnos/admin">Alumnos</button>
+      <button mat-menu-item routerLink="/cursos/admin">Cursos</button>
+      <button mat-menu-item routerLink="/inscripciones/admin">Inscripciones</button>
     </mat-menu>
   </div>
 </mat-toolbar>

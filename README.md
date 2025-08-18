@@ -74,18 +74,26 @@ src/
 │   │       └── toolbar.ts /.html /.css
 │
 │   ├── pages/
+│   │   ├── home /
+│   │   │   └──  inicio.components.ts
 │   │   ├── alumnos/
 │   │   │   ├── lista-alumnos.ts / .html / .css
 │   │   │   ├── alta-alumno.ts / html / .css
-│   │   │   └── mis-cursos.ts / .html / .css
+│   │   │   ├── mis-cursos.ts / .html / .css
+│   │   │   ├── alumnos-routing.module.ts
+│   │   │   └── alumnos.module.ts
 │   │   │
 │   │   ├── cursos/
 │   │   │   ├── lista-cursos.ts / .html / .css
-│   │   │   └── alta-curso.ts /.html / .css
+│   │   │   ├── alta-curso.ts /.html / .css
+│   │   │   ├── cursos-routing.module.ts
+│   │   │   └── cursos.module.ts
 │   │   │
 │   │   ├── inscripciones/
 │   │   │   ├── listado-inscripciones.ts /.html /.css
-│   │   │   └── alta-inscripcion.ts / .html / .css
+│   │   │   ├── alta-inscripcion.ts / .html / .css
+│   │   │   ├── inscripciones-routing.module.ts
+│   │   │   └── inscripciones.module.ts
 │
 │   ├── services/
 │   │   ├── alumno.service.ts
@@ -141,6 +149,9 @@ src/
 | estado            | - activa <br> - cancelada <br> - finalizada <br> - sin inscripcion| Estado actual de la inscripción       |
 
 ## MockApi.io
+- La opción sin costo permite dos recursos.
+- https://github.com/mockapi-io/docs/wiki/Quick-start-guide
+
 ![MockApi](image-6.png)
 
 ## 🛠️ Tecnologías utilizadas para el proyecto
