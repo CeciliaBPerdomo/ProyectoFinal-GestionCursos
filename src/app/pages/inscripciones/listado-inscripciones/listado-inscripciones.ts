@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 // Material UI
 import { CommonModule } from '@angular/common';
@@ -19,6 +20,8 @@ import { Curso } from '../../../models/curso.model';
 
 import { AlumnoService } from '../../../services/alumno.service';
 import { Alumno } from '../../../models/alumno.model';
+
+
 
 declare var bootstrap: any;
 @Component({
@@ -62,15 +65,21 @@ export class ListadoInscripciones implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.alumnos = this.alumnoService.getAlumnos();
-    this.cursos = this.cursoService.getCursos();
-    this.cargarInscripciones();
+    forkJoin({
+      alumnos: this.alumnoService.getAlumnos(),
+      cursos: this.cursoService.getCursos()
+    }).subscribe(({ alumnos, cursos }) => {
+      this.alumnos = alumnos;
+      this.cursos = cursos;
+      this.cargarInscripciones(); 
+    });
   }
 
+
   cargarInscripciones(): void {
-    this.alumnos = this.alumnoService.getAlumnos();
-    this.cursos = this.cursoService.getCursos();
-    const todasInscripciones = this.inscripcionService.getInscripciones();
+    const todasInscripciones = this.inscripcionService.getInscripciones(); // array normal
+
+    // Detectar qué alumnos no tienen inscripciones
     const alumnosConInscripciones = new Set(todasInscripciones.map(i => i.alumnoId));
 
     const sinInscripcion: Inscripcion[] = this.alumnos
@@ -83,8 +92,10 @@ export class ListadoInscripciones implements OnInit {
         estado: 'sin' as any
       }));
 
+    // Combinar inscripciones existentes con los que no tienen
     this.inscripciones = [...todasInscripciones, ...sinInscripcion];
 
+    // Ordenar por prioridad de estado
     const ordenPrioridad: Record<string, number> = {
       'sin': 0,
       'cancelada': 1,

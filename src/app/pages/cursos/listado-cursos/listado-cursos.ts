@@ -52,7 +52,9 @@ export class ListadoCursos implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.cursos = this.cursoService.getCursos();
+     this.cursoService.getCursos().subscribe(cursos => {
+    this.cursos = cursos; // ahora es un array normal
+  });
   }
 
   editarCurso(curso: Curso): void {
@@ -61,20 +63,24 @@ export class ListadoCursos implements OnInit {
   }
 
   guardarCursoEditado(): void {
-    if (this.cursoEditandoId !== null) {
-      this.cursoService.actualizarCurso(this.cursoEditado as Curso);
-      this.cursos = [...this.cursoService.getCursos()];
-      this.cursoEditandoId = null;
-      this.cursoEditado = {};
+  if (this.cursoEditandoId !== null) {
+    this.cursoService.actualizarCurso(this.cursoEditado as Curso);
 
-      this.snackBar.open('Curso actualizado correctamente', 'Cerrar', {
-        duration: 3000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        panelClass: 'snackbar-exito'
-      });
-    }
+    this.cursoService.getCursos().subscribe(cursos => {
+      this.cursos = cursos; 
+    });
+
+    this.cursoEditandoId = null;
+    this.cursoEditado = {};
+
+    this.snackBar.open('Curso actualizado correctamente', 'Cerrar', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: 'snackbar-exito'
+    });
   }
+}
 
   cancelarEdicion(): void {
     this.cursoEditandoId = null;
@@ -101,9 +107,14 @@ export class ListadoCursos implements OnInit {
     this.cursoIdAEliminar = id;
     this.modal?.show();
   }
+
   eliminarCursoConfirmado(id: number): void {
     this.cursoService.eliminarCurso(id);
-    this.cursos = [...this.cursoService.getCursos()];
+    
+    this.cursoService.getCursos().subscribe(cursos => {
+    this.cursos = cursos; 
+  });
+
     this.snackBar.open('Curso eliminado 🗑️ correctamente', 'Cerrar', {
       duration: 3000,
       panelClass: 'snackbar-exito',

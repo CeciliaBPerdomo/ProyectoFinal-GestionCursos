@@ -1,6 +1,6 @@
 ![CeciliaPerdomo](image-3.png)
 
-# <img src="Angular.png" style="width: 3%"> Segunda entrega Angular <img src="Angular.png" style="width: 3%">
+# <img src="Angular.png" style="width: 3%"> Tercera entrega Angular <img src="Angular.png" style="width: 3%">
 **Creación de un proyecto frontend basado en `Angular` para gestionar los asistentes a una serie de cursos.**
 
 ## 🖥️ Consigna
@@ -18,6 +18,15 @@ Creación de un proyecto frontend basado en `Angular` para gestionar los asisten
     - Feature Module de Inscripciones: Incluye componentes y servicios.
 - Rutas: Implementación de rutas para acceder a cada uno de los feature modules.
 - Operaciones de ABM (Altas, Bajas y Modificaciones) completas para cada opción, mostrando los datos utilizando el componente Table de Angular Material.
+
+- El sistema deberá contener dos perfiles de usuario:
+    - **Perfil Administrador**:
+        - Podrá listar, realizar altas, bajas y modificaciones de los alumnos, cursos e inscripciones.
+        - Tendrá la capacidad de crear y modificar usuarios.
+    - **Perfil Usuario**:
+        - Podrá listar los alumnos y los cursos.
+        - Podrá agregar o eliminar inscripciones de alumnos a los cursos.
+        - No podrá realizar ninguna operación sobre los usuarios.
 
 ## ​💻​ Proyecto
 Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.

@@ -2,6 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { Curso } from '../models/curso.model';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,13 +33,13 @@ export class CursoService {
     }
   ];
 
-  getCursos(): Curso[] {
-    return this.cursos;
-  }
+getCursos(): Observable<Curso[]> {
+  return of(this.cursos);
+}
 
-  getCursoPorId(id: number): Curso | undefined {
-    return this.cursos.find(curso => curso.id === id);
-  }
+getCursoPorId(id: number): Observable<Curso | undefined> {
+  return of(this.cursos.find(curso => curso.id === id));
+}
 
   agregarCurso(curso: Curso): void {
     curso.id = this.generarNuevoId();

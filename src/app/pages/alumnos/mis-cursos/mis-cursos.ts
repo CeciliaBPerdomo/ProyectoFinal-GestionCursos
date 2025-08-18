@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { forkJoin } from 'rxjs';
 
 // Models y servicios
 import { Curso } from '../../../models/curso.model';
@@ -31,7 +32,7 @@ import { MatCardModule } from '@angular/material/card';
   styleUrls: ['./mis-cursos.css']
 })
 
-export class MisCursos {
+export class MisCursos implements OnInit {
   alumno: Alumno | undefined;
   cursosDelAlumno: CursoConEstado[] = [];
 
@@ -42,28 +43,33 @@ export class MisCursos {
   ) { }
 
   ngOnInit(): void {
-    const idAlumno = 1; 
-    this.alumno = this.alumnoService.getAlumnoPorId(idAlumno);
+    const idAlumno = 1;
 
-    const todosCursos = this.cursoService.getCursos();
-    const inscripciones = this.inscripcionService.getInscripciones().filter(
-      insc => insc.alumnoId === idAlumno
-    );
+    forkJoin({
+      alumno: this.alumnoService.getAlumnoPorId(idAlumno),
+      cursos: this.cursoService.getCursos()
+    }).subscribe(({ alumno, cursos }) => {
+      this.alumno = alumno;
+      const todosCursos = cursos;
 
-    // Cursos con inscripción (con estado)
-    const cursosConInscripcion: CursoConEstado[] = inscripciones.map(insc => {
-      const curso = todosCursos.find(c => c.id === insc.cursoId);
-      return curso ? { ...curso, estado: insc.estado } : null;
-    }).filter((curso): curso is CursoConEstado => curso !== null);
+      const inscripciones = this.inscripcionService.getInscripciones().filter(
+        insc => insc.alumnoId === idAlumno
+      );
 
-    // Curso asignado directamente al alumno (sin inscripción)
-    const cursoAsignado = todosCursos.find(c => c.id === this.alumno?.cursoId);
+      // Cursos con inscripción (con estado)
+      const cursosConInscripcion: CursoConEstado[] = inscripciones.map(insc => {
+        const curso = todosCursos.find(c => c.id === insc.cursoId);
+        return curso ? { ...curso, estado: insc.estado } : null;
+      }).filter((curso): curso is CursoConEstado => curso !== null);
 
-    // Si el curso asignado no está en cursosConInscripcion, lo agregamos con estado 'sin inscripcion'
-    if (cursoAsignado && !cursosConInscripcion.some(c => c.id === cursoAsignado.id)) {
-      cursosConInscripcion.push({ ...cursoAsignado, estado: 'sin inscripcion' });
-    }
+      // Curso asignado directamente al alumno (sin inscripción)
+      const cursoAsignado = todosCursos.find(c => c.id === alumno?.cursoId);
 
-    this.cursosDelAlumno = cursosConInscripcion;
+      if (cursoAsignado && !cursosConInscripcion.some(c => c.id === cursoAsignado.id)) {
+        cursosConInscripcion.push({ ...cursoAsignado, estado: 'sin inscripcion' });
+      }
+
+      this.cursosDelAlumno = cursosConInscripcion;
+    });
   }
 }

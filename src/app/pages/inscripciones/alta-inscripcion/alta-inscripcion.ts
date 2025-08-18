@@ -47,14 +47,20 @@ export class AltaInscripcionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.cursos = this.cursoService.getCursos();
-    this.alumnos = this.alumnoService.getAlumnos();
-
     this.inscripcionForm = this.fb.group({
       cursoId: [null, [Validators.required]],
       alumnoId: [null, [Validators.required]],
       fechaInscripcion: [new Date().toISOString().substring(0, 10), Validators.required],
       estado: ['activa', Validators.required]
+    });
+
+    // Obtener cursos y alumnos desde los servicios
+    this.cursoService.getCursos().subscribe(cursos => {
+      this.cursos = cursos;
+    });
+
+    this.alumnoService.getAlumnos().subscribe(alumnos => {
+      this.alumnos = alumnos;
     });
   }
 

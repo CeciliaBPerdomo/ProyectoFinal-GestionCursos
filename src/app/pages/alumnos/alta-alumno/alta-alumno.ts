@@ -50,21 +50,35 @@ export class AltaAlumno {
       email: ['', [Validators.required, Validators.email]],
       cursoId: [null]
     });
-    this.cursos = this.cursoService.getCursos();
+    this.cursoService.getCursos().subscribe(cursos => {
+      this.cursos = cursos;
+    });
   }
 
   onSubmit() {
     if (this.alumnoForm.valid) {
-      this.alumnoService.agregarAlumno(this.alumnoForm.value);
-      this.snackBar.open('Alumno agregado con éxito 🎉', 'Cerrar', {
-        duration: 3000,
-        panelClass: ['snackbar-exito'],
-        horizontalPosition: 'center',
-        verticalPosition: 'top'
-      });
+      this.alumnoService.agregarAlumno(this.alumnoForm.value).subscribe({
+        next: (alumno) => {
+          this.snackBar.open('Alumno agregado con éxito 🎉', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['snackbar-exito'],
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+          });
 
-      this.alumnoForm.reset();
-      this.router.navigateByUrl('/alumnos-admin');
+          this.alumnoForm.reset();
+          this.router.navigateByUrl('/alumnos-admin');
+        },
+        error: (err) => {
+          console.error('Error al agregar alumno:', err);
+          this.snackBar.open('Error al agregar alumno ❌', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['snackbar-error'],
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+          });
+        }
+      });
     }
   }
 }
