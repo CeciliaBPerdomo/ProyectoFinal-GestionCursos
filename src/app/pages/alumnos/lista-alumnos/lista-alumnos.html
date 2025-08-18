@@ -51,14 +51,14 @@
         <td mat-cell *matCellDef="let alumno" class="text-center align-middle">
           <ng-container *ngIf="alumnoEditandoId !== alumno.id; else editarCurso">
             <div class="fw-semibold">{{ getCursoNombre(alumno.cursoId) }}</div>
-            <div class="badge mt-1"
-              [ngClass]="{
-                'bg-success': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'activa',
-                'bg-danger': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'cancelada',
-                'bg-secondary': getEstadoInscripcion(alumno.id, alumno.cursoId) === 'Sin inscripción'
-              }">
-              {{ getEstadoInscripcion(alumno.id, alumno.cursoId) }}
+            <div class="badge mt-1" [ngClass]="{
+    'bg-success': getEstadoInscripcion(alumno, alumno.cursoId) === 'activa',
+    'bg-danger': getEstadoInscripcion(alumno, alumno.cursoId) === 'cancelada',
+    'bg-secondary': getEstadoInscripcion(alumno, alumno.cursoId) === 'Sin inscripción'
+  }">
+              {{ getEstadoInscripcion(alumno, alumno.cursoId) }}
             </div>
+
           </ng-container>
 
           <ng-template #editarCurso>

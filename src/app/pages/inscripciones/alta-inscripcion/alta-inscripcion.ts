@@ -70,24 +70,36 @@ export class AltaInscripcionComponent implements OnInit {
       return;
     }
 
-    const nuevaId = Math.max(...this.inscripcionService.getInscripciones().map(i => i.id), 0) + 1;
+    const alumnoId = Number(this.inscripcionForm.value.alumnoId);
+    const cursoId = Number(this.inscripcionForm.value.cursoId);
+    const estado = this.inscripcionForm.value.estado as EstadoInscripcion;
+    const fecha = new Date(this.inscripcionForm.value.fechaInscripcion);
 
-    const nuevaInscripcion: Inscripcion = {
-      id: nuevaId,
-      alumnoId: Number(this.inscripcionForm.value.alumnoId),
-      cursoId: Number(this.inscripcionForm.value.cursoId),
-      fechaInscripcion: new Date(this.inscripcionForm.value.fechaInscripcion),
-      estado: this.inscripcionForm.value.estado
+    // Buscar el alumno seleccionado
+    const alumno = this.alumnos.find(a => a.id === alumnoId);
+    if (!alumno) return;
+
+    // Crear la nueva inscripción para el alumno
+    const nuevaInscripcion = {
+      cursoId,
+      estado,
+      fechaInscripcion: fecha
     };
 
-    this.inscripcionService.agregarInscripcion(nuevaInscripcion);
+    // Inicializar el array de inscripciones si no existe
+    alumno.inscripciones = alumno.inscripciones || [];
+    alumno.inscripciones.push(nuevaInscripcion);
 
-    this.snackBar.open('Inscripción creada con éxito 🎉', 'Cerrar', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'top'
+    // Actualizar el alumno con la nueva inscripción
+    this.alumnoService.actualizarAlumno(alumno).subscribe(() => {
+      this.snackBar.open('Inscripción creada con éxito 🎉', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      });
+      this.router.navigate(['/inscripciones-admin']);
     });
-
-    this.router.navigate(['/inscripciones-admin']);
   }
+
+
 }

@@ -8,3 +8,4 @@ export interface Inscripcion {
   fechaInscripcion: Date;
   estado: EstadoInscripcion;
 }
+

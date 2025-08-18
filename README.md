@@ -140,6 +140,8 @@ src/
 | fechaInscripcion  | Date                       | Fecha en la que se realizó la inscripción           |
 | estado            | - activa <br> - cancelada <br> - finalizada <br> - sin inscripcion| Estado actual de la inscripción       |
 
+## MockApi.io
+![MockApi](image-6.png)
 
 ## 🛠️ Tecnologías utilizadas para el proyecto
 

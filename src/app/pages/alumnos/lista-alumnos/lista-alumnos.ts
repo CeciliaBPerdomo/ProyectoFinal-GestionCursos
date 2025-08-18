@@ -58,7 +58,7 @@ export class ListaAlumnos implements OnInit, AfterViewInit {
     private inscripcionService: InscripcionService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const modoRuta = this.route.snapshot.data['modo'];
@@ -83,10 +83,10 @@ export class ListaAlumnos implements OnInit, AfterViewInit {
     return curso ? curso.nombre : 'Sin curso';
   }
 
-  getEstadoInscripcion(alumnoId: number, cursoId: number): string {
-    const inscripcion = this.inscripcionService
-      .getInscripciones()
-      .find(i => i.alumnoId === alumnoId && i.cursoId === cursoId);
+  getEstadoInscripcion(alumno: Alumno, cursoId: number): string {
+    if (!alumno.inscripciones) return 'Sin inscripción';
+
+    const inscripcion = alumno.inscripciones.find(i => i.cursoId === cursoId);
     return inscripcion ? inscripcion.estado : 'Sin inscripción';
   }
 

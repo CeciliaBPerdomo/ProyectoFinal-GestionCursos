@@ -5,7 +5,7 @@ import { Observable, of, catchError, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root' // hace que el servicio esté disponible globalmente
+  providedIn: 'root'
 })
 
 export class AlumnoService {

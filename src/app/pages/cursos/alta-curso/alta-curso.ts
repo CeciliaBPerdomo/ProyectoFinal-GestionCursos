@@ -52,14 +52,27 @@ export class AltaCurso implements OnInit {
     }
 
     const nuevoCurso: Curso = this.cursoForm.value;
-    this.cursoService.agregarCurso(nuevoCurso);
-    this.snackBar.open('Curso agregado correctamente ✅', 'Cerrar', {
-      duration: 3000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
-      panelClass: 'snackbar-exito'
+
+    this.cursoService.agregarCurso(nuevoCurso).subscribe({
+      next: (cursoAgregado) => {
+        this.snackBar.open('Curso agregado correctamente ✅', 'Cerrar', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          panelClass: 'snackbar-exito'
+        });
+        this.router.navigate(['/cursos-admin']);
+      },
+      error: (err) => {
+        console.error('Error al agregar curso', err);
+        this.snackBar.open('Error al agregar el curso ❌', 'Cerrar', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          panelClass: 'snackbar-error'
+        });
+      }
     });
-    this.router.navigate(['/cursos-admin']);
   }
 
   campoInvalido(campo: string): boolean {

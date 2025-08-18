@@ -1,70 +1,42 @@
 // src/app/services/curso.service.ts
 
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Curso } from '../models/curso.model';
 import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CursoService {
-  private cursos: Curso[] = [
-    {
-      id: 1,
-      nombre: 'Angular Básico',
-      descripcion: 'Curso introductorio de Angular para principiantes.',
-      fechaInicio: new Date('2025-08-01'),
-      duracion: 40
-    },
-    {
-      id: 2,
-      nombre: 'TypeScript Avanzado',
-      descripcion: 'Profundización en el uso de TypeScript con Angular.',
-      fechaInicio: new Date('2025-09-10'),
-      duracion: 30
-    },
-    {
-      id: 3,
-      nombre: 'Diseño UX/UI',
-      descripcion: 'Curso sobre experiencia de usuario e interfaces modernas.',
-      fechaInicio: new Date('2025-10-15'),
-      duracion: 20
-    }
-  ];
+  private apiUrl = 'https://68a35265c5a31eb7bb1fe392.mockapi.io/api/cursos'
+  constructor(private http: HttpClient) { }
 
-getCursos(): Observable<Curso[]> {
-  return of(this.cursos);
-}
-
-getCursoPorId(id: number): Observable<Curso | undefined> {
-  return of(this.cursos.find(curso => curso.id === id));
-}
-
-  agregarCurso(curso: Curso): void {
-    curso.id = this.generarNuevoId();
-    this.cursos.push(curso);
+  getCursos(): Observable<Curso[]> {
+    return this.http.get<Curso[]>(this.apiUrl);
   }
 
-  private generarNuevoId(): number {
-  const ids = this.cursos
-    .map(c => c.id)
-    .filter((id): id is number => id !== undefined); // filtramos undefined
-
-  return ids.length > 0
-    ? Math.max(...ids) + 1
-    : 1;
-}
-
-
-  actualizarCurso(cursoActualizado: Curso): void {
-    const index = this.cursos.findIndex(c => c.id === cursoActualizado.id);
-    if (index !== -1) {
-      this.cursos[index] = cursoActualizado;
-    }
+  getCursoPorId(id: number): Observable<Curso | undefined> {
+    return this.http.get<Curso>(`${this.apiUrl}/${id}`).pipe(
+      catchError(err => {
+        console.error('Error al traer curso', err);
+        return of(undefined);
+      })
+    );
   }
 
-  eliminarCurso(id: number): void {
-    this.cursos = this.cursos.filter(curso => curso.id !== id);
+
+  agregarCurso(curso: Curso): Observable<Curso> {
+    return this.http.post<Curso>(this.apiUrl, curso);
+  }
+
+  actualizarCurso(curso: Curso): Observable<Curso> {
+    return this.http.put<Curso>(`${this.apiUrl}/${curso.id}`, curso);
+  }
+
+  eliminarCurso(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

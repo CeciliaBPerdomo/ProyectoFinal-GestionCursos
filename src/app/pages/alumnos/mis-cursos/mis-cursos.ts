@@ -49,27 +49,25 @@ export class MisCursos implements OnInit {
       alumno: this.alumnoService.getAlumnoPorId(idAlumno),
       cursos: this.cursoService.getCursos()
     }).subscribe(({ alumno, cursos }) => {
+      if (!alumno) return;
       this.alumno = alumno;
-      const todosCursos = cursos;
 
-      const inscripciones = this.inscripcionService.getInscripciones().filter(
-        insc => insc.alumnoId === idAlumno
-      );
+      // Inscripciones del alumno
+      const inscripciones = alumno.inscripciones || [];
 
-      // Cursos con inscripción (con estado)
-      const cursosConInscripcion: CursoConEstado[] = inscripciones.map(insc => {
-        const curso = todosCursos.find(c => c.id === insc.cursoId);
+      // Cursos con estado según inscripciones
+      const cursosConEstado: CursoConEstado[] = inscripciones.map(insc => {
+        const curso = cursos.find(c => c.id === insc.cursoId);
         return curso ? { ...curso, estado: insc.estado } : null;
       }).filter((curso): curso is CursoConEstado => curso !== null);
 
-      // Curso asignado directamente al alumno (sin inscripción)
-      const cursoAsignado = todosCursos.find(c => c.id === alumno?.cursoId);
-
-      if (cursoAsignado && !cursosConInscripcion.some(c => c.id === cursoAsignado.id)) {
-        cursosConInscripcion.push({ ...cursoAsignado, estado: 'sin inscripcion' });
+      // Agregar curso asignado directamente al alumno (sin inscripción)
+      const cursoAsignado = cursos.find(c => c.id === alumno.cursoId);
+      if (cursoAsignado && !cursosConEstado.some(c => c.id === cursoAsignado.id)) {
+        cursosConEstado.push({ ...cursoAsignado, estado: 'sin inscripcion' });
       }
 
-      this.cursosDelAlumno = cursosConInscripcion;
+      this.cursosDelAlumno = cursosConEstado;
     });
   }
 }
