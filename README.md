@@ -48,7 +48,7 @@ npm install @angular/animations@20.1.0 --legacy-peer-deps
 ## Gestión de cursos 
 ### Home page
 ![Home](image-4.png)
-
+![Home](image-7.png)
 
 - Menú **Alumnos**
     - Listado de alumnos 
