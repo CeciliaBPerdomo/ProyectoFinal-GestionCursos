@@ -20,12 +20,12 @@ Creación de un proyecto frontend basado en `Angular` para gestionar los asisten
 - Rutas: Implementación de rutas para acceder a cada uno de los feature modules.
 - Operaciones de ABM (Altas, Bajas y Modificaciones) completas para cada opción, mostrando los datos utilizando el componente Table de Angular Material.
 
-- **Objetivos**
-    - Dominar los conceptos iniciales, intermedios y avanzados para realizar un desarrollo basado en Angular y TypeScript.
-    - Comprender el concepto de componentes y servicios para su reutilización en otros proyectos.
-    -   Comprender el concepto de módulos, lazy loading, rutas y la organización del proyecto en módulos core, shared y feature.
-    - Integrar el patrón de estado global Redux y comprender la importancia de su uso utilizando la librería NgRx.
-    - Realizar test unitarios del proyecto frontend.
+### **Objetivos**
+- Dominar los conceptos iniciales, intermedios y avanzados para realizar un desarrollo basado en Angular y TypeScript.
+- Comprender el concepto de componentes y servicios para su reutilización en otros proyectos.
+-   Comprender el concepto de módulos, lazy loading, rutas y la organización del proyecto en módulos core, shared y feature.
+- Integrar el patrón de estado global Redux y comprender la importancia de su uso utilizando la librería NgRx.
+- Realizar test unitarios del proyecto frontend.
 
 - El sistema deberá contener dos perfiles de usuario:
     - **Perfil Administrador**:
@@ -36,24 +36,24 @@ Creación de un proyecto frontend basado en `Angular` para gestionar los asisten
         - Podrá agregar o eliminar inscripciones de alumnos a los cursos.
         - No podrá realizar ninguna operación sobre los usuarios.
 
-- **Requisitos Base**
+### **Requisitos Base**
 Los siguientes requisitos serán evaluados para aprobar el proyecto:
 
-- Componente de Login:
-    - El login se mostrará al inicio de la aplicación o cuando se intente acceder a cualquier ruta sin un usuario logueado.
-- Gestión de Perfiles:
-    - Los administradores tendrán acceso a todas las opciones del menú.
-    - Los usuarios comunes podrán listar alumnos y cursos, pero no tendrán acceso a la opción de "Usuarios".
-- Funcionalidad por Perfil:
-    - El perfil usuario podrá listar los alumnos y cursos.
-    - Los usuarios comunes podrán inscribir y desinscribir alumnos en los cursos.
+- **FrontEnd**:
+    - Componente de Login:
+        - El login se mostrará al inicio de la aplicación o cuando se intente acceder a cualquier ruta sin un usuario logueado.
+    - Gestión de Perfiles:
+        - Los administradores tendrán acceso a todas las opciones del menú.
+        - Los usuarios comunes podrán listar alumnos y cursos, pero no tendrán acceso a la opción de "Usuarios".
+    - Funcionalidad por Perfil:
+        - El perfil usuario podrá listar los alumnos y cursos.
+        - Los usuarios comunes podrán inscribir y desinscribir alumnos en los cursos.
 - **Backend**:
     - Se podrá utilizar una cuenta en mockapi.io (u otra alternativa) para gestionar los recursos:
         - Usuarios: Contienen los campos de email, password, nombre, dirección, teléfono y perfil.
         - Alumnos: Contienen los campos de nombre y perfil (desarrollador, IT, usuario final, etc.).
         - Curso: Contienen los campos de nombre, cantidad de horas, cantidad de clases y nombre del profesor asignado.
         - Inscripciones: Contienen el ID del alumno, ID del curso inscrito, fecha de inscripción y el ID del usuario que realizó la inscripción.
-
 
 ## ​💻​ Proyecto
 Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
@@ -102,10 +102,9 @@ npm install @angular/animations@20.1.0 --legacy-peer-deps
 
 ![MockApi.io](image-9.png)
 
-
 ## 🛠️ Tecnologías utilizadas para el proyecto
 
-| 🛠️ Tecnologías Utilizadas |
+| 🛠️  |
 |----------------------------|
 | ![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![Material UI](https://img.shields.io/badge/Material--UI-007FFF?style=flat&logo=mui&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white) ![MockAPI](https://img.shields.io/badge/MockAPI-00CFFF?style=flat&logo=mockapi&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)  |
 
