@@ -20,6 +20,13 @@ Creación de un proyecto frontend basado en `Angular` para gestionar los asisten
 - Rutas: Implementación de rutas para acceder a cada uno de los feature modules.
 - Operaciones de ABM (Altas, Bajas y Modificaciones) completas para cada opción, mostrando los datos utilizando el componente Table de Angular Material.
 
+- **Objetivos**
+    - Dominar los conceptos iniciales, intermedios y avanzados para realizar un desarrollo basado en Angular y TypeScript.
+    - Comprender el concepto de componentes y servicios para su reutilización en otros proyectos.
+    -   Comprender el concepto de módulos, lazy loading, rutas y la organización del proyecto en módulos core, shared y feature.
+    - Integrar el patrón de estado global Redux y comprender la importancia de su uso utilizando la librería NgRx.
+    - Realizar test unitarios del proyecto frontend.
+
 - El sistema deberá contener dos perfiles de usuario:
     - **Perfil Administrador**:
         - Podrá listar, realizar altas, bajas y modificaciones de los alumnos, cursos e inscripciones.
@@ -28,6 +35,25 @@ Creación de un proyecto frontend basado en `Angular` para gestionar los asisten
         - Podrá listar los alumnos y los cursos.
         - Podrá agregar o eliminar inscripciones de alumnos a los cursos.
         - No podrá realizar ninguna operación sobre los usuarios.
+
+- **Requisitos Base**
+Los siguientes requisitos serán evaluados para aprobar el proyecto:
+
+- Componente de Login:
+    - El login se mostrará al inicio de la aplicación o cuando se intente acceder a cualquier ruta sin un usuario logueado.
+- Gestión de Perfiles:
+    - Los administradores tendrán acceso a todas las opciones del menú.
+    - Los usuarios comunes podrán listar alumnos y cursos, pero no tendrán acceso a la opción de "Usuarios".
+- Funcionalidad por Perfil:
+    - El perfil usuario podrá listar los alumnos y cursos.
+    - Los usuarios comunes podrán inscribir y desinscribir alumnos en los cursos.
+- **Backend**:
+    - Se podrá utilizar una cuenta en mockapi.io (u otra alternativa) para gestionar los recursos:
+        - Usuarios: Contienen los campos de email, password, nombre, dirección, teléfono y perfil.
+        - Alumnos: Contienen los campos de nombre y perfil (desarrollador, IT, usuario final, etc.).
+        - Curso: Contienen los campos de nombre, cantidad de horas, cantidad de clases y nombre del profesor asignado.
+        - Inscripciones: Contienen el ID del alumno, ID del curso inscrito, fecha de inscripción y el ID del usuario que realizó la inscripción.
+
 
 ## ​💻​ Proyecto
 Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
@@ -61,56 +87,6 @@ npm install @angular/animations@20.1.0 --legacy-peer-deps
 
 ![AlumnosAdmin](image-5.png)
 
-### 📦 Estructura de componentes
-```bash
-src/
-├── app/
-│   ├── app.ts                      # componente raíz
-│   ├── app.routes.ts               # rutas principales
-│
-│   ├── layout/
-│   │   ├── navbar/
-│   │   │   └── navbar.ts / .html / .css
-│   │   └── toolbar/
-│   │       └── toolbar.ts /.html /.css
-│
-│   ├── pages/
-│   │   ├── home /
-│   │   │   └──  inicio.components.ts
-│   │   ├── alumnos/
-│   │   │   ├── lista-alumnos.ts / .html / .css
-│   │   │   ├── alta-alumno.ts / html / .css
-│   │   │   ├── mis-cursos.ts / .html / .css
-│   │   │   ├── alumnos-routing.module.ts
-│   │   │   └── alumnos.module.ts
-│   │   │
-│   │   ├── cursos/
-│   │   │   ├── lista-cursos.ts / .html / .css
-│   │   │   ├── alta-curso.ts /.html / .css
-│   │   │   ├── cursos-routing.module.ts
-│   │   │   └── cursos.module.ts
-│   │   │
-│   │   ├── inscripciones/
-│   │   │   ├── listado-inscripciones.ts /.html /.css
-│   │   │   ├── alta-inscripcion.ts / .html / .css
-│   │   │   ├── inscripciones-routing.module.ts
-│   │   │   └── inscripciones.module.ts
-│
-│   ├── services/
-│   │   ├── alumno.service.ts
-│   │   ├── curso.service.ts
-│   │   └── inscripcion.service.ts
-│
-│   ├── models/
-│   │   ├── alumno.model.ts
-│   │   ├── curso.model.ts
-│   │   └── inscripcion.model.ts
-│
-│   └── shared/
-│       └── material.ts             # módulo compartido Angular Material
-
-```
-
 ### 📦 Models y services
 - **Models**: 
     - Interfaces o clases que definen la forma de los datos.
@@ -118,42 +94,14 @@ src/
     - Son clases que encapsulan lógica relacionada con datos.
     - Como no se utiliza base de datos aún, los services devuelven arrays simulados.
 
-#### 🧑‍🎓 Modelo: Alumno
-
-| **Campo**   | **Tipo**     | **Descripción**                        |
-|---------|----------|------------------------------------|
-| id      | number   | Identificador único del alumno     |
-| nombre  | string   | Nombre completo del alumno         |
-| email   | string   | Correo electrónico del alumno      |
-| cursoId | number   | ID del curso al que está inscrito  |
-
-
-#### 📘 Modelo: Curso
-
-| **Campo**        | **Tipo**   | **Descripción**                                 |
-|--------------|--------|---------------------------------------------|
-| id           | number | Identificador único del curso               |
-| nombre       | string | Nombre del curso                            |
-| descripcion  | string | Detalle breve del contenido del curso       |
-| fechaInicio  | Date   | Fecha de inicio del curso                   |
-| duracion     | number | Duración del curso (en horas)        |
-
-
-#### 📝 Modelo: Inscripción
-
-| **Campo**             | **Tipo**                       | **Descripción**                                         |
-|-------------------|----------------------------|-----------------------------------------------------|
-| id                | number                     | Identificador único de la inscripción               |
-| alumnoId          | number                     | ID del alumno inscrito                              |
-| cursoId           | number                     | ID del curso al que se inscribe                     |
-| fechaInscripcion  | Date                       | Fecha en la que se realizó la inscripción           |
-| estado            | - activa <br> - cancelada <br> - finalizada <br> - sin inscripcion| Estado actual de la inscripción       |
+![ModeladoBaseDatos](image-8.png)
 
 ## MockApi.io
-- La opción sin costo permite dos recursos.
+- **MockAPI** es un servicio online que te permite crear APIs falsas (mock APIs) de manera rápida y sencilla.
 - https://github.com/mockapi-io/docs/wiki/Quick-start-guide
 
-![MockApi](image-6.png)
+![MockApi.io](image-9.png)
+
 
 ## 🛠️ Tecnologías utilizadas para el proyecto
 
