@@ -19,6 +19,11 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./pages/inscripciones/inscripciones.module').then(m => m.InscripcionesModule)
   },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./pages/admin/admin.module').then(m => m.AdminModule) 
+  },
   { path: '**', redirectTo: '/' }
 ];
 
