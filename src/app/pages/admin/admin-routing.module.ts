@@ -7,7 +7,7 @@ const routes: Routes = [
     { path: 'registro', loadComponent: () => import('./registro/admin').then(m => m.AdminComponent) },
     { path: 'alumnos', loadComponent: () => import('./listado-alumnos/listado-alumnos').then(m => m.ListadoAlumnos) },
     { path: 'profesores', loadComponent: () => import('./listado-profesores/listado-profesores').then(m => m.ListadoProfesores) },
-
+    { path: 'administradores', loadComponent: () => import('./listado-administradores/listado-administradores').then(m => m.ListadoAdministradores) }
 ];
 
 @NgModule({

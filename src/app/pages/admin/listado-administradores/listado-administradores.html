@@ -1,0 +1,74 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Listado de Administradores</h2>
+    <button mat-button color="primary" (click)="refrescar()">
+      <mat-icon>refresh</mat-icon> Actualizar
+    </button>
+  </div>
+
+  <!-- Loading spinner -->
+  <div *ngIf="loading$ | async" class="text-center py-4">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="mt-2">Cargando administradores...</p>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error$ | async as error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Table -->
+  <table *ngIf="!(loading$ | async)" mat-table [dataSource]="(administradores$ | async) || []" class="mat-elevation-z8 w-100">
+
+    <!-- Nombre -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let administrador"> {{ administrador.nombre }} </td>
+    </ng-container>
+
+    <!-- Email -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let administrador"> {{ administrador.email }} </td>
+    </ng-container>
+
+    <!-- Teléfono -->
+    <ng-container matColumnDef="telefono">
+      <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+      <td mat-cell *matCellDef="let administrador"> {{ administrador.telefono }} </td>
+    </ng-container>
+
+    <!-- Dirección -->
+    <ng-container matColumnDef="direccion">
+      <th mat-header-cell *matHeaderCellDef> Dirección </th>
+      <td mat-cell *matCellDef="let administrador"> {{ administrador.direccion }} </td>
+    </ng-container>
+
+    <!-- Perfil -->
+    <ng-container matColumnDef="perfil">
+      <th mat-header-cell *matHeaderCellDef> Perfil </th>
+      <td mat-cell *matCellDef="let administrador"> {{ administrador.perfil }} </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let administrador">
+        <button mat-button color="warn" (click)="eliminarAdministrador(administrador.usuarioId!)">
+          <mat-icon>delete</mat-icon> Eliminar
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- Empty state -->
+  <div *ngIf="(administradores$ | async)?.length === 0 && !(loading$ | async) && !(error$ | async)" 
+       class="text-center py-5">
+    <mat-icon class="empty-icon">admin_panel_settings</mat-icon>
+    <h4>No hay administradores registrados</h4>
+    <p>No se encontraron administradores en el sistema.</p>
+  </div>
+</div>

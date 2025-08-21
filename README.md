@@ -89,6 +89,8 @@ npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 
 ![ModeladoBaseDatos](image-8.png)
 
+> **Nota**: Para el curso solo armé tres tablas: `usuarios`, `cursos` e `inscripciones`. Igual, pensando en que el sistema pueda crecer, habría sido mejor sumar otras dos tablas: `perfil` y `rol`, así sería más fácil agregar nuevos perfiles o roles en un futuro en caso de ser necesario. 
+
 ## MockApi.io
 - **MockAPI** es un servicio online que te permite crear APIs falsas (mock APIs) de manera rápida y sencilla.
 - https://github.com/mockapi-io/docs/wiki/Quick-start-guide

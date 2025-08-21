@@ -17,6 +17,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './registro/admin';
 import { ListadoAlumnos } from './listado-alumnos/listado-alumnos';
 import { ListadoProfesores } from './listado-profesores/listado-profesores';
+import { ListadoAdministradores } from './listado-administradores/listado-administradores';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { ListadoProfesores } from './listado-profesores/listado-profesores';
     AdminComponent,          
     ListadoAlumnos,
     ListadoProfesores,
+    ListadoAdministradores,
   ]
 })
 
