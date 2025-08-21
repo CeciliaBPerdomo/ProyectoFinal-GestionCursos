@@ -7,19 +7,6 @@
 ## 🖥️ Consigna
 Creación de un proyecto frontend basado en `Angular` para gestionar los asistentes a una serie de cursos.
 
-### Requisitos:
-- Proyecto Angular publicado en GitHub.
-- Menú lateral con las opciones de:
-    - Alumnos
-    - Cursos
-    - Inscripciones
-- Feature Modules:
-    - Feature Module de Alumnos: Incluye componentes y servicios.
-    - Feature Module de Cursos: Incluye componentes y servicios.
-    - Feature Module de Inscripciones: Incluye componentes y servicios.
-- Rutas: Implementación de rutas para acceder a cada uno de los feature modules.
-- Operaciones de ABM (Altas, Bajas y Modificaciones) completas para cada opción, mostrando los datos utilizando el componente Table de Angular Material.
-
 ### **Objetivos**
 - Dominar los conceptos iniciales, intermedios y avanzados para realizar un desarrollo basado en Angular y TypeScript.
 - Comprender el concepto de componentes y servicios para su reutilización en otros proyectos.
@@ -58,22 +45,22 @@ Los siguientes requisitos serán evaluados para aprobar el proyecto:
 ## ​💻​ Proyecto
 Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
 
-### ​​📑​ Recursos adicionales
+## ​​📑​ Recursos adicionales
 Para obtener más información sobre cómo usar Angular CLI, incluyendo una referencia detallada de los comandos, visitá la página [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
 
-### Instalaciones 
-#### 🎨 Angular Material
+## Instalaciones 
+### 🎨 Angular Material
 ```bash
 ng add @angular/material
 ```
 **Documentación oficial**: https://material.angular.dev/guide/getting-started
 
-#### 🤡​ Animaciones
+### 🤡​ Animaciones
 ```bash
 npm install @angular/animations@20.1.0 --legacy-peer-deps
 ```
 
-#### Redux
+### Redux
 ```bash
 npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 ```
@@ -93,7 +80,7 @@ npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 
 ![AlumnosAdmin](image-5.png)
 
-### 📦 Models y services
+### 📦 Modelos y servicios
 - **Models**: 
     - Interfaces o clases que definen la forma de los datos.
 - **Services**:

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 
 // Services y models
-import { UsuarioService } from '../../../services/usuarios.services';
+import { UsuarioService } from '../../../services/usuario.service';
 import { Usuarios } from '../../../models/usuario.model';
 
 // Material ui

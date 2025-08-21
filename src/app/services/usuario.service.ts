@@ -1,4 +1,3 @@
-// src/app/services/usuario.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, catchError, map } from 'rxjs';
@@ -7,7 +6,6 @@ import { Usuarios } from '../models/usuario.model';
 @Injectable({
   providedIn: 'root'
 })
-
 export class UsuarioService {
   private apiUrl = 'https://68a35265c5a31eb7bb1fe392.mockapi.io/api/usuarios';
 
@@ -25,7 +23,10 @@ export class UsuarioService {
   }
 
   // Devuelve usuarios filtrados por rol
-  getUsuariosPorRol(rol: 'alumno' | 'profesor' | 'administrador'): Observable<Usuarios[]> {
+  getUsuariosPorRol(rol: 'alumno' | 'profesor' | 'administrador' | 'todos'): Observable<Usuarios[]> {
+    if (rol === 'todos') {
+      return this.getUsuarios();
+    }
     return this.http.get<Usuarios[]>(`${this.apiUrl}?rol=${rol}`).pipe(
       map(res => res || []),
       catchError(err => {

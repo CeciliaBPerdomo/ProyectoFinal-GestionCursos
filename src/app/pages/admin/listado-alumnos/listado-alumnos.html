@@ -1,7 +1,24 @@
 <div class="container mt-5">
-  <h2 class="mb-4 text-center text-md-start">Listado de Alumnos</h2>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Listado de Alumnos</h2>
+    <button mat-button color="primary" (click)="refrescar()">
+      <mat-icon>refresh</mat-icon> Actualizar
+    </button>
+  </div>
 
-  <table mat-table [dataSource]="alumnos" class="mat-elevation-z8 w-100">
+  <!-- Loading spinner -->
+  <div *ngIf="loading$ | async" class="text-center py-4">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="mt-2">Cargando alumnos...</p>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error$ | async as error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Table -->
+  <table *ngIf="!(loading$ | async)" mat-table [dataSource]="(alumnos$ | async) || []" class="mat-elevation-z8 w-100">
 
     <!-- Nombre -->
     <ng-container matColumnDef="nombre">
@@ -33,21 +50,24 @@
       <td mat-cell *matCellDef="let alumno"> {{ alumno.perfil }} </td>
     </ng-container>
 
-    <!-- Rol -->
-    <ng-container matColumnDef="rol">
-      <th mat-header-cell *matHeaderCellDef> Rol </th>
-      <td mat-cell *matCellDef="let alumno"> {{ alumno.rol }} </td>
-    </ng-container>
-
     <!-- Acciones -->
     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let alumno">
-        <button mat-button color="warn" (click)="eliminarAlumno(alumno.usuarioId)">Eliminar</button>
+        <button mat-button color="warn" (click)="eliminarAlumno(alumno.usuarioId!)">
+          <mat-icon>delete</mat-icon> Eliminar
+        </button>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+  <!-- Empty state -->
+  <div *ngIf="(alumnos$ | async)?.length === 0 && !(loading$ | async) && !(error$ | async)" class="text-center py-5">
+    <mat-icon class="empty-icon">group</mat-icon>
+    <h4>No hay alumnos registrados</h4>
+    <p>No se encontraron alumnos en el sistema.</p>
+  </div>
 </div>

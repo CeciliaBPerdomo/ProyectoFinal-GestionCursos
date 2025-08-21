@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 
-import { UsuarioService } from '../../../services/usuarios.services';
+import { UsuarioService } from '../../../services/usuario.service';
 import { Usuarios } from '../../../models/usuario.model';
 
 @Component({

@@ -8,7 +8,7 @@ import { Navbar } from './layout/navbar/navbar';
   standalone: true,
   imports: [
     RouterOutlet,
-    Navbar
+    Navbar,
   ],
   template: `
   <div class="app-background">
@@ -18,7 +18,6 @@ import { Navbar } from './layout/navbar/navbar';
 `,
   styleUrls: ['./app.css']
 })
-
 export class App {
-  protected title = 'PrimeraEntrega';
+  protected title = 'Gestión de Cursos';
 }
