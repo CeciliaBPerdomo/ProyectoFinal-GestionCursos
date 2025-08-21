@@ -57,13 +57,13 @@ export class MisCursos implements OnInit {
 
       // Cursos con estado según inscripciones
       const cursosConEstado: CursoConEstado[] = inscripciones.map(insc => {
-        const curso = cursos.find(c => c.id === insc.cursoId);
+        const curso = cursos.find(c => (c.cursoId || c.id) === insc.cursoId);
         return curso ? { ...curso, estado: insc.estado } : null;
       }).filter((curso): curso is CursoConEstado => curso !== null);
 
       // Agregar curso asignado directamente al alumno (sin inscripción)
-      const cursoAsignado = cursos.find(c => c.id === alumno.cursoId);
-      if (cursoAsignado && !cursosConEstado.some(c => c.id === cursoAsignado.id)) {
+      const cursoAsignado = cursos.find(c => (c.cursoId || c.id) === alumno.cursoId);
+      if (cursoAsignado && !cursosConEstado.some(c => (c.cursoId || c.id) === (cursoAsignado.cursoId || cursoAsignado.id))) {
         cursosConEstado.push({ ...cursoAsignado, estado: 'sin inscripcion' });
       }
 

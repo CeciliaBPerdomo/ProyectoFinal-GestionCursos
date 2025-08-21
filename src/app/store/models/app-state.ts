@@ -1,7 +1,9 @@
 import { Usuarios } from '../../models/usuario.model';
+import { Curso } from '../../models/curso.model';
 
 export interface AppState {
     usuarios: UsuariosState;
+    cursos: CursosState;
 }
 
 export interface UsuariosState {
@@ -22,4 +24,26 @@ export const initialUsuariosState: UsuariosState = {
   loading: false,
   searchTerm: '',
   filterRol: 'todos'
+};
+
+
+// Cursos 
+export interface CursosState {
+  cursos: Curso[];
+  cursosFiltrados: Curso[];
+  currentCurso: Curso | null;
+  error: string | null;
+  loading: boolean;
+  filterProfesor: number | 'todos';
+  searchTerm: string;
+}
+
+export const initialCursosState: CursosState = {
+  cursos: [],
+  cursosFiltrados: [],
+  currentCurso: null,
+  error: null,
+  loading: false,
+  filterProfesor: 'todos',
+  searchTerm: ''
 };

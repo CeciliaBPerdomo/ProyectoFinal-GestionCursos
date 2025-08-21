@@ -3,12 +3,23 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 
+// Material
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
-import { CursoService } from '../../../services/curso.service';
+// NgRx
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/models/app-state';
+import { addCurso } from '../../../store/actions/curso.actions';
+import { selectCursoLoading, selectCursoError } from '../../../store/selectors/curso.selectors';
+import { Observable } from 'rxjs';
+
+// Models
 import { Curso } from '../../../models/curso.model';
 
 @Component({
@@ -21,55 +32,91 @@ import { Curso } from '../../../models/curso.model';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   templateUrl: './alta-curso.html',
   styleUrls: ['./alta-curso.css']
 })
 export class AltaCurso implements OnInit {
   cursoForm!: FormGroup;
+  loading$!: Observable<boolean>;  // ← Cambiado: inicializar en ngOnInit
+  error$!: Observable<string | null>;  // ← Cambiado: inicializar en ngOnInit
 
   constructor(
     private fb: FormBuilder,
-    private cursoService: CursoService,
+    private store: Store<AppState>,
     private router: Router,
     private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
+    // Inicializar después de que el constructor configure el store
+    this.loading$ = this.store.select(selectCursoLoading);
+    this.error$ = this.store.select(selectCursoError);
+    
+    this.initForm();
+    this.setupErrorHandling();
+  }
+
+  private initForm(): void {
     this.cursoForm = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
-      fechaInicio: ['', Validators.required],
-      duracion: [null, [Validators.required, Validators.min(1)]]
+      cantHoras: ['', [Validators.required, Validators.min(1)]],
+      cantClases: ['', [Validators.required, Validators.min(1)]],
+      comienzo: ['', Validators.required],
+      fin: ['', Validators.required],
+      profesorId: ['', [Validators.required, Validators.min(1)]]
+    });
+  }
+
+  private setupErrorHandling(): void {
+    this.error$.subscribe(error => {
+      if (error) {
+        this.snackBar.open(`Error: ${error}`, 'Cerrar', { 
+          duration: 3000,
+          panelClass: 'snackbar-error'
+        });
+      }
     });
   }
 
   guardar(): void {
     if (this.cursoForm.invalid) {
-      this.cursoForm.markAllAsTouched(); // muestra todos los errores
+      this.cursoForm.markAllAsTouched();
       return;
     }
 
-    const nuevoCurso: Curso = this.cursoForm.value;
+    const nuevoCurso: Curso = {
+      ...this.cursoForm.value,
+      // Asegurar que las fechas estén en formato string
+      comienzo: new Date(this.cursoForm.value.comienzo).toISOString().split('T')[0],
+      fin: new Date(this.cursoForm.value.fin).toISOString().split('T')[0]
+    };
 
-    this.cursoService.agregarCurso(nuevoCurso).subscribe({
-      next: (cursoAgregado) => {
-        this.snackBar.open('Curso agregado correctamente ✅', 'Cerrar', {
-          duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-          panelClass: 'snackbar-exito'
-        });
-        this.router.navigate(['/cursos-admin']);
-      },
-      error: (err) => {
-        console.error('Error al agregar curso', err);
-        this.snackBar.open('Error al agregar el curso ❌', 'Cerrar', {
-          duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-          panelClass: 'snackbar-error'
+    this.store.dispatch(addCurso({ curso: nuevoCurso }));
+
+    // Suscribirse al éxito de la operación
+    const successSubscription = this.loading$.subscribe(loading => {
+      if (!loading) {
+        // Verificar si no hay error (éxito)
+        const errorSubscription = this.error$.subscribe(error => {
+          if (!error) {
+            this.snackBar.open('Curso agregado correctamente ✅', 'Cerrar', {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center',
+              panelClass: 'snackbar-exito'
+            });
+            this.router.navigate(['/cursos-admin']);
+            
+            // Limpiar suscripciones
+            successSubscription.unsubscribe();
+            errorSubscription.unsubscribe();
+          }
         });
       }
     });

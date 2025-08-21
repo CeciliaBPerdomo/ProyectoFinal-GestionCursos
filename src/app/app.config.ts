@@ -8,7 +8,11 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { isDevMode } from '@angular/core';
 import { reducers } from './store/reducers';
+
+// Effects
 import { UsuarioEffects } from './store/effects/usuario.effects';
+import { CursoEffects } from './store/effects/curso.effects';
+
 
 export const appConfig = {
   providers: [
@@ -21,7 +25,7 @@ export const appConfig = {
       withFetch()
     ),
     provideStore(reducers),
-    provideEffects([UsuarioEffects]),
+    provideEffects([UsuarioEffects, CursoEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

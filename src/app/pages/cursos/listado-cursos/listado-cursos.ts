@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -10,10 +10,25 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-// Models y Services
+// NgRx
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from '../../../store/models/app-state';
+import { 
+  loadCursos, 
+  deleteCurso, 
+  updateCurso 
+} from '../../../store/actions/curso.actions';
+import { 
+  selectAllCursos, 
+  selectCursoLoading, 
+  selectCursoError 
+} from '../../../store/selectors/curso.selectors';
+
+// Models
 import { Curso } from '../../../models/curso.model';
-import { CursoService } from '../../../services/curso.service';
 
 declare var bootstrap: any;
 
@@ -30,13 +45,15 @@ declare var bootstrap: any;
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './listado-cursos.html',
   styleUrls: ['./listado-cursos.css']
 })
-
 export class ListadoCursos implements OnInit {
-  cursos: Curso[] = [];
+  cursos$: Observable<Curso[]>;
+  loading$: Observable<boolean>;
+  error$: Observable<string | null>;
 
   // Modal para borrar
   cursoIdAEliminar: number | null = null;
@@ -46,41 +63,52 @@ export class ListadoCursos implements OnInit {
   cursoEditado: Partial<Curso> = {};
 
   constructor(
-    private cursoService: CursoService,
+    private store: Store<AppState>,
     private snackBar: MatSnackBar
-
-  ) { }
+  ) {
+    this.cursos$ = this.store.select(selectAllCursos);
+    this.loading$ = this.store.select(selectCursoLoading);
+    this.error$ = this.store.select(selectCursoError);
+  }
 
   ngOnInit(): void {
-     this.cursoService.getCursos().subscribe(cursos => {
-    this.cursos = cursos; // ahora es un array normal
-  });
+    this.store.dispatch(loadCursos());
+    
+    // Manejar errores
+    this.error$.subscribe(error => {
+      if (error) {
+        this.snackBar.open(`Error: ${error}`, 'Cerrar', { 
+          duration: 3000,
+          panelClass: 'snackbar-error'
+        });
+      }
+    });
   }
 
   editarCurso(curso: Curso): void {
-    this.cursoEditandoId = curso.id!;
+    this.cursoEditandoId = curso.cursoId!;
     this.cursoEditado = { ...curso };
   }
 
   guardarCursoEditado(): void {
-  if (this.cursoEditandoId !== null) {
-    this.cursoService.actualizarCurso(this.cursoEditado as Curso);
-
-    this.cursoService.getCursos().subscribe(cursos => {
-      this.cursos = cursos; 
-    });
-
-    this.cursoEditandoId = null;
-    this.cursoEditado = {};
-
-    this.snackBar.open('Curso actualizado correctamente', 'Cerrar', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-      panelClass: 'snackbar-exito'
-    });
+    if (this.cursoEditandoId !== null && this.cursoEditado) {
+      const cursoActualizado: Curso = {
+        ...this.cursoEditado,
+        cursoId: this.cursoEditandoId
+      } as Curso;
+      
+      this.store.dispatch(updateCurso({ curso: cursoActualizado }));
+      
+      this.snackBar.open('Curso actualizado correctamente', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: 'snackbar-exito'
+      });
+      
+      this.cancelarEdicion();
+    }
   }
-}
 
   cancelarEdicion(): void {
     this.cursoEditandoId = null;
@@ -88,6 +116,10 @@ export class ListadoCursos implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    this.inicializarModal();
+  }
+
+  private inicializarModal(): void {
     const modalElement = document.getElementById('confirmDeleteCursoModal');
     if (modalElement) {
       this.modal = new bootstrap.Modal(modalElement);
@@ -109,18 +141,24 @@ export class ListadoCursos implements OnInit {
   }
 
   eliminarCursoConfirmado(id: number): void {
-    this.cursoService.eliminarCurso(id);
+    this.store.dispatch(deleteCurso({ id }));
     
-    this.cursoService.getCursos().subscribe(cursos => {
-    this.cursos = cursos; 
-  });
-
     this.snackBar.open('Curso eliminado 🗑️ correctamente', 'Cerrar', {
       duration: 3000,
       panelClass: 'snackbar-exito',
       horizontalPosition: 'center',
       verticalPosition: 'top'
     });
+    
     this.modal?.hide();
+    this.cursoIdAEliminar = null;
+  }
+
+  refrescar(): void {
+    this.store.dispatch(loadCursos());
+    this.snackBar.open('Lista de cursos actualizada', 'Cerrar', {
+      duration: 2000,
+      panelClass: 'snackbar-info'
+    });
   }
 }

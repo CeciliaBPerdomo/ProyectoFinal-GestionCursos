@@ -1,21 +1,36 @@
 <div class="container mt-4">
-  <h2 class="mb-3 text-start">Listado de Cursos</h2>
-
-  <div class="d-flex justify-content-end mb-3">
-    <button mat-raised-button color="primary" routerLink="/alta-curso">
-      <mat-icon>add</mat-icon>
-      Nuevo Curso
-    </button>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Listado de Cursos</h2>
+    <div>
+      <button mat-button color="primary" (click)="refrescar()" class="me-2">
+        <mat-icon>refresh</mat-icon> Actualizar
+      </button>
+      <button mat-raised-button color="primary" routerLink="/cursos/alta">
+        <mat-icon>add</mat-icon>
+        Nuevo Curso
+      </button>
+    </div>
   </div>
 
-  <div class="row g-3">
-    <div class="col-md-6 col-lg-4" *ngFor="let curso of cursos">
+  <!-- Loading spinner -->
+  <div *ngIf="loading$ | async" class="text-center py-4">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="mt-2">Cargando cursos...</p>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error$ | async as error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="row g-3" *ngIf="!(loading$ | async)">
+    <div class="col-md-6 col-lg-4" *ngFor="let curso of cursos$ | async">
       <div class="card shadow-sm h-100">
         <div class="card-body">
 
           <!-- Título -->
           <h5 class="card-title">
-            <ng-container *ngIf="cursoEditandoId !== curso.id; else editandoTitulo">
+            <ng-container *ngIf="cursoEditandoId !== curso.cursoId; else editandoTitulo">
               {{ curso.nombre }}
             </ng-container>
             <ng-template #editandoTitulo>
@@ -24,10 +39,10 @@
           </h5>
 
           <!-- ID -->
-          <p class="mb-1"><strong>ID:</strong> {{ curso.id }}</p>
+          <p class="mb-1"><strong>ID:</strong> {{ curso.cursoId }}</p>
 
           <!-- Descripción -->
-          <div *ngIf="cursoEditandoId !== curso.id; else editandoDescripcion">
+          <div *ngIf="cursoEditandoId !== curso.cursoId; else editandoDescripcion">
             <p class="mb-0"><strong>Descripción:</strong> {{ curso.descripcion || 'Sin descripción' }}</p>
           </div>
           <ng-template #editandoDescripcion>
@@ -36,11 +51,18 @@
               <textarea [(ngModel)]="cursoEditado.descripcion" class="form-control" rows="2"></textarea>
             </div>
           </ng-template>
+
+          <!-- Información adicional -->
+          <div class="mt-2">
+            <p class="mb-1"><strong>Horas:</strong> {{ curso.cantHoras }}</p>
+            <p class="mb-1"><strong>Clases:</strong> {{ curso.cantClases }}</p>
+            <p class="mb-1"><strong>Profesor ID:</strong> {{ curso.profesorId }}</p>
+          </div>
         </div>
 
         <!-- Botones -->
         <div class="card-footer bg-white border-top d-flex justify-content-end gap-2">
-          <ng-container *ngIf="cursoEditandoId === curso.id; else botonesNormales">
+          <ng-container *ngIf="cursoEditandoId === curso.cursoId; else botonesNormales">
             <button mat-icon-button color="primary" class="editar" (click)="guardarCursoEditado()">
               <mat-icon>check</mat-icon>
             </button>
@@ -53,13 +75,21 @@
             <button mat-icon-button color="accent" class="editar" (click)="editarCurso(curso)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" class="eliminar" (click)="mostrarModalEliminar(curso.id!)">
+            <button mat-icon-button color="warn" class="eliminar" (click)="mostrarModalEliminar(curso.cursoId!)">
               <mat-icon>delete</mat-icon>
             </button>
           </ng-template>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="(cursos$ | async)?.length === 0 && !(loading$ | async) && !(error$ | async)" 
+       class="text-center py-5">
+    <mat-icon class="empty-icon">school</mat-icon>
+    <h4>No hay cursos registrados</h4>
+    <p>No se encontraron cursos en el sistema.</p>
   </div>
 </div>
 

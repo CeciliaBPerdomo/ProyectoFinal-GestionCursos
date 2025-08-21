@@ -29,7 +29,7 @@
         <mat-label>Curso</mat-label>
         <mat-select formControlName="cursoId">
           <mat-option [value]="null">Sin curso</mat-option>
-          <mat-option *ngFor="let curso of cursos" [value]="curso.id">
+         <mat-option *ngFor="let curso of cursos" [value]="curso.cursoId || curso.id">
             {{ curso.nombre }}
           </mat-option>
         </mat-select>

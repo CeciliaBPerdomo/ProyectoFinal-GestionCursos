@@ -79,7 +79,7 @@ export class ListaAlumnos implements OnInit, AfterViewInit {
   }
 
   getCursoNombre(id: number): string {
-    const curso = this.cursos.find(c => c.id === id);
+    const curso = this.cursos.find(c => (c.cursoId || c.id) === id);
     return curso ? curso.nombre : 'Sin curso';
   }
 

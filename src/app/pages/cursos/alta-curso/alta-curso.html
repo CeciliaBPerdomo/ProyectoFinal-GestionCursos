@@ -5,45 +5,91 @@
   <form [formGroup]="cursoForm" (ngSubmit)="guardar()" class="row g-3">
 
     <!-- Nombre -->
-    <div class="col-12">
-      <mat-form-field appearance="fill" class="w-100 white-input">
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
         <mat-label>Nombre del curso</mat-label>
         <input matInput formControlName="nombre" />
         <mat-error *ngIf="campoInvalido('nombre')">Este campo es obligatorio</mat-error>
       </mat-form-field>
     </div>
 
+    <!-- Profesor ID -->
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>ID del Profesor</mat-label>
+        <input matInput type="number" formControlName="profesorId" />
+        <mat-error *ngIf="campoInvalido('profesorId')">ID de profesor válido requerido</mat-error>
+      </mat-form-field>
+    </div>
+
     <!-- Descripción -->
     <div class="col-12">
-      <mat-form-field appearance="fill" class="w-100 white-input">
+      <mat-form-field appearance="fill" class="w-100">
         <mat-label>Descripción</mat-label>
-        <textarea matInput formControlName="descripcion"></textarea>
+        <textarea matInput formControlName="descripcion" rows="3"></textarea>
         <mat-error *ngIf="campoInvalido('descripcion')">Este campo es obligatorio</mat-error>
       </mat-form-field>
     </div>
 
-    <!-- Fecha -->
-    <div class="col-12">
-      <mat-form-field appearance="fill" class="w-100 white-input">
+    <!-- Cantidad de Horas -->
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Horas totales</mat-label>
+        <input matInput type="number" formControlName="cantHoras" />
+        <mat-error *ngIf="campoInvalido('cantHoras')">Mínimo 1 hora</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Cantidad de Clases -->
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Cantidad de clases</mat-label>
+        <input matInput type="number" formControlName="cantClases" />
+        <mat-error *ngIf="campoInvalido('cantClases')">Mínimo 1 clase</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Fecha de Comienzo -->
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
         <mat-label>Fecha de inicio</mat-label>
-        <input matInput type="date" formControlName="fechaInicio" />
-        <mat-error *ngIf="campoInvalido('fechaInicio')">Este campo es obligatorio</mat-error>
+        <input matInput [matDatepicker]="comienzoPicker" formControlName="comienzo" />
+        <mat-datepicker-toggle matSuffix [for]="comienzoPicker"></mat-datepicker-toggle>
+        <mat-datepicker #comienzoPicker></mat-datepicker>
+        <mat-error *ngIf="campoInvalido('comienzo')">Fecha de inicio requerida</mat-error>
       </mat-form-field>
     </div>
 
-    <!-- Duración -->
-    <div class="col-12">
-      <mat-form-field appearance="fill" class="w-100 white-input">
-        <mat-label>Duración (horas)</mat-label>
-        <input matInput type="number" formControlName="duracion" />
-        <mat-error *ngIf="campoInvalido('duracion')">Debe ser mayor a 0</mat-error>
+    <!-- Fecha de Fin -->
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Fecha de finalización</mat-label>
+        <input matInput [matDatepicker]="finPicker" formControlName="fin" />
+        <mat-datepicker-toggle matSuffix [for]="finPicker"></mat-datepicker-toggle>
+        <mat-datepicker #finPicker></mat-datepicker>
+        <mat-error *ngIf="campoInvalido('fin')">Fecha de finalización requerida</mat-error>
       </mat-form-field>
     </div>
 
-    <!-- Botón -->
+    <!-- Botones -->
     <div class="col-12 text-center text-md-end">
-      <button mat-raised-button color="primary" type="submit" [disabled]="cursoForm.invalid">
-        Guardar Curso
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="cursoForm.invalid || (loading$ | async)"
+      >
+        {{ (loading$ | async) ? 'Guardando...' : 'Guardar Curso' }}
+      </button>
+      
+      <button 
+        mat-button 
+        color="warn" 
+        type="button" 
+        class="ms-2"
+        routerLink="/cursos-admin"
+      >
+        Cancelar
       </button>
     </div>
   </form>
