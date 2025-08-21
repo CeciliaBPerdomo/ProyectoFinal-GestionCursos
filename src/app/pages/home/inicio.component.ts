@@ -1,45 +1,48 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [MatCardModule],
-  template: `
-    <div class="inicio-container">
-      <mat-card class="inicio-card">
-        <h1>Bienvenido a la plataforma 🌟</h1>
-        <p>Desde aquí puedes navegar a Alumnos, Cursos e Inscripciones mediante la barra de navegación superior.</p>
-      </mat-card>
-    </div>
-  `,
-  styles: [`
-    .inicio-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 80vh;
-      padding: 20px;
-    }
-
-    .inicio-card {
-      text-align: center;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      max-width: 600px;
-      width: 100%;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 16px;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 0;
-    }
-  `]
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule
+  ],
+  templateUrl: './inicio.component.html',
+  styleUrls: ['./inicio.component.css']
 })
-export class InicioComponent {}
+export class InicioComponent {
+  loginForm: FormGroup;
+  hidePassword = true;
+
+  constructor(private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      console.log('Login attempt:', this.loginForm.value);
+      // Aquí iría la lógica de autenticación
+    }
+  }
+
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+}
