@@ -1,0 +1,37 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.empty-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: #ccc;
+    margin-bottom: 16px;
+}
+
+.mat-elevation-z8 {
+    overflow-x: auto;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+    .mat-table {
+        min-width: 600px;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+}
+
+/* Loading styles */
+mat-spinner {
+    margin: 0 auto;
+}
+
+/* Button styles */
+button[mat-button] {
+    min-width: auto;
+}

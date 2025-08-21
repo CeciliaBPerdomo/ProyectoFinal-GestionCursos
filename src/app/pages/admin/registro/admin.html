@@ -94,8 +94,13 @@
 
     <!-- Botón -->
     <div class="col-12 text-center text-md-end">
-      <button mat-raised-button color="primary" type="submit" [disabled]="usuarioForm.invalid || loading">
-        {{ loading ? 'Guardando...' : 'Guardar Usuario' }}
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="usuarioForm.invalid || (loading$ | async)"
+      >
+        {{ (loading$ | async) ? 'Guardando...' : 'Guardar Usuario' }}
       </button>
     </div>
 
