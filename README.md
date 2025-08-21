@@ -61,15 +61,21 @@ Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angul
 ### ​​📑​ Recursos adicionales
 Para obtener más información sobre cómo usar Angular CLI, incluyendo una referencia detallada de los comandos, visitá la página [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
 
-### 🎨 Angular Material
+### Instalaciones 
+#### 🎨 Angular Material
 ```bash
 ng add @angular/material
 ```
 **Documentación oficial**: https://material.angular.dev/guide/getting-started
 
-### 🤡​ Animaciones
+#### 🤡​ Animaciones
 ```bash
 npm install @angular/animations@20.1.0 --legacy-peer-deps
+```
+
+#### Redux
+```bash
+npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 ```
 
 ## Gestión de cursos 
@@ -106,7 +112,7 @@ npm install @angular/animations@20.1.0 --legacy-peer-deps
 
 | 🛠️  |
 |----------------------------|
-| ![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![Material UI](https://img.shields.io/badge/Material--UI-007FFF?style=flat&logo=mui&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white) ![MockAPI](https://img.shields.io/badge/MockAPI-00CFFF?style=flat&logo=mockapi&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)  |
+| ![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![Material UI](https://img.shields.io/badge/Material--UI-007FFF?style=flat&logo=mui&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white) ![MockAPI](https://img.shields.io/badge/MockAPI-00CFFF?style=flat&logo=mockapi&logoColor=white) ![NgRx Store](https://img.shields.io/badge/NgRx%20Store-E23237?style=flat&logo=ngrx&logoColor=white) ![NgRx Effects](https://img.shields.io/badge/NgRx%20Effects-E23237?style=flat&logo=ngrx&logoColor=white) ![NgRx Store DevTools](https://img.shields.io/badge/NgRx%20StoreDevTools-E23237?style=flat&logo=ngrx&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)  |
 
 
 ## ​​💣​ Servidor de desarrollo
