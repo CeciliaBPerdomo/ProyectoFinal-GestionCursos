@@ -12,6 +12,7 @@ import { reducers } from './store/reducers';
 // Effects
 import { UsuarioEffects } from './store/effects/usuario.effects';
 import { CursoEffects } from './store/effects/curso.effects';
+import { InscripcionEffects } from './store/effects/inscripcion.effects';
 
 
 export const appConfig = {
@@ -25,7 +26,7 @@ export const appConfig = {
       withFetch()
     ),
     provideStore(reducers),
-    provideEffects([UsuarioEffects, CursoEffects]),
+    provideEffects([UsuarioEffects, CursoEffects, InscripcionEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

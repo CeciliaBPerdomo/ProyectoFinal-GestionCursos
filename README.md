@@ -42,6 +42,8 @@ Los siguientes requisitos serán evaluados para aprobar el proyecto:
         - Curso: Contienen los campos de nombre, cantidad de horas, cantidad de clases y nombre del profesor asignado.
         - Inscripciones: Contienen el ID del alumno, ID del curso inscrito, fecha de inscripción y el ID del usuario que realizó la inscripción.
 
+> **Nota**: Este proyecto está basado en un sistema donde un usuario administrador es el encargado de registrar a los demás usuarios. Además, se incluyen cuentas demo con el fin de probar funcionalidades específicas y facilitar el testeo del proyecto.
+
 ## ​💻​ Proyecto
 Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
 
@@ -89,7 +91,7 @@ npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 
 ![ModeladoBaseDatos](image-8.png)
 
-> **Nota**: Para el curso solo armé tres tablas: `usuario`, `curso` e `inscripciones`. Igual, pensando en que el sistema pueda crecer, habría sido mejor sumar otras dos tablas: `perfil` y `rol`, así sería más fácil agregar nuevos perfiles o roles (Administrador, Profesor y Alumno) en un futuro en caso de ser necesario. 
+> **Nota**: Para el curso solo armé tres tablas: `usuario`, `curso` e `inscripciones`. Igual, pensando en que el sistema pueda crecer, habría sido mejor sumar otras dos tablas: `perfil` y `rol`, así sería más fácil agregar nuevos perfiles o roles (Administrador, Profesor y Alumno) para darle más escabilidad al proyecto. 
 
 ## MockApi.io
 - **MockAPI** es un servicio online que te permite crear APIs falsas (mock APIs) de manera rápida y sencilla.

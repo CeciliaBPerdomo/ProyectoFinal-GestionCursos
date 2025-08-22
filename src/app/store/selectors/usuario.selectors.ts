@@ -1,5 +1,7 @@
+// store / selectors / usuario.selectors
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UsuariosState } from '../models/app-state';
+import { Usuarios } from '../../models/usuario.model';
 
 export const selectUsuariosState = createFeatureSelector<UsuariosState>('usuarios');
 
@@ -53,4 +55,9 @@ export const selectUsuariosStats = createSelector(
         profesores: usuarios.filter(u => u.rol === 'profesor').length,
         administradores: usuarios.filter(u => u.rol === 'administrador').length
     })
+);
+
+export const selectAllAlumnos = createSelector(
+  selectAllUsuarios,
+  (usuarios: Usuarios[]) => usuarios.filter(user => user.rol === 'alumno')
 );

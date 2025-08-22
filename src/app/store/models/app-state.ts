@@ -1,9 +1,12 @@
+// store / models / app-state.ts
 import { Usuarios } from '../../models/usuario.model';
 import { Curso } from '../../models/curso.model';
+import { Inscripcion } from '../../models/inscripcion.model';
 
 export interface AppState {
     usuarios: UsuariosState;
     cursos: CursosState;
+    inscripciones: InscripcionesState;
 }
 
 export interface UsuariosState {
@@ -45,5 +48,30 @@ export const initialCursosState: CursosState = {
   error: null,
   loading: false,
   filterProfesor: 'todos',
+  searchTerm: ''
+};
+
+// Inscripciones 
+export interface InscripcionesState {
+  inscripciones: Inscripcion[];
+  inscripcionesFiltradas: Inscripcion[];
+  currentInscripcion: Inscripcion | null;
+  error: string | null;
+  loading: boolean;
+  filterEstado: string;
+  filterCurso: number | 'todos';
+  filterAlumno: number | 'todos';
+  searchTerm: string;
+}
+
+export const initialInscripcionesState: InscripcionesState = {
+  inscripciones: [],
+  inscripcionesFiltradas: [],
+  currentInscripcion: null,
+  error: null,
+  loading: false,
+  filterEstado: 'todos',
+  filterCurso: 'todos',
+  filterAlumno: 'todos',
   searchTerm: ''
 };

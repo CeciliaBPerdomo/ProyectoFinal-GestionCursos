@@ -1,103 +1,163 @@
-<div class="container mt-4 bg-white p-4 rounded shadow">
-    <h2 class="mb-4 text-start">Listado de Inscripciones</h2>
-
-    <!-- Botón Nueva Inscripción -->
-    <div class="d-flex justify-content-end mb-3" *ngIf="modo === 'admin'">
-        <button routerLink="/alta-inscripcion" mat-raised-button color="primary"
-            class="d-flex align-items-center gap-1">
-            <mat-icon>person_add</mat-icon> Nueva Inscripción
-        </button>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Listado de Inscripciones</h2>
+    <div>
+      <button mat-button color="primary" (click)="refrescar()" class="me-2">
+        <mat-icon>refresh</mat-icon> Actualizar
+      </button>
+      <button mat-raised-button color="primary" routerLink="/inscripciones/alta">
+        <mat-icon>add</mat-icon>
+        Nueva Inscripción
+      </button>
     </div>
+  </div>
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>ID</th>
-                    <th>Alumno</th>
-                    <th>Curso</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let inscripcion of inscripciones">
-                    <td>{{ inscripcion.id > 0 ? inscripcion.id : '-' }}</td>
-                    <td>{{ getAlumnoNombre(inscripcion.alumnoId) }}</td>
-                    <td>{{ getCursoNombre(inscripcion.cursoId) }}</td>
-                    <td>{{ inscripcion.fechaInscripcion | date }}</td>
+  <!-- Loading spinner -->
+  <div *ngIf="loading$ | async" class="text-center py-4">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="mt-2">Cargando inscripciones...</p>
+  </div>
 
-                    <!-- Estado -->
-                    <td>
-                        <ng-container *ngIf="estadoEditandoId === inscripcion.id; else mostrarEstado">
-                            <select class="form-select d-inline w-auto me-2" [(ngModel)]="estadoSeleccionado">
-                                <option *ngFor="let estado of estados" [value]="estado">
-                                    {{ estado === 'sin inscripcion' ? 'Sin inscripción' : estado }}
-                                </option>
-                            </select>
-                            <button mat-icon-button color="primary" (click)="guardarEstado(inscripcion.id)"
-                                class="editar me-1" aria-label="Guardar">
-                                <mat-icon>check</mat-icon>
-                            </button>
-                            <button mat-icon-button color="warn" (click)="cancelarEdicion()" class="eliminar"
-                                aria-label="Cancelar">
-                                <mat-icon>close</mat-icon>
-                            </button>
-                        </ng-container>
+  <!-- Error message -->
+  <div *ngIf="error$ | async as error" class="alert alert-danger">
+    {{ error }}
+  </div>
 
-                        <ng-template #mostrarEstado>
-                            <span class="badge" [ngClass]="{
-  'estado-sin': inscripcion.estado === 'sin inscripcion' || inscripcion.estado === 'sin',
-  'bg-success': inscripcion.estado === 'activa',
-  'bg-danger': inscripcion.estado === 'cancelada',
-  'bg-primary': inscripcion.estado === 'finalizada'
-}">
-  {{ mostrarEstadoNormalizado(inscripcion.estado) }}
-</span>
-
-
-                        </ng-template>
-                    </td>
-
-                    <!-- Acciones -->
-                    <td>
-                        <button mat-icon-button color="accent"
-                            (click)="editarEstado(inscripcion.id, inscripcion.estado)" class="editar me-1"
-                            aria-label="Editar estado">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-
-                        <!-- Borrar sólo si NO es sin inscripción -->
-                        <button *ngIf="!esEstadoSinInscripcion(inscripcion.estado)" mat-icon-button color="warn"
-                            (click)="mostrarModalEliminar(inscripcion.id)" class="eliminar"
-                            aria-label="Eliminar inscripción">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </td>
-
-                </tr>
-            </tbody>
-        </table>
+  <!-- Filtros -->
+  <div class="row mb-3" *ngIf="!(loading$ | async)">
+    <div class="col-md-4">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Filtrar por estado</mat-label>
+        <mat-select (selectionChange)="filtrarPorEstado($event.value)">
+          <mat-option value="todos">Todos los estados</mat-option>
+          <mat-option value="activa">Activas</mat-option>
+          <mat-option value="cancelada">Canceladas</mat-option>
+          <mat-option value="finalizada">Finalizadas</mat-option>
+          <mat-option value="sin">Sin inscripción</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
+  </div>
+
+  <!-- Table -->
+  <table mat-table [dataSource]="(inscripcionesCompletas$ | async) ?? []" class="mat-elevation-z8">
+
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let inscripcion">
+        {{ inscripcion.inscrId || inscripcion.id }}
+      </td>
+    </ng-container>
+
+    <!-- Alumno -->
+    <ng-container matColumnDef="alumno">
+      <th mat-header-cell *matHeaderCellDef> Alumno </th>
+      <td mat-cell *matCellDef="let inscripcion">
+        {{ inscripcion.alumnoNombre }}
+      </td>
+    </ng-container>
+
+    <!-- Curso -->
+    <ng-container matColumnDef="curso">
+      <th mat-header-cell *matHeaderCellDef> Curso </th>
+      <td mat-cell *matCellDef="let inscripcion">
+        {{ inscripcion.cursoNombre }}
+      </td>
+    </ng-container>
+
+    <!-- Fecha -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef> Fecha </th>
+      <td mat-cell *matCellDef="let inscripcion">
+        {{ inscripcion.fechaInsc | date:'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let inscripcion">
+        <ng-container *ngIf="estadoEditandoId === (inscripcion.inscrId || inscripcion.id); else mostrarEstado">
+          <mat-form-field appearance="fill">
+            <mat-select [(ngModel)]="estadoSeleccionado">
+              <mat-option *ngFor="let estado of estados" [value]="estado">
+                {{ mostrarEstadoNormalizado(estado) }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-icon-button color="primary"
+            (click)="guardarEstado(inscripcion.inscrId || inscripcion.id, inscripcion)">
+            <mat-icon>check</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="cancelarEdicion()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </ng-container>
+        <ng-template #mostrarEstado>
+          <span [ngClass]="{
+            'text-success': inscripcion.estado === 'activa',
+            'text-danger': inscripcion.estado === 'cancelada',
+            'text-warning': inscripcion.estado === 'finalizada',
+            'text-muted': esEstadoSinInscripcion(inscripcion.estado)
+          }">
+            {{ mostrarEstadoNormalizado(inscripcion.estado) }}
+          </span>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let inscripcion">
+        <ng-container *ngIf="!esEstadoSinInscripcion(inscripcion.estado)">
+          <button mat-icon-button color="accent"
+            (click)="editarEstado(inscripcion.inscrId || inscripcion.id, inscripcion.estado)"
+            *ngIf="estadoEditandoId !== (inscripcion.inscrId || inscripcion.id)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="mostrarModalEliminar(inscripcion.inscrId || inscripcion.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="esEstadoSinInscripcion(inscripcion.estado)">
+          <button mat-raised-button color="primary"
+            (click)="editarEstado(inscripcion.inscrId || inscripcion.id, 'activa')">
+            Crear Inscripción
+          </button>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- Empty state -->
+  <div *ngIf="(inscripcionesCompletas$ | async)?.length === 0 && !(loading$ | async) && !(error$ | async)"
+    class="text-center py-5">
+    <mat-icon class="empty-icon">assignment</mat-icon>
+    <h4>No hay inscripciones registradas</h4>
+    <p>No se encontraron inscripciones en el sistema.</p>
+  </div>
 </div>
 
-<!-- Modal de confirmación Bootstrap -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="confirmDeleteLabel">¿Eliminar inscripción?</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                    aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                Esta acción no se puede deshacer. ¿Estás segura/o de eliminar la inscripción?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" (click)="confirmarEliminacion()">Eliminar</button>
-            </div>
-        </div>
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalLabel">Confirmar eliminación</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro que querés eliminar esta inscripción? Esta acción no se puede deshacer.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button id="confirmDeleteBtn" type="button" class="btn btn-danger">Eliminar</button>
+      </div>
     </div>
+  </div>
 </div>

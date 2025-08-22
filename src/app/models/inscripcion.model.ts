@@ -1,11 +1,17 @@
 // src/app/models/inscripcion.model.ts
-export type EstadoInscripcion = 'activa' | 'cancelada' | 'finalizada' | 'sin inscripcion' | 'sin';
+export type EstadoInscripcion = 'pendiente' | 'confirmada' | 'cancelada' | 'completada' | 'sin' | 'sin inscripcion' | 'activa' | 'finalizada';
 
 export interface Inscripcion {
-  id: number;
-  alumnoId: number;
+  inscrId?: number;
   cursoId: number;
-  fechaInscripcion: Date;
+  alumnoId: number;
+  fechaInsc: string; 
   estado: EstadoInscripcion;
+  inscriptorId: number;
 }
 
+export interface InscripcionCompleta extends Inscripcion {
+  nombreCurso?: string;
+  nombreAlumno?: string;
+  nombreInscriptor?: string;
+}

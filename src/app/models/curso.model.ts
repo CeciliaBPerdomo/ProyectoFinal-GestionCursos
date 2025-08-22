@@ -1,7 +1,7 @@
 // src/app/models/curso.model.ts
 export interface Curso {
-   id?: number;           // ← Mantener temporalmente por compatibilidad
-  cursoId?: number;      // ← Nuevo campo
+   id?: number;          
+  cursoId?: number;     
   nombre: string;
   descripcion: string;
   cantHoras: string;

@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, combineLatest } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { Usuarios } from '../../../models/usuario.model';
 
 // Material UI
 import { CommonModule } from '@angular/common';
@@ -10,20 +13,34 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
-// Models y services
-import { InscripcionService } from '../../../services/inscripcion.service';
+// NgRx
+import { AppState } from '../../../store/models/app-state';
+import {
+  loadInscripciones,
+  updateInscripcion,
+  deleteInscripcion,
+  addInscripcion,
+  setFilterByEstado
+} from '../../../store/actions/inscripcion.actions';
+import {
+  selectAllInscripciones,
+  selectInscripcionLoading,
+  selectInscripcionError
+} from '../../../store/selectors/inscripcion.selectors';
+import { selectAllAlumnos } from '../../../store/selectors/usuario.selectors';
+import { loadUsuarios } from '../../../store/actions/usuario.actions';
+import { loadCursos } from '../../../store/actions/curso.actions';
+import { selectAllCursos } from '../../../store/selectors/curso.selectors';
+
+// Models
 import { Inscripcion, EstadoInscripcion } from '../../../models/inscripcion.model';
-
-import { CursoService } from '../../../services/curso.service';
 import { Curso } from '../../../models/curso.model';
 
-import { AlumnoService } from '../../../services/alumno.service';
-import { Alumno } from '../../../models/alumno.model';
-
-
-
 declare var bootstrap: any;
+
 @Component({
   selector: 'app-listado-inscripciones',
   standalone: true,
@@ -35,6 +52,8 @@ declare var bootstrap: any;
     MatIconModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
     FormsModule,
   ],
   templateUrl: './listado-inscripciones.html',
@@ -44,79 +63,78 @@ export class ListadoInscripciones implements OnInit {
 
   @Input() modo: 'admin' | 'alumno' = 'admin';
 
-  inscripciones: Inscripcion[] = [];
-  alumnos: Alumno[] = [];
-  cursos: Curso[] = [];
+  inscripciones$: Observable<Inscripcion[]>;
+  inscripcionesCompletas$: Observable<any[]>;
+  loading$: Observable<boolean>;
+  error$: Observable<string | null>;
+  alumnos$: Observable<Usuarios[]>;
+  cursos$: Observable<Curso[]>;
+
   displayedColumns: string[] = ['id', 'alumno', 'curso', 'fecha', 'estado', 'acciones'];
 
   estados: EstadoInscripcion[] = ['activa', 'cancelada', 'finalizada', 'sin inscripcion', 'sin'];
 
   estadoEditandoId: number | null = null;
   estadoSeleccionado: EstadoInscripcion = 'activa';
-
-  estadoSin: EstadoInscripcion = 'sin inscripcion';
   inscripcionIdAEliminar: number | null = null;
   modal: any;
 
   constructor(
-    private inscripcionService: InscripcionService,
-    private alumnoService: AlumnoService,
-    private cursoService: CursoService
-  ) { }
+    private store: Store<AppState>,
+    private snackBar: MatSnackBar
+  ) {
+    this.inscripciones$ = this.store.select(selectAllInscripciones);
+    this.loading$ = this.store.select(selectInscripcionLoading);
+    this.error$ = this.store.select(selectInscripcionError);
+    this.alumnos$ = this.store.select(selectAllAlumnos);
+    this.cursos$ = this.store.select(selectAllCursos);
 
-  ngOnInit(): void {
-    forkJoin({
-      alumnos: this.alumnoService.getAlumnos(),
-      cursos: this.cursoService.getCursos()
-    }).subscribe(({ alumnos, cursos }) => {
-      this.alumnos = alumnos;
-      this.cursos = cursos;
-      this.cargarInscripciones(); 
-    });
-  }
-
-
-  cargarInscripciones(): void {
-    const todasInscripciones = this.inscripcionService.getInscripciones(); // array normal
-
-    // Detectar qué alumnos no tienen inscripciones
-    const alumnosConInscripciones = new Set(todasInscripciones.map(i => i.alumnoId));
-
-    const sinInscripcion: Inscripcion[] = this.alumnos
-      .filter(alumno => !alumnosConInscripciones.has(alumno.id))
-      .map(alumno => ({
-        id: -alumno.id,
-        alumnoId: alumno.id,
-        cursoId: alumno.cursoId ?? -1,
-        fechaInscripcion: new Date(),
-        estado: 'sin' as any
-      }));
-
-    // Combinar inscripciones existentes con los que no tienen
-    this.inscripciones = [...todasInscripciones, ...sinInscripcion];
-
-    // Ordenar por prioridad de estado
-    const ordenPrioridad: Record<string, number> = {
-      'sin': 0,
-      'cancelada': 1,
-      'activa': 2,
-      'finalizada': 3
-    };
-
-    this.inscripciones.sort(
-      (a, b) => (ordenPrioridad[a.estado] ?? 99) - (ordenPrioridad[b.estado] ?? 99)
+    // Combina inscripciones con nombres de alumnos y cursos
+    this.inscripcionesCompletas$ = combineLatest([
+      this.inscripciones$,
+      this.alumnos$,
+      this.cursos$
+    ]).pipe(
+      map(([inscripciones, alumnos, cursos]) =>
+        inscripciones.map(inscripcion => ({
+          ...inscripcion,
+          alumnoNombre: this.findAlumnoNombre(alumnos, inscripcion.alumnoId),
+          cursoNombre: this.findCursoNombre(cursos, inscripcion.cursoId)
+        }))
+      )
     );
   }
 
-  getAlumnoNombre(id: number): string {
-    const alumno = this.alumnos.find(a => a.id === id);
-    return alumno ? alumno.nombre : 'Desconocido';
+  ngOnInit(): void {
+    this.store.dispatch(loadUsuarios());
+    this.store.dispatch(loadCursos());
+    this.store.dispatch(loadInscripciones());
+
+    this.error$.subscribe(error => {
+      if (error) {
+        this.snackBar.open(`Error: ${error}`, 'Cerrar', {
+          duration: 3000,
+          panelClass: 'snackbar-error'
+        });
+      }
+    });
   }
 
-  getCursoNombre(id: number): string {
-    if (id === -1) return 'Sin curso';
-    const curso = this.cursos.find(c => c.id === id);
-    return curso ? curso.nombre : 'Desconocido';
+  private findAlumnoNombre(alumnos: Usuarios[], alumnoId: number): string {
+    const alumno = alumnos.find(a =>
+      Number(a.id) === Number(alumnoId) ||
+      Number((a as any).usuarioId) === Number(alumnoId)
+    );
+    return alumno ? alumno.nombre : `Desconocido (ID: ${alumnoId})`;
+  }
+
+  private findCursoNombre(cursos: Curso[], cursoId: number): string {
+    const curso = cursos.find(c =>
+      Number(c.id) === Number(cursoId) ||
+      Number((c as any).cursoId) === Number(cursoId) ||
+      Number((c as any).CursoId) === Number(cursoId)
+    );
+    return curso ? curso.nombre : `Desconocido (ID: ${cursoId})`;
   }
 
   editarEstado(inscripcionId: number, estadoActual: EstadoInscripcion): void {
@@ -125,7 +143,8 @@ export class ListadoInscripciones implements OnInit {
   }
 
   public esEstadoSinInscripcion(estado: string): boolean {
-    const estadoNormalizado = estado?.trim().toLowerCase();
+    if (!estado) return false;
+    const estadoNormalizado = estado.trim().toLowerCase();
     return estadoNormalizado === 'sin inscripcion' || estadoNormalizado === 'sin';
   }
 
@@ -133,57 +152,93 @@ export class ListadoInscripciones implements OnInit {
     if (!estado) return '';
     const e = estado.trim().toLowerCase();
     if (e === 'sin' || e === 'sin inscripcion') return 'Sin inscripción';
-    return estado.toUpperCase();
+    return estado.charAt(0).toUpperCase() + estado.slice(1);
   }
 
   cancelarEdicion(): void {
     this.estadoEditandoId = null;
   }
 
-  guardarEstado(inscripcionId: number): void {
+  guardarEstado(inscripcionId: number, inscripcion: Inscripcion): void {
     if (this.estadoEditandoId === null) return;
 
-    const inscripcion = this.inscripciones.find(i => i.id === inscripcionId);
-    if (!inscripcion) return;
+    const inscripcionActualizada: Inscripcion = {
+      ...inscripcion,
+      estado: this.estadoSeleccionado
+    };
 
-    inscripcion.estado = this.estadoSeleccionado;
-
-    // Si el estado cambia y es distinto de 'sin', y el id es negativo, asigno nuevo id positivo
-    if (this.estadoSeleccionado !== 'sin inscripcion' && inscripcion.id < 0) {
-      const maxId = this.inscripcionService.getInscripciones().reduce((max, i) => i.id > max ? i.id : max, 0);
-      inscripcion.id = maxId + 1;
-      this.inscripcionService.agregarInscripcion(inscripcion);
+    if (this.estadoSeleccionado !== 'sin inscripcion' && this.estadoSeleccionado !== 'sin' && inscripcionId < 0) {
+      // Crear nueva inscripción
+      const nuevaInscripcion: Inscripcion = {
+        ...inscripcionActualizada,
+        inscrId: Math.abs(inscripcionId),
+        fechaInsc: new Date().toISOString().split('T')[0]
+      };
+      this.store.dispatch(addInscripcion({ inscripcion: nuevaInscripcion }));
     } else {
-      this.inscripcionService.actualizarInscripcion(inscripcion);
+      // Actualizar inscripción existente
+      this.store.dispatch(updateInscripcion({ inscripcion: inscripcionActualizada }));
     }
 
     this.estadoEditandoId = null;
-    this.cargarInscripciones();
+
+    this.snackBar.open('Estado actualizado correctamente', 'Cerrar', {
+      duration: 2000,
+      panelClass: 'snackbar-success'
+    });
   }
 
   mostrarModalEliminar(id: number): void {
     this.inscripcionIdAEliminar = id;
+    this.inicializarModal();
+  }
+
+  private inicializarModal(): void {
     const modalElement = document.getElementById('confirmDeleteModal');
     if (modalElement) {
       this.modal = new bootstrap.Modal(modalElement);
+
+      const confirmBtn = document.getElementById('confirmDeleteBtn');
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+          this.confirmarEliminacion();
+        });
+      }
+
       this.modal.show();
     }
   }
 
   confirmarEliminacion(): void {
     if (this.inscripcionIdAEliminar !== null) {
-      this.inscripcionService.eliminarInscripcion(this.inscripcionIdAEliminar);
-      this.cargarInscripciones();
-      this.modal.hide();
+      this.eliminarInscripcion(this.inscripcionIdAEliminar);
+      this.modal?.hide();
+      this.inscripcionIdAEliminar = null;
     }
   }
 
   eliminarInscripcion(id: number): void {
-    if (id < 0) return; // No se puede eliminar una inscripción "falsa"
+    if (id < 0) return;
 
     if (confirm('¿Seguro que querés eliminar esta inscripción?')) {
-      this.inscripcionService.eliminarInscripcion(id);
-      this.cargarInscripciones();
+      this.store.dispatch(deleteInscripcion({ id }));
+
+      this.snackBar.open('Inscripción eliminada correctamente', 'Cerrar', {
+        duration: 2000,
+        panelClass: 'snackbar-success'
+      });
     }
+  }
+
+  filtrarPorEstado(estado: string): void {
+    this.store.dispatch(setFilterByEstado({ estado }));
+  }
+
+  refrescar(): void {
+    this.store.dispatch(loadInscripciones());
+    this.snackBar.open('Lista de inscripciones actualizada', 'Cerrar', {
+      duration: 1500,
+      panelClass: 'snackbar-info'
+    });
   }
 }

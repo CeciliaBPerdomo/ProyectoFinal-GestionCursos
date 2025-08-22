@@ -2,6 +2,7 @@
 
 export interface Usuarios {
     usuarioId?: number;
+    id?: number; 
     email: string;
     password: string;
     nombre: string;

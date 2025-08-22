@@ -7,7 +7,7 @@ import { AltaInscripcionComponent } from './alta-inscripcion/alta-inscripcion';
 
 const routes: Routes = [
   { path: '', component: ListadoInscripciones, data: { modo: 'alumno' } },    
-  { path: 'admin', component: ListadoInscripciones, data: { modo: 'admin' } }, 
+  { path: 'listado', component: ListadoInscripciones, data: { modo: 'admin' } }, 
   { path: 'alta', component: AltaInscripcionComponent }                        
 ];
 
