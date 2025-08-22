@@ -18,6 +18,7 @@ import { AdminComponent } from './registro/admin';
 import { ListadoAlumnos } from './listado-alumnos/listado-alumnos';
 import { ListadoProfesores } from './listado-profesores/listado-profesores';
 import { ListadoAdministradores } from './listado-administradores/listado-administradores';
+import { AdminDashboardComponent } from './dashboard/dashboard';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { ListadoAdministradores } from './listado-administradores/listado-admini
     ListadoAlumnos,
     ListadoProfesores,
     ListadoAdministradores,
+    AdminDashboardComponent,
   ]
 })
 

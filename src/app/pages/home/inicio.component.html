@@ -32,6 +32,15 @@
                     </mat-card-header>
 
                     <mat-card-content>
+                        <!-- Error message -->
+                        <div *ngIf="error$ | async as error" class="error-message">
+                            <mat-icon>error</mat-icon>
+                            {{ error }}
+                            <button mat-icon-button (click)="clearError()" class="close-error">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </div>
+
                         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
                             <!-- Email -->
                             <mat-form-field appearance="outline" class="full-width">
@@ -65,9 +74,10 @@
 
                             <!-- Submit Button -->
                             <button mat-raised-button color="primary" type="submit" class="login-button"
-                                [disabled]="loginForm.invalid">
+                                [disabled]="loginForm.invalid || (isLoading$ | async)">
                                 <mat-icon>login</mat-icon>
-                                Ingresar
+                                {{ (isLoading$ | async) ? 'Ingresando...' : 'Ingresar' }}
+                                <mat-spinner diameter="20" *ngIf="isLoading$ | async" class="spinner"></mat-spinner>
                             </button>
                         </form>
                     </mat-card-content>

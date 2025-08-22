@@ -2,8 +2,9 @@
 import { Usuarios } from '../../models/usuario.model';
 import { Curso } from '../../models/curso.model';
 import { Inscripcion } from '../../models/inscripcion.model';
-
+import { AuthState } from './auth.model';
 export interface AppState {
+    auth: AuthState;
     usuarios: UsuariosState;
     cursos: CursosState;
     inscripciones: InscripcionesState;

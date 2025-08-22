@@ -1,0 +1,138 @@
+<div class="admin-dashboard">
+  <!-- Navbar -->
+  <mat-toolbar color="primary" class="admin-navbar">
+    <span class="navbar-brand">Panel de Administración</span>
+
+    <span class="spacer"></span>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+      <button mat-button (click)="navigateTo('alumnos')">
+        <mat-icon>people</mat-icon>
+        Alumnos
+      </button>
+      <button mat-button (click)="navigateTo('profesores')">
+        <mat-icon>person</mat-icon>
+        Profesores
+      </button>
+      <button mat-button (click)="navigateTo('cursos')">
+        <mat-icon>class</mat-icon>
+        Cursos
+      </button>
+      <button mat-button (click)="navigateTo('inscripciones')">
+        <mat-icon>assignment</mat-icon>
+        Inscripciones
+      </button>
+    </nav>
+
+    <span class="spacer"></span>
+
+    <!-- User Menu -->
+    <div class="user-section">
+      <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+        <mat-icon>account_circle</mat-icon>
+        {{ (user$ | async)?.nombre }}
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="onLogout()">
+          <mat-icon>logout</mat-icon>
+          Cerrar Sesión
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+
+  <!-- Main Content -->
+  <div class="dashboard-content">
+    <div class="welcome-section">
+      <mat-card class="welcome-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon class="welcome-icon">dashboard</mat-icon>
+            Bienvenido al Panel de Control
+          </mat-card-title>
+          <mat-card-subtitle>
+            {{ currentDate | date:'fullDate' }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <div class="stats-grid">
+            <mat-card class="stat-card">
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon color="primary">people</mat-icon>
+                  Alumnos
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="stat-number">150</div>
+                <div class="stat-label">Registrados</div>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="stat-card">
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon color="accent">person</mat-icon>
+                  Profesores
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="stat-number">25</div>
+                <div class="stat-label">Activos</div>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="stat-card">
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon color="warn">class</mat-icon>
+                  Cursos
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="stat-number">45</div>
+                <div class="stat-label">Disponibles</div>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="stat-card">
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon color="primary">assignment</mat-icon>
+                  Inscripciones
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="stat-number">320</div>
+                <div class="stat-label">Este mes</div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <h2>Acciones Rápidas</h2>
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" (click)="navigateTo('registro')">
+          <mat-icon>person_add</mat-icon>
+          Nuevo Usuario
+        </button>
+        <button mat-raised-button color="warn" (click)="navigateTo('cursos')">
+          <mat-icon>add_circle</mat-icon>
+          Nuevo Curso
+        </button>
+        <button mat-raised-button color="accent" (click)="navigateTo('profesores')">
+          <mat-icon>person_add</mat-icon>
+          Nueva inscripción
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

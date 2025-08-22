@@ -120,6 +120,36 @@
   color: #666;
 }
 
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.close-error {
+  margin-left: auto;
+}
+
+.spinner {
+  margin-left: 8px;
+}
+
+.login-button {
+  position: relative;
+}
+
+.login-button .spinner {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hero-content {
