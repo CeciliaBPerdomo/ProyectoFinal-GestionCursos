@@ -68,19 +68,9 @@ npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 ```
 
 ## Gestión de cursos 
-### Home page
-![Home](image-4.png)
-![Home](image-7.png)
+![alt text](image-10.png)
 
-- Menú **Alumnos**
-    - Listado de alumnos 
-    - Mis cursos
-- Menú **Administrador**
-    - Alumnnos
-    - Cursos
-    - Inscripciones
-
-![AlumnosAdmin](image-5.png)
+> Luego de iniciar sesión, según el rol de cada usuario te llevará al dashboard que te corresponde. 
 
 ### 📦 Modelos y servicios
 - **Models**: 
