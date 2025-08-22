@@ -70,15 +70,9 @@ npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 ## Gestión de cursos 
 ![alt text](image-10.png)
 
-> Luego de iniciar sesión, según el rol de cada usuario te llevará al dashboard que te corresponde. 
+> Luego de iniciar sesión, según el rol de cada usuario, el sistema te re-direccionará al dashboard que corresponde. 
 
-### 📦 Modelos y servicios
-- **Models**: 
-    - Interfaces o clases que definen la forma de los datos.
-- **Services**:
-    - Son clases que encapsulan lógica relacionada con datos.
-    - Como no se utiliza base de datos aún, los services devuelven arrays simulados.
-
+### 📦 Modelo
 ![ModeladoBaseDatos](image-8.png)
 
 > **Nota**: Para el curso solo armé tres tablas: `usuario`, `curso` e `inscripciones`. Igual, pensando en que el sistema pueda crecer, habría sido mejor sumar otras dos tablas: `perfil` y `rol`, así sería más fácil agregar nuevos perfiles o roles (Administrador, Profesor y Alumno) para darle más escabilidad al proyecto. 
@@ -89,9 +83,9 @@ npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 
 ![MockApi.io](image-9.png)
 
-## 🛠️ Tecnologías utilizadas para el proyecto
+---  
 
-| 🛠️  |
+| 🛠️ **Tecnologías utilizadas para el proyecto**  |
 |----------------------------|
 | ![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![Material UI](https://img.shields.io/badge/Material--UI-007FFF?style=flat&logo=mui&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white) ![MockAPI](https://img.shields.io/badge/MockAPI-00CFFF?style=flat&logo=mockapi&logoColor=white) ![NgRx Store](https://img.shields.io/badge/NgRx%20Store-E23237?style=flat&logo=ngrx&logoColor=white) ![NgRx Effects](https://img.shields.io/badge/NgRx%20Effects-E23237?style=flat&logo=ngrx&logoColor=white) ![NgRx Store DevTools](https://img.shields.io/badge/NgRx%20StoreDevTools-E23237?style=flat&logo=ngrx&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)  |
 
