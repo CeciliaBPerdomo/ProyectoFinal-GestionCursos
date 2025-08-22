@@ -1,9 +1,10 @@
 // app.routes.ts
 import { Routes } from '@angular/router';
 import { InicioComponent } from './pages/home/inicio.component';
+import { AuthGuard, AdminGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', component: InicioComponent }, 
+  { path: '', component: InicioComponent },
   {
     path: 'alumnos',
     loadChildren: () =>
@@ -21,8 +22,9 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivate: [AuthGuard, AdminGuard],
     loadChildren: () =>
-      import('./pages/admin/admin.module').then(m => m.AdminModule) 
+      import('./pages/admin/admin.module').then(m => m.AdminModule)
   },
   { path: '**', redirectTo: '/' }
 ];
