@@ -21,7 +21,7 @@ import { AppState } from '../../../store/models/app-state';
   imports: [
     CommonModule,
     RouterModule,
-    
+
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
@@ -52,6 +52,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   navigateTo(route: string): void {
-    this.router.navigate([`/admin/${route}`]);
+    this.router.navigate([`/${route}`]);
   }
 }

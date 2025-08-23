@@ -11,6 +11,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+
 
 // NgRx
 import { Store } from '@ngrx/store';
@@ -28,14 +30,17 @@ import { Curso } from '../../../models/curso.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+
     RouterModule,
     MatFormFieldModule,
+
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatIconModule
   ],
   templateUrl: './alta-curso.html',
   styleUrls: ['./alta-curso.css']
@@ -111,7 +116,7 @@ export class AltaCurso implements OnInit {
               horizontalPosition: 'center',
               panelClass: 'snackbar-exito'
             });
-            this.router.navigate(['/cursos-admin']);
+            this.router.navigate(['/cursos/listado-cursos']);
             
             // Limpiar suscripciones
             successSubscription.unsubscribe();

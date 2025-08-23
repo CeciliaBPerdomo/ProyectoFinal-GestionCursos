@@ -7,7 +7,7 @@
 
     <!-- Navigation Menu -->
     <nav class="nav-menu">
-      <button mat-button (click)="navigateTo('alumnos')">
+      <button mat-button (click)="navigateTo('alumnos/listado-alumnos/listado-alumnos')">
         <mat-icon>people</mat-icon>
         Alumnos
       </button>
@@ -62,8 +62,8 @@
           <div class="stats-grid">
             <mat-card class="stat-card">
               <mat-card-header>
-                <mat-card-title>
-                  <mat-icon color="primary">people</mat-icon>
+                <mat-card-title class="text-dark">
+                  <mat-icon>people</mat-icon>
                   Alumnos
                 </mat-card-title>
               </mat-card-header>
@@ -75,8 +75,8 @@
 
             <mat-card class="stat-card">
               <mat-card-header>
-                <mat-card-title>
-                  <mat-icon color="accent">person</mat-icon>
+                <mat-card-title class="text-dark">
+                  <mat-icon>person</mat-icon>
                   Profesores
                 </mat-card-title>
               </mat-card-header>
@@ -88,8 +88,8 @@
 
             <mat-card class="stat-card">
               <mat-card-header>
-                <mat-card-title>
-                  <mat-icon color="warn">class</mat-icon>
+                <mat-card-title class="text-dark">
+                  <mat-icon>class</mat-icon>
                   Cursos
                 </mat-card-title>
               </mat-card-header>
@@ -101,8 +101,8 @@
 
             <mat-card class="stat-card">
               <mat-card-header>
-                <mat-card-title>
-                  <mat-icon color="primary">assignment</mat-icon>
+                <mat-card-title class="text-dark">
+                  <mat-icon>assignment</mat-icon>
                   Inscripciones
                 </mat-card-title>
               </mat-card-header>
@@ -120,15 +120,15 @@
     <div class="quick-actions">
       <h2>Acciones Rápidas</h2>
       <div class="action-buttons">
-        <button mat-raised-button color="primary" (click)="navigateTo('registro')">
+        <button mat-raised-button color="primary" (click)="navigateTo('admin/registro')">
           <mat-icon>person_add</mat-icon>
           Nuevo Usuario
         </button>
-        <button mat-raised-button color="warn" (click)="navigateTo('cursos')">
+        <button mat-raised-button color="warn" (click)="navigateTo('cursos/alta')">
           <mat-icon>add_circle</mat-icon>
           Nuevo Curso
         </button>
-        <button mat-raised-button color="accent" (click)="navigateTo('profesores')">
+        <button mat-raised-button color="accent" (click)="navigateTo('inscripciones/alta')">
           <mat-icon>person_add</mat-icon>
           Nueva inscripción
         </button>

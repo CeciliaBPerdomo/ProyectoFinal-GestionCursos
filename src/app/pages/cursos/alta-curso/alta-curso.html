@@ -1,96 +1,97 @@
-<div class="container mt-4 bg-white p-4 rounded shadow">
-  <h2 class="mb-3 text-center text-md-start">Alta de Curso</h2>
-  <p class="mb-4 text-center text-md-start">Formulario para dar de alta un nuevo curso.</p>
+<div class="curso-form-container">
+  <!-- Header mejorado -->
+  <div class="curso-header">
+    <div class="header-content">
+      <div class="title-group">
+        <h2 class="curso-title">
+          <mat-icon class="title-icon">school</mat-icon>
+          Alta de Curso
+        </h2>
+        <p class="curso-subtitle">
+          Formulario para registrar un nuevo curso en el sistema
+        </p>
+      </div>
+      
+      <button mat-raised-button color="primary" [routerLink]="['/admin','dashboard']"  class="back-dashboard-btn">
+        <mat-icon>dashboard</mat-icon>
+        Volver al Dashboard
+      </button>
+    </div>
+  </div>
 
-  <form [formGroup]="cursoForm" (ngSubmit)="guardar()" class="row g-3">
+  <form [formGroup]="cursoForm" (ngSubmit)="guardar()" class="curso-form-card">
 
     <!-- Nombre -->
-    <div class="col-12 col-md-6">
-      <mat-form-field appearance="fill" class="w-100">
-        <mat-label>Nombre del curso</mat-label>
-        <input matInput formControlName="nombre" />
-        <mat-error *ngIf="campoInvalido('nombre')">Este campo es obligatorio</mat-error>
-      </mat-form-field>
-    </div>
-
-    <!-- Profesor ID -->
-    <div class="col-12 col-md-6">
-      <mat-form-field appearance="fill" class="w-100">
-        <mat-label>ID del Profesor</mat-label>
-        <input matInput type="number" formControlName="profesorId" />
-        <mat-error *ngIf="campoInvalido('profesorId')">ID de profesor válido requerido</mat-error>
-      </mat-form-field>
-    </div>
+    <mat-form-field appearance="outline" class="col-12">
+      <mat-label>Nombre del curso</mat-label>
+      <input matInput formControlName="nombre" placeholder="Ej: Angular Avanzado">
+      <mat-icon matSuffix>title</mat-icon>
+      <mat-error *ngIf="campoInvalido('nombre')">El nombre es requerido</mat-error>
+    </mat-form-field>
 
     <!-- Descripción -->
-    <div class="col-12">
-      <mat-form-field appearance="fill" class="w-100">
-        <mat-label>Descripción</mat-label>
-        <textarea matInput formControlName="descripcion" rows="3"></textarea>
-        <mat-error *ngIf="campoInvalido('descripcion')">Este campo es obligatorio</mat-error>
-      </mat-form-field>
-    </div>
+    <mat-form-field appearance="outline" class="col-12">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="descripcion" placeholder="Breve descripción del curso" rows="2"></textarea>
+      <mat-icon matSuffix>description</mat-icon>
+      <mat-error *ngIf="campoInvalido('descripcion')">La descripción es requerida</mat-error>
+    </mat-form-field>
 
     <!-- Cantidad de Horas -->
-    <div class="col-12 col-md-6">
-      <mat-form-field appearance="fill" class="w-100">
-        <mat-label>Horas totales</mat-label>
-        <input matInput type="number" formControlName="cantHoras" />
-        <mat-error *ngIf="campoInvalido('cantHoras')">Mínimo 1 hora</mat-error>
-      </mat-form-field>
-    </div>
+    <mat-form-field appearance="outline" class="col-md-6">
+      <mat-label>Cantidad de Horas</mat-label>
+      <input matInput type="number" formControlName="cantHoras">
+      <mat-icon matSuffix>access_time</mat-icon>
+      <mat-error *ngIf="campoInvalido('cantHoras')">Debe ser mayor a 0</mat-error>
+    </mat-form-field>
 
     <!-- Cantidad de Clases -->
-    <div class="col-12 col-md-6">
-      <mat-form-field appearance="fill" class="w-100">
-        <mat-label>Cantidad de clases</mat-label>
-        <input matInput type="number" formControlName="cantClases" />
-        <mat-error *ngIf="campoInvalido('cantClases')">Mínimo 1 clase</mat-error>
-      </mat-form-field>
-    </div>
+    <mat-form-field appearance="outline" class="col-md-6">
+      <mat-label>Cantidad de Clases</mat-label>
+      <input matInput type="number" formControlName="cantClases">
+      <mat-icon matSuffix>event_note</mat-icon>
+      <mat-error *ngIf="campoInvalido('cantClases')">Debe ser mayor a 0</mat-error>
+    </mat-form-field>
 
-    <!-- Fecha de Comienzo -->
-    <div class="col-12 col-md-6">
-      <mat-form-field appearance="fill" class="w-100">
-        <mat-label>Fecha de inicio</mat-label>
-        <input matInput [matDatepicker]="comienzoPicker" formControlName="comienzo" />
-        <mat-datepicker-toggle matSuffix [for]="comienzoPicker"></mat-datepicker-toggle>
-        <mat-datepicker #comienzoPicker></mat-datepicker>
-        <mat-error *ngIf="campoInvalido('comienzo')">Fecha de inicio requerida</mat-error>
-      </mat-form-field>
-    </div>
+    <!-- Fecha de inicio -->
+    <mat-form-field appearance="outline" class="col-md-6">
+      <mat-label>Fecha de Inicio</mat-label>
+      <input matInput [matDatepicker]="pickerInicio" formControlName="comienzo">
+      <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+      <mat-datepicker #pickerInicio></mat-datepicker>
+      <mat-icon matSuffix>event_available</mat-icon>
+      <mat-error *ngIf="campoInvalido('comienzo')">Seleccione una fecha de inicio</mat-error>
+    </mat-form-field>
 
-    <!-- Fecha de Fin -->
-    <div class="col-12 col-md-6">
-      <mat-form-field appearance="fill" class="w-100">
-        <mat-label>Fecha de finalización</mat-label>
-        <input matInput [matDatepicker]="finPicker" formControlName="fin" />
-        <mat-datepicker-toggle matSuffix [for]="finPicker"></mat-datepicker-toggle>
-        <mat-datepicker #finPicker></mat-datepicker>
-        <mat-error *ngIf="campoInvalido('fin')">Fecha de finalización requerida</mat-error>
-      </mat-form-field>
-    </div>
+    <!-- Fecha de fin -->
+    <mat-form-field appearance="outline" class="col-md-6">
+      <mat-label>Fecha de Fin</mat-label>
+      <input matInput [matDatepicker]="pickerFin" formControlName="fin">
+      <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFin></mat-datepicker>
+      <mat-icon matSuffix>event_busy</mat-icon>
+      <mat-error *ngIf="campoInvalido('fin')">Seleccione una fecha de fin</mat-error>
+    </mat-form-field>
+
+    <!-- Profesor -->
+    <mat-form-field appearance="outline" class="col-12">
+      <mat-label>Profesor ID</mat-label>
+      <input matInput type="number" formControlName="profesorId" placeholder="Ej: 1">
+      <mat-icon matSuffix>badge</mat-icon>
+      <mat-error *ngIf="campoInvalido('profesorId')">Debe ingresar un ID válido</mat-error>
+    </mat-form-field>
 
     <!-- Botones -->
-    <div class="col-12 text-center text-md-end">
-      <button 
-        mat-raised-button 
-        color="primary" 
-        type="submit" 
-        [disabled]="cursoForm.invalid || (loading$ | async)"
-      >
-        {{ (loading$ | async) ? 'Guardando...' : 'Guardar Curso' }}
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="cursoForm.invalid" class="submit-btn">
+        <mat-icon>save</mat-icon>
+        Guardar Curso
       </button>
-      
-      <button 
-        mat-button 
-        color="warn" 
-        type="button" 
-        class="ms-2"
-        routerLink="/cursos-admin"
-      >
+      <button mat-raised-button color="warn" type="button" routerLink="/cursos/listado-cursos" class="cancel-btn">
+        <mat-icon>cancel</mat-icon>
         Cancelar
       </button>
     </div>
+
   </form>
 </div>

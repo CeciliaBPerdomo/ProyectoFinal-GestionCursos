@@ -6,8 +6,8 @@ import { ListadoCursos } from './listado-cursos/listado-cursos';
 import { AltaCurso } from './alta-curso/alta-curso';
 
 const routes: Routes = [
-  { path: '', component: ListadoCursos, data: { modo: 'alumno' } },    
-  { path: 'admin', component: ListadoCursos, data: { modo: 'admin' } },
+  { path: '', component: ListadoCursos},    
+  { path: 'listado-cursos', component: ListadoCursos },
   { path: 'alta', component: AltaCurso }
 ];
 
