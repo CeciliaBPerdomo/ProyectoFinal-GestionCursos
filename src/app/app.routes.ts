@@ -27,6 +27,12 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./pages/admin/admin.module').then(m => m.AdminModule)
   },
+   {
+    path: 'profesores',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./pages/profesores/profesores.module').then(m => m.ProfesoresModule) 
+  },
   { path: '**', redirectTo: '/' }
 ];
 
