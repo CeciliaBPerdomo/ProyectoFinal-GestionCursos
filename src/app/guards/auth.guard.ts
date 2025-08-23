@@ -48,3 +48,21 @@ export class AdminGuard implements CanActivate {
     );
   }
 }
+
+export class AlumnoGuard implements CanActivate {
+  private store = inject(Store<AppState>);
+  private router = inject(Router);
+
+  canActivate() {
+    return this.store.select(selectUser).pipe(
+      take(1),
+      map(user => {
+        if (!user || user.rol !== 'alumno') {
+          this.router.navigate(['/']);
+          return false;
+        }
+        return true;
+      })
+    );
+  }
+}

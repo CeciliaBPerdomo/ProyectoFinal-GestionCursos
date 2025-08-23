@@ -88,7 +88,7 @@ export class AuthEffects {
             this.router.navigate(['/profesor/cursos']);
             break;
           case 'alumno':
-            this.router.navigate(['/alumno/mis-cursos']);
+            this.router.navigate(['/alumnos/dashboard-alumno']);
             break;
           default:
             this.router.navigate(['/']);

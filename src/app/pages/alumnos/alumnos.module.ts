@@ -7,18 +7,22 @@ import { FormsModule } from '@angular/forms';
 import { AlumnosRoutingModule } from './alumnos-routing.module';
 
 // Importar componentes 
-import { AltaAlumno } from './alta-alumno/alta-alumno';
-import { ListaAlumnos } from './lista-alumnos/lista-alumnos';
-import { MisCursos } from './mis-cursos/mis-cursos';
+import { AlumnoDashboardComponent } from './dashboard/dashboard-alumno';
+// import { AltaAlumno } from './alta-alumno/alta-alumno';
+// import { ListaAlumnos } from './lista-alumnos/lista-alumnos';
+// import { MisCursos } from './mis-cursos/mis-cursos';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
+
         AlumnosRoutingModule,
-        ListaAlumnos,
-        MisCursos,
-        AltaAlumno
+
+        AlumnoDashboardComponent,
+        // ListaAlumnos,
+        // MisCursos,
+        // AltaAlumno
     ]
 })
 

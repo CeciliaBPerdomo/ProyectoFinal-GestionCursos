@@ -8,10 +8,11 @@ import { AltaAlumno } from './alta-alumno/alta-alumno';
 import { MisCursos } from './mis-cursos/mis-cursos';
 
 const routes: Routes = [
-  { path: '', component: ListaAlumnos, data: { modo: 'alumno' } },          // Lista para alumnos
-  { path: 'admin', component: ListaAlumnos, data: { modo: 'admin' } },      // Lista para admin
-  { path: 'alta', component: AltaAlumno },                                  // Alta de alumno
-  { path: 'mis-cursos', component: MisCursos, data: { modo: 'alumno' } }    // Mis cursos
+  { path: '', redirectTo: 'dashboard-alumno', pathMatch: 'full' },
+  { path: 'dashboard-alumno', loadComponent: () => import('./dashboard/dashboard-alumno').then(m => m.AlumnoDashboardComponent), },
+  // { path: 'admin', component: ListaAlumnos, data: { modo: 'admin' } },    
+  // { path: 'alta', component: AltaAlumno },                                  
+  // { path: 'mis-cursos', component: MisCursos, data: { modo: 'alumno' } }    
 ];
 
 @NgModule({
@@ -19,4 +20,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class AlumnosRoutingModule {}
+export class AlumnosRoutingModule { }

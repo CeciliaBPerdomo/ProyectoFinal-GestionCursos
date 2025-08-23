@@ -6,8 +6,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: 'dashboard',
-    loadComponent: () =>
-      import('./dashboard/dashboard').then(m => m.AdminDashboardComponent)
+    loadComponent: () => import('./dashboard/dashboard').then(m => m.AdminDashboardComponent)
   },
   {
     path: 'registro',

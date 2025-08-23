@@ -1,12 +1,13 @@
 // app.routes.ts
 import { Routes } from '@angular/router';
 import { InicioComponent } from './pages/home/inicio.component';
-import { AuthGuard, AdminGuard } from './guards/auth.guard';
+import { AuthGuard, AdminGuard} from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: InicioComponent },
   {
     path: 'alumnos',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/alumnos/alumnos.module').then(m => m.AlumnosModule)
   },

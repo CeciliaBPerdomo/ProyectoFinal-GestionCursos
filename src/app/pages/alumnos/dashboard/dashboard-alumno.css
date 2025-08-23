@@ -1,0 +1,115 @@
+.alumno-dashboard {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.welcome-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.welcome-icon {
+  margin-right: 12px;
+  font-size: 32px;
+}
+
+.dashboard-content {
+  margin-top: 24px;
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+.tab-content h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.cursos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.curso-card {
+  transition: transform 0.2s;
+}
+
+.curso-card:hover {
+  transform: translateY(-2px);
+}
+
+.precio {
+  font-weight: bold;
+  color: #2e7d32;
+  font-size: 1.1em;
+}
+
+.estado-activo {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.estado-inactivo {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+.no-cursos {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.no-cursos mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+}
+
+.alumno-item {
+  border-bottom: 1px solid #eee;
+}
+
+.alumno-item:last-child {
+  border-bottom: none;
+}
+
+.perfil-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.info-item mat-icon {
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .alumno-dashboard {
+    padding: 10px;
+  }
+  
+  .cursos-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tab-content {
+    padding: 10px;
+  }
+}
