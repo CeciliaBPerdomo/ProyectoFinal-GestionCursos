@@ -1,32 +1,42 @@
-.admin-container {
+.curso-form-container {
   padding: 2rem;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
-  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.admin-header {
+.curso-form-container::-webkit-scrollbar {
+  display: none;
+}
+
+.curso-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 2rem;
   margin-bottom: 2rem;
   color: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 2rem;
 }
 
-.title-section {
+.title-group {
   flex: 1;
 }
 
-.admin-title {
-  font-size: 2rem;
+.curso-title {
+  font-size: 2.2rem;
   font-weight: 600;
   margin: 0 0 0.5rem 0;
   display: flex;
@@ -35,53 +45,75 @@
 }
 
 .title-icon {
-  font-size: 2rem;
-  width: 2rem;
-  height: 2rem;
+  font-size: 2.2rem;
+  width: 2.2rem;
+  height: 2.2rem;
 }
 
-.admin-subtitle {
+.curso-subtitle {
   font-size: 1.1rem;
   opacity: 0.9;
   margin: 0;
   font-weight: 300;
 }
 
-.back-button {
+.back-dashboard-btn {
   background: rgba(255, 255, 255, 0.2) !important;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: white !important;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0.75rem 1.5rem;
   font-weight: 500;
+  white-space: nowrap;
 }
 
-.form-container {
+.curso-form-card {
   background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
-.usuario-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.curso-form-card .col-12 {
+  grid-column: span 2;
+}
+
+.curso-form-card .col-md-6 {
+  grid-column: span 1;
 }
 
 .form-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  display: contents;
 }
 
-.form-field {
+mat-form-field {
   width: 100%;
 }
 
-.full-width {
-  grid-column: 1 / -1;
+mat-form-field.mat-form-field-appearance-outline .mat-form-field-outline {
+  border-radius: 12px;
+}
+
+mat-form-field.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+mat-form-field .mat-form-field-label {
+  font-weight: 500;
+  color: #6c757d;
+}
+
+mat-form-field .mat-input-element {
+  padding: 0.75rem 0;
+}
+
+mat-icon.mat-suffix {
+  color: #667eea;
+  margin-right: 0.5rem;
 }
 
 .rol-option {
@@ -92,28 +124,32 @@
 }
 
 .form-actions {
+  grid-column: span 2;
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
   align-items: center;
-  flex-wrap: wrap;
   margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #f1f3f4;
 }
 
-.submit-button {
+.submit-btn {
   padding: 0.75rem 2rem;
-  font-size: 1rem;
+  border-radius: 12px;
   font-weight: 500;
-  border-radius: 8px;
+  font-size: 1rem;
 }
 
-.cancel-button {
+.cancel-btn {
   padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
   font-size: 1rem;
-  border-radius: 8px;
 }
 
 .feedback-message {
+  grid-column: span 2;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -140,60 +176,89 @@
   height: 1.25rem;
 }
 
-/* Material overrides */
-mat-form-field {
-  width: 100%;
+/* Efectos hover */
+.back-dashboard-btn:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-1px);
 }
 
-mat-label {
-  font-weight: 500;
+.submit-btn:hover,
+.cancel-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .admin-container {
+  .curso-form-container {
     padding: 1rem;
   }
 
   .header-content {
     flex-direction: column;
     text-align: center;
+    gap: 1rem;
   }
 
-  .admin-title {
+  .curso-title {
     justify-content: center;
-    font-size: 1.75rem;
+    font-size: 1.8rem;
   }
 
-  .form-row {
+  .curso-form-card {
     grid-template-columns: 1fr;
-  }
-
-  .form-actions {
-    justify-content: center;
-  }
-
-  .back-button {
-    align-self: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .admin-header {
     padding: 1.5rem;
+    gap: 1rem;
   }
 
-  .form-container {
-    padding: 1.5rem;
+  .curso-form-card .col-12,
+  .curso-form-card .col-md-6 {
+    grid-column: span 1;
   }
 
   .form-actions {
     flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .submit-btn,
+  .cancel-btn {
     width: 100%;
   }
 
-  .submit-button,
-  .cancel-button {
+  .back-dashboard-btn {
     width: 100%;
+    justify-content: center;
   }
+}
+
+/* Animaciones suaves */
+.curso-form-container {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mejora para los selects */
+.mat-select-panel {
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Estados de validación */
+mat-form-field.ng-invalid.ng-touched .mat-form-field-outline-thick {
+  color: #dc3545;
+}
+
+mat-form-field.ng-valid.ng-touched .mat-form-field-outline-thick {
+  color: #28a745;
 }

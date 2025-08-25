@@ -1,6 +1,6 @@
 .app-background {
   position: relative;
-  background-image: url('../assets/New-Fondo.jpg');
+background-color: aliceblue;
   background-size: cover;
   background-position: center;
   height: 100vh;

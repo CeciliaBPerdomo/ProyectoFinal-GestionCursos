@@ -1,169 +1,167 @@
-<div class="admin-container">
-  <!-- Header con título y botón de volver -->
-  <div class="admin-header">
+<div class="curso-form-container">
+  <!-- Header mejorado -->
+  <div class="curso-header">
     <div class="header-content">
-      <div class="title-section">
-        <h1 class="admin-title">
+      <div class="title-group">
+        <h2 class="curso-title">
           <mat-icon class="title-icon">person_add</mat-icon>
           Alta de Usuario
-        </h1>
-        <p class="admin-subtitle">
+        </h2>
+        <p class="curso-subtitle">
           Formulario para registrar un nuevo usuario en el sistema
         </p>
       </div>
       
-      <button mat-raised-button color="primary" routerLink="/admin/dashboard" class="back-button">
+      <button mat-raised-button color="primary" routerLink="/admin/dashboard" class="back-dashboard-btn">
         <mat-icon>dashboard</mat-icon>
         Volver al Dashboard
       </button>
     </div>
   </div>
 
-  <!-- Formulario -->
-  <div class="form-container">
-    <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="usuario-form">
-      
-      <!-- Primera fila de campos -->
-      <div class="form-row">
-        <!-- Nombre -->
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Nombre completo</mat-label>
-          <input matInput placeholder="Ingrese el nombre" formControlName="nombre" />
-          <mat-icon matSuffix>person</mat-icon>
-          <mat-error *ngIf="usuarioForm.get('nombre')?.hasError('required')">
-            El nombre es obligatorio
-          </mat-error>
-        </mat-form-field>
+  <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="curso-form-card">
 
-        <!-- Email -->
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" placeholder="correo@ejemplo.com" formControlName="email" />
-          <mat-icon matSuffix>email</mat-icon>
-          <mat-error *ngIf="usuarioForm.get('email')?.hasError('required')">
-            El email es obligatorio
-          </mat-error>
-          <mat-error *ngIf="usuarioForm.get('email')?.hasError('email')">
-            Ingrese un email válido
-          </mat-error>
-        </mat-form-field>
-      </div>
+    <!-- Primera fila de campos -->
+    <div class="form-row">
+      <!-- Nombre -->
+      <mat-form-field appearance="outline" class="col-md-6">
+        <mat-label>Nombre completo</mat-label>
+        <input matInput placeholder="Ingrese el nombre" formControlName="nombre" />
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="usuarioForm.get('nombre')?.hasError('required')">
+          El nombre es obligatorio
+        </mat-error>
+      </mat-form-field>
 
-      <!-- Segunda fila de campos -->
-      <div class="form-row">
-        <!-- Password -->
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Contraseña</mat-label>
-          <input matInput type="password" placeholder="Mínimo 6 caracteres" formControlName="password" />
-          <mat-icon matSuffix>lock</mat-icon>
-          <mat-error *ngIf="usuarioForm.get('password')?.hasError('required')">
-            La contraseña es obligatoria
-          </mat-error>
-        </mat-form-field>
-
-        <!-- Teléfono -->
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Teléfono</mat-label>
-          <input matInput placeholder="+54 11 1234-5678" formControlName="telefono" />
-          <mat-icon matSuffix>phone</mat-icon>
-        </mat-form-field>
-      </div>
-
-      <!-- Tercera fila de campos -->
-      <div class="form-row">
-        <!-- Dirección -->
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Dirección</mat-label>
-          <input matInput placeholder="Dirección completa" formControlName="direccion" />
-          <mat-icon matSuffix>location_on</mat-icon>
-        </mat-form-field>
-
-        <!-- Perfil -->
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Perfil</mat-label>
-          <mat-select formControlName="perfil">
-            <mat-option value="Desarrollador Web">Desarrollador Web</mat-option>
-            <mat-option value="Desarrollador IT">Desarrollador IT</mat-option>
-            <mat-option value="UX/UI">UX/UI</mat-option>
-            <mat-option value="FrontEnd">FrontEnd</mat-option>
-            <mat-option value="Backend">Backend</mat-option>
-            <mat-option value="FullStack">FullStack</mat-option>
-            <mat-option value="DevOps">DevOps</mat-option>
-            <mat-option value="QA">QA</mat-option>
-            <mat-option value="Usuario Final">Usuario Final</mat-option>
-            <mat-option value="Administrador">Administrador</mat-option>
-          </mat-select>
-          <mat-icon matSuffix>work</mat-icon>
-          <mat-error *ngIf="usuarioForm.get('perfil')?.hasError('required')">
-            Seleccione un perfil
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <!-- Cuarta fila - Rol -->
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="form-field full-width">
-          <mat-label>Rol del usuario</mat-label>
-          <mat-select formControlName="rol">
-            <mat-option value="alumno">
-              <div class="rol-option">
-                <mat-icon>school</mat-icon>
-                <span>Alumno</span>
-              </div>
-            </mat-option>
-            <mat-option value="profesor">
-              <div class="rol-option">
-                <mat-icon>person</mat-icon>
-                <span>Profesor</span>
-              </div>
-            </mat-option>
-            <mat-option value="administrador">
-              <div class="rol-option">
-                <mat-icon>admin_panel_settings</mat-icon>
-                <span>Administrador</span>
-              </div>
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="usuarioForm.get('rol')?.hasError('required')">
-            Seleccione un rol
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <!-- Botones de acción -->
-      <div class="form-actions">
-        <button 
-          mat-raised-button 
-          color="primary" 
-          type="submit" 
-          [disabled]="usuarioForm.invalid || (loading$ | async)"
-          class="submit-button"
-        >
-          <mat-icon>{{ (loading$ | async) ? 'hourglass_empty' : 'save' }}</mat-icon>
-          {{ (loading$ | async) ? 'Guardando...' : 'Guardar Usuario' }}
-        </button>
-
-        <button 
-          mat-stroked-button 
-          type="button" 
-          routerLink="/admin/dashboard"
-          class="cancel-button"
-        >
-          <mat-icon>cancel</mat-icon>
-          Cancelar
-        </button>
-      </div>
-
-    </form>
-
-    <!-- Mensaje de feedback -->
-    <div class="feedback-message" *ngIf="mensaje">
-      <mat-icon class="message-icon">
-        {{ mensaje.startsWith('✅') ? 'check_circle' : 'error' }}
-      </mat-icon>
-      <span [class]="mensaje.startsWith('✅') ? 'success-text' : 'error-text'">
-        {{ mensaje }}
-      </span>
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="col-md-6">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="correo@ejemplo.com" formControlName="email" />
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error *ngIf="usuarioForm.get('email')?.hasError('required')">
+          El email es obligatorio
+        </mat-error>
+        <mat-error *ngIf="usuarioForm.get('email')?.hasError('email')">
+          Ingrese un email válido
+        </mat-error>
+      </mat-form-field>
     </div>
+
+    <!-- Segunda fila de campos -->
+    <div class="form-row">
+      <!-- Password -->
+      <mat-form-field appearance="outline" class="col-md-6">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" placeholder="Mínimo 6 caracteres" formControlName="password" />
+        <mat-icon matSuffix>lock</mat-icon>
+        <mat-error *ngIf="usuarioForm.get('password')?.hasError('required')">
+          La contraseña es obligatoria
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Teléfono -->
+      <mat-form-field appearance="outline" class="col-md-6">
+        <mat-label>Teléfono</mat-label>
+        <input matInput placeholder="+54 11 1234-5678" formControlName="telefono" />
+        <mat-icon matSuffix>phone</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <!-- Tercera fila de campos -->
+    <div class="form-row">
+      <!-- Dirección -->
+      <mat-form-field appearance="outline" class="col-md-6">
+        <mat-label>Dirección</mat-label>
+        <input matInput placeholder="Dirección completa" formControlName="direccion" />
+        <mat-icon matSuffix>location_on</mat-icon>
+      </mat-form-field>
+
+      <!-- Perfil -->
+      <mat-form-field appearance="outline" class="col-md-6">
+        <mat-label>Perfil</mat-label>
+        <mat-select formControlName="perfil">
+          <mat-option value="Desarrollador Web">Desarrollador Web</mat-option>
+          <mat-option value="Desarrollador IT">Desarrollador IT</mat-option>
+          <mat-option value="UX/UI">UX/UI</mat-option>
+          <mat-option value="FrontEnd">FrontEnd</mat-option>
+          <mat-option value="Backend">Backend</mat-option>
+          <mat-option value="FullStack">FullStack</mat-option>
+          <mat-option value="DevOps">DevOps</mat-option>
+          <mat-option value="QA">QA</mat-option>
+          <mat-option value="Usuario Final">Usuario Final</mat-option>
+          <mat-option value="Administrador">Administrador</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>work</mat-icon>
+        <mat-error *ngIf="usuarioForm.get('perfil')?.hasError('required')">
+          Seleccione un perfil
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Cuarta fila - Rol -->
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="col-12">
+        <mat-label>Rol del usuario</mat-label>
+        <mat-select formControlName="rol">
+          <mat-option value="alumno">
+            <div class="rol-option">
+              <mat-icon>school</mat-icon>
+              <span>Alumno</span>
+            </div>
+          </mat-option>
+          <mat-option value="profesor">
+            <div class="rol-option">
+              <mat-icon>person</mat-icon>
+              <span>Profesor</span>
+            </div>
+          </mat-option>
+          <mat-option value="administrador">
+            <div class="rol-option">
+              <mat-icon>admin_panel_settings</mat-icon>
+              <span>Administrador</span>
+            </div>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="usuarioForm.get('rol')?.hasError('required')">
+          Seleccione un rol
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="form-actions">
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="usuarioForm.invalid || (loading$ | async)"
+        class="submit-btn"
+      >
+        <mat-icon>{{ (loading$ | async) ? 'hourglass_empty' : 'save' }}</mat-icon>
+        {{ (loading$ | async) ? 'Guardando...' : 'Guardar Usuario' }}
+      </button>
+
+      <button 
+        mat-raised-button 
+        color="warn" 
+        type="button" 
+        routerLink="/admin/dashboard"
+        class="cancel-btn"
+      >
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+      </button>
+    </div>
+
+  </form>
+
+  <!-- Mensaje de feedback -->
+  <div class="feedback-message" *ngIf="mensaje">
+    <mat-icon class="message-icon">
+      {{ mensaje.startsWith('✅') ? 'check_circle' : 'error' }}
+    </mat-icon>
+    <span [class]="mensaje.startsWith('✅') ? 'success-text' : 'error-text'">
+      {{ mensaje }}
+    </span>
   </div>
 </div>

@@ -32,3 +32,10 @@ export const selectSearchTermCurso = createSelector(
   selectCursosState,
   (state: CursosState) => state.searchTerm
 );
+
+export const selectCursosStats = createSelector(
+  selectAllCursos,
+  (cursos) => ({
+    total: cursos.length
+  })
+);

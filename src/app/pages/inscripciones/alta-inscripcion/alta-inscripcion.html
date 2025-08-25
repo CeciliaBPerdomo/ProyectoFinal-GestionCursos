@@ -1,109 +1,93 @@
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <mat-card class="shadow">
-                <mat-card-header class="bg-primary text-white p-3">
-                    <mat-card-title>
-                        <mat-icon class="me-2">assignment_add</mat-icon>
-                        Alta de Nueva Inscripción
-                    </mat-card-title>
-                </mat-card-header>
-
-                <mat-card-content class="p-4">
-                    <form [formGroup]="inscripcionForm" (ngSubmit)="onSubmit()" class="row g-3">
-
-                        <!-- Curso -->
-                        <div class="col-12">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Curso</mat-label>
-                                <mat-select formControlName="cursoId">
-                                    <mat-option [value]="null" disabled>Selecciona un curso</mat-option>
-                                    <mat-option *ngFor="let curso of (cursos$ | async) || []" [value]="curso.cursoId">
-                                        {{ curso.nombre }}
-                                        <span *ngIf="curso.profesorId">- Profesor: {{curso.profesorId}}</span>
-                                    </mat-option>
-                                </mat-select>
-                                <mat-icon matSuffix>school</mat-icon>
-                                <mat-error *ngIf="campoInvalido('cursoId')">
-                                    Debes seleccionar un curso
-                                </mat-error>
-                            </mat-form-field>
-
-                        </div>
-
-                        <!-- Alumno -->
-                        <div class="col-12">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Alumno</mat-label>
-                                <mat-select formControlName="alumnoId">
-                                    <mat-option value="" disabled>Selecciona un alumno</mat-option>
-                                    <mat-option *ngFor="let alumno of (alumnos$ | async) || []"
-                                        [value]="alumno.usuarioId || alumno.id">
-                                        {{ alumno.nombre }} - {{ alumno.email }}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-icon matSuffix>person</mat-icon>
-                                <mat-error *ngIf="campoInvalido('alumnoId')">
-                                    Debes seleccionar un alumno
-                                </mat-error>
-
-                                <!-- Mensaje si no hay alumnos -->
-                                <mat-hint *ngIf="(alumnos$ | async)?.length === 0">
-                                    No hay alumnos disponibles
-                                </mat-hint>
-                            </mat-form-field>
-                        </div>
-
-                        <!-- Fecha -->
-                        <div class="col-12">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Fecha de Inscripción</mat-label>
-                                <input matInput [matDatepicker]="picker" formControlName="fechaInsc">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                                <mat-icon matSuffix>event</mat-icon>
-                                <mat-error *ngIf="campoInvalido('fechaInsc')">
-                                    La fecha de inscripción es obligatoria
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-
-                        <!-- Estado -->
-                        <div class="col-12">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Estado</mat-label>
-                                <mat-select formControlName="estado">
-                                    <mat-option *ngFor="let estado of estados" [value]="estado">
-                                        {{ estado.charAt(0).toUpperCase() + estado.slice(1) }}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-icon matSuffix>status</mat-icon>
-                            </mat-form-field>
-                        </div>
-
-                        <!-- Botones -->
-                        <div class="col-12 text-center mt-4">
-                            <button mat-raised-button color="primary" type="submit"
-                                [disabled]="inscripcionForm.invalid || (loading$ | async) || (cursos$ | async)?.length === 0 || (alumnos$ | async)?.length === 0"
-                                class="me-3">
-                                <mat-icon>save</mat-icon>
-                                {{ (loading$ | async) ? 'Guardando...' : 'Guardar Inscripción' }}
-                            </button>
-
-                            <button mat-button type="button" color="warn" routerLink="/inscripciones/admin">
-                                <mat-icon>cancel</mat-icon>
-                                Cancelar
-                            </button>
-                        </div>
-
-                    </form>
-                </mat-card-content>
-            </mat-card>
-        </div>
+<div class="curso-form-container">
+  <!-- Header mejorado -->
+  <div class="curso-header">
+    <div class="header-content">
+      <div class="title-group">
+        <h2 class="curso-title">
+          <mat-icon class="title-icon">assignment_add</mat-icon>
+          Alta de Inscripción
+        </h2>
+        <p class="curso-subtitle">
+          Formulario para registrar una nueva inscripción en el sistema
+        </p>
+      </div>
+      
+      <button mat-raised-button color="primary" routerLink="/admin/dashboard" class="back-dashboard-btn">
+        <mat-icon>dashboard</mat-icon>
+        Volver al Dashboard
+      </button>
     </div>
+  </div>
+
+  <form [formGroup]="inscripcionForm" (ngSubmit)="onSubmit()" class="curso-form-card">
+
+    <!-- Curso -->
+    <mat-form-field appearance="outline" class="col-12">
+      <mat-label>Curso</mat-label>
+      <mat-select formControlName="cursoId">
+        <mat-option [value]="null" disabled>Selecciona un curso</mat-option>
+        <mat-option *ngFor="let curso of (cursos$ | async) || []" [value]="curso.cursoId">
+          {{ curso.nombre }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matSuffix>school</mat-icon>
+      <mat-error *ngIf="campoInvalido('cursoId')">Debes seleccionar un curso</mat-error>
+    </mat-form-field>
+
+    <!-- Alumno -->
+    <mat-form-field appearance="outline" class="col-12">
+      <mat-label>Alumno</mat-label>
+      <mat-select formControlName="alumnoId">
+        <mat-option value="" disabled>Selecciona un alumno</mat-option>
+        <mat-option *ngFor="let alumno of (alumnos$ | async) || []"
+          [value]="alumno.usuarioId || alumno.id">
+          {{ alumno.nombre }} - {{ alumno.email }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="campoInvalido('alumnoId')">Debes seleccionar un alumno</mat-error>
+      <mat-hint *ngIf="(alumnos$ | async)?.length === 0">No hay alumnos disponibles</mat-hint>
+    </mat-form-field>
+
+    <!-- Fecha de Inscripción -->
+    <mat-form-field appearance="outline" class="col-md-6">
+      <mat-label>Fecha de Inscripción</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fechaInsc">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-icon matSuffix>event</mat-icon>
+      <mat-error *ngIf="campoInvalido('fechaInsc')">La fecha de inscripción es obligatoria</mat-error>
+    </mat-form-field>
+
+    <!-- Estado -->
+    <mat-form-field appearance="outline" class="col-md-6">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado">
+        <mat-option *ngFor="let estado of estados" [value]="estado">
+          {{ estado.charAt(0).toUpperCase() + estado.slice(1) }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matSuffix>status</mat-icon>
+    </mat-form-field>
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" 
+        [disabled]="inscripcionForm.invalid || (loading$ | async) || (cursos$ | async)?.length === 0 || (alumnos$ | async)?.length === 0" 
+        class="submit-btn">
+        <mat-icon>save</mat-icon>
+        {{ (loading$ | async) ? 'Guardando...' : 'Guardar Inscripción' }}
+      </button>
+      <button mat-raised-button color="warn" type="button" routerLink="/inscripciones/admin" class="cancel-btn">
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+      </button>
+    </div>
+
+  </form>
 </div>
 
 <!-- Loading overlay -->
 <div *ngIf="loading$ | async" class="overlay">
-    <mat-spinner diameter="50"></mat-spinner>
+  <mat-spinner diameter="50"></mat-spinner>
 </div>

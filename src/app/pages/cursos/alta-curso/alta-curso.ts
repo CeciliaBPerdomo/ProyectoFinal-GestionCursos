@@ -12,7 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // NgRx
 import { Store } from '@ngrx/store';
@@ -20,6 +20,10 @@ import { AppState } from '../../../store/models/app-state';
 import { addCurso } from '../../../store/actions/curso.actions';
 import { selectCursoLoading, selectCursoError } from '../../../store/selectors/curso.selectors';
 import { Observable } from 'rxjs';
+
+import { selectUsuariosFiltrados } from '../../../store/selectors/usuario.selectors';
+import { loadUsuariosByRol } from '../../../store/actions/usuario.actions';
+import { Usuarios } from '../../../models/usuario.model';
 
 // Models
 import { Curso } from '../../../models/curso.model';
@@ -40,15 +44,17 @@ import { Curso } from '../../../models/curso.model';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './alta-curso.html',
   styleUrls: ['./alta-curso.css']
 })
 export class AltaCurso implements OnInit {
   cursoForm!: FormGroup;
-  loading$!: Observable<boolean>;  // ← Cambiado: inicializar en ngOnInit
-  error$!: Observable<string | null>;  // ← Cambiado: inicializar en ngOnInit
+  loading$!: Observable<boolean>;
+  error$!: Observable<string | null>;
+  profesores$!: Observable<Usuarios[]>;
 
   constructor(
     private fb: FormBuilder,
@@ -61,7 +67,10 @@ export class AltaCurso implements OnInit {
     // Inicializar después de que el constructor configure el store
     this.loading$ = this.store.select(selectCursoLoading);
     this.error$ = this.store.select(selectCursoError);
-    
+    this.profesores$ = this.store.select(selectUsuariosFiltrados);
+
+    this.store.dispatch(loadUsuariosByRol({ rol: 'profesor' }));
+
     this.initForm();
     this.setupErrorHandling();
   }
@@ -81,7 +90,7 @@ export class AltaCurso implements OnInit {
   private setupErrorHandling(): void {
     this.error$.subscribe(error => {
       if (error) {
-        this.snackBar.open(`Error: ${error}`, 'Cerrar', { 
+        this.snackBar.open(`Error: ${error}`, 'Cerrar', {
           duration: 3000,
           panelClass: 'snackbar-error'
         });
@@ -117,7 +126,7 @@ export class AltaCurso implements OnInit {
               panelClass: 'snackbar-exito'
             });
             this.router.navigate(['/cursos/listado-cursos']);
-            
+
             // Limpiar suscripciones
             successSubscription.unsubscribe();
             errorSubscription.unsubscribe();

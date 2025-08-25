@@ -12,7 +12,7 @@
         </p>
       </div>
       
-      <button mat-raised-button color="primary" [routerLink]="['/admin','dashboard']"  class="back-dashboard-btn">
+      <button mat-raised-button color="primary" [routerLink]="['/admin/dashboard']"  class="back-dashboard-btn">
         <mat-icon>dashboard</mat-icon>
         Volver al Dashboard
       </button>
@@ -74,12 +74,19 @@
     </mat-form-field>
 
     <!-- Profesor -->
-    <mat-form-field appearance="outline" class="col-12">
-      <mat-label>Profesor ID</mat-label>
-      <input matInput type="number" formControlName="profesorId" placeholder="Ej: 1">
-      <mat-icon matSuffix>badge</mat-icon>
-      <mat-error *ngIf="campoInvalido('profesorId')">Debe ingresar un ID válido</mat-error>
-    </mat-form-field>
+<!-- Profesor -->
+<mat-form-field appearance="outline" class="col-12">
+  <mat-label>Profesor</mat-label>
+  <mat-select formControlName="profesorId">
+    <mat-option *ngFor="let prof of profesores$ | async" [value]="prof.usuarioId">
+      {{ prof.nombre }}
+    </mat-option>
+  </mat-select>
+  <mat-icon matSuffix>person</mat-icon>
+  <mat-error *ngIf="campoInvalido('profesorId')">
+    Debe seleccionar un profesor válido
+  </mat-error>
+</mat-form-field>
 
     <!-- Botones -->
     <div class="form-actions">

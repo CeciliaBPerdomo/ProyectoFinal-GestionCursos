@@ -38,3 +38,11 @@ export const selectFilterAlumno = createSelector(
   selectInscripcionesState,
   (state: InscripcionesState) => state.filterAlumno
 );
+
+// Selector para estadísticas de inscripciones
+export const selectInscripcionesStats = createSelector(
+  selectAllInscripciones,
+  (inscripciones) => ({
+    total: inscripciones.length
+  })
+);

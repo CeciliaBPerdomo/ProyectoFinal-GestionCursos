@@ -1,35 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Usuarios } from '../models/usuario.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'api/auth'; // URL de tu API real
+  private apiUrl = 'https://68a35265c5a31eb7bb1fe392.mockapi.io/api/usuarios'; 
 
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<{ user: Usuarios; token: string }> {
-    // En producción, harías una llamada HTTP real
-    // return this.http.post<{ user: Usuarios; token: string }>(`${this.apiUrl}/login`, { email, password });
-    
-    // Mock para demo
-    return of({
-      user: {
-        usuarioId: 1,
-        email: email,
-        password: password,
-        nombre: 'Usuario Demo',
-        direccion: 'Demo Address',
-        telefono: '123456789',
-        perfil: 'Demo Profile',
-        rol: this.getRoleFromEmail(email)
-      },
-      token: 'demo-token-' + Date.now()
-    });
-  }
+  return this.http.get<Usuarios[]>(`${this.apiUrl}?email=${email}`).pipe(
+    map(users => {
+      if (users.length === 0) {
+        throw new Error('Usuario no encontrado');
+      }
+
+      const user = users[0];
+      if (user.password !== password) {
+        throw new Error('Contraseña incorrecta');
+      }
+
+      const token = btoa(`${user.email}:${Date.now()}`);
+      localStorage.setItem('auth_token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      return { user, token };
+    })
+  );
+}
+
 
   private getRoleFromEmail(email: string): string {
     if (email.includes('admin')) return 'administrador';

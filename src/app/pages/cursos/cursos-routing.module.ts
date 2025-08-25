@@ -2,14 +2,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ListadoCursos } from './listado-cursos/listado-cursos';
-import { AltaCurso } from './alta-curso/alta-curso';
-
 const routes: Routes = [
-  { path: '', component: ListadoCursos},    
-  { path: 'listado-cursos', component: ListadoCursos },
-  { path: 'alta', component: AltaCurso }
+  { path: '', loadComponent: () => import('./listado-cursos/listado-cursos').then(m => m.ListadoCursos) },    
+  { path: 'listado-cursos', loadComponent: () => import('./listado-cursos/listado-cursos').then(m => m.ListadoCursos) },
+  { path: 'alta', loadComponent: () => import('./alta-curso/alta-curso').then(m => m.AltaCurso) }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
