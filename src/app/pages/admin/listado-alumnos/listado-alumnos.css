@@ -3,7 +3,6 @@
   padding: 2rem;
   width: 85%;
   margin: 0 auto;
-  /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
   min-height: 100vh;
   box-sizing: border-box;
   animation: fadeIn 0.6s ease-in-out;  
@@ -98,7 +97,7 @@
   }
 }
 
-/* Card tabla */
+/* Tabla */
 .curso-form-card {
   border-radius: 16px;
   padding: 1rem;

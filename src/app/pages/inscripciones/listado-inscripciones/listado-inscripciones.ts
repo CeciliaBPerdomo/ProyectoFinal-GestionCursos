@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -47,6 +47,7 @@ declare var bootstrap: any;
   imports: [
     RouterModule,
     CommonModule,
+
     MatTableModule,
     MatButtonModule,
     MatIconModule,
@@ -59,6 +60,8 @@ declare var bootstrap: any;
   templateUrl: './listado-inscripciones.html',
   styleUrls: ['./listado-inscripciones.css']
 })
+
+
 export class ListadoInscripciones implements OnInit {
 
   @Input() modo: 'admin' | 'alumno' = 'admin';
@@ -81,7 +84,8 @@ export class ListadoInscripciones implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.inscripciones$ = this.store.select(selectAllInscripciones);
     this.loading$ = this.store.select(selectInscripcionLoading);
@@ -240,5 +244,9 @@ export class ListadoInscripciones implements OnInit {
       duration: 1500,
       panelClass: 'snackbar-info'
     });
+  }
+
+  volverAlDashboard(): void {
+    this.router.navigate(['/admin/dashboard']);
   }
 }
