@@ -1,8 +1,6 @@
 .app-background {
   position: relative;
-background-color: aliceblue;
-  background-size: cover;
-  background-position: center;
+  background-color: aliceblue;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
