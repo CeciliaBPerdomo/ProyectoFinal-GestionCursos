@@ -69,4 +69,18 @@ export class InscripcionEffects {
       map(() => InscripcionActions.loadInscripciones())
     )
   );
+
+  loadInscripcionesByAlumno$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(InscripcionActions.loadInscripcionesByAlumno),
+    exhaustMap((action) =>
+      this.inscripcionService.getInscripcionesPorAlumno(action.alumnoId).pipe(
+        map((inscripciones) => InscripcionActions.loadInscripcionesByAlumnoSuccess({ inscripciones, alumnoId: action.alumnoId })),
+        catchError((error) => of(InscripcionActions.loadInscripcionesByAlumnoFailure({ error: error.message, alumnoId: action.alumnoId })))
+      )
+    )
+  )
+);
+  
 }
+

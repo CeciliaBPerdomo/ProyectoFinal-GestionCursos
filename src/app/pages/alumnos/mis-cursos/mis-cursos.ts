@@ -13,12 +13,15 @@ import { InscripcionService } from '../../../services/inscripcion.service';
 
 import { EstadoInscripcion } from '../../../models/inscripcion.model';
 
+// Material UI
+import { MatTableModule } from '@angular/material/table';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+
 interface CursoConEstado extends Curso {
   estado: EstadoInscripcion;
 }
-
-// Material UI
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-mis-cursos',
@@ -26,7 +29,12 @@ import { MatCardModule } from '@angular/material/card';
   imports: [
     RouterModule,
     CommonModule,
+
+    // Material ui
     MatCardModule,
+    MatTableModule,
+    MatChipsModule,
+    MatIconModule
   ],
   templateUrl: './mis-cursos.html',
   styleUrls: ['./mis-cursos.css']
@@ -36,14 +44,19 @@ export class MisCursos implements OnInit {
   alumno: Alumno | undefined;
   cursosDelAlumno: CursoConEstado[] = [];
 
+  displayedColumns: string[] = ['curso', 'descripcion', 'estado'];
+
   constructor(
     private alumnoService: AlumnoService,
     private inscripcionService: InscripcionService,
     private cursoService: CursoService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    const idAlumno = 1;
+    const alumnoLogueado = JSON.parse(localStorage.getItem('user') || '{}');
+    const idAlumno = Number(alumnoLogueado?.usuarioId);
+
+    if (!idAlumno) return;
 
     forkJoin({
       alumno: this.alumnoService.getAlumnoPorId(idAlumno),
@@ -52,19 +65,16 @@ export class MisCursos implements OnInit {
       if (!alumno) return;
       this.alumno = alumno;
 
-      // Inscripciones del alumno
       const inscripciones = alumno.inscripciones || [];
 
-      // Cursos con estado según inscripciones
       const cursosConEstado: CursoConEstado[] = inscripciones.map(insc => {
         const curso = cursos.find(c => (c.cursoId || c.id) === insc.cursoId);
         return curso ? { ...curso, estado: insc.estado } : null;
       }).filter((curso): curso is CursoConEstado => curso !== null);
 
-      // Agregar curso asignado directamente al alumno (sin inscripción)
       const cursoAsignado = cursos.find(c => (c.cursoId || c.id) === alumno.cursoId);
       if (cursoAsignado && !cursosConEstado.some(c => (c.cursoId || c.id) === (cursoAsignado.cursoId || cursoAsignado.id))) {
-        cursosConEstado.push({ ...cursoAsignado, estado: 'sin inscripcion' });
+        cursosConEstado.push({ ...cursoAsignado, estado: 'sin inscripcion' as EstadoInscripcion });
       }
 
       this.cursosDelAlumno = cursosConEstado;

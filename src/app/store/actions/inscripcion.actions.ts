@@ -70,6 +70,7 @@ export const loadInscripcionFailure = createAction(
   props<{ error: string }>()
 );
 
+
 // Agregar inscripción
 export const addInscripcion = createAction(
   '[Inscripciones] Add Inscripcion',

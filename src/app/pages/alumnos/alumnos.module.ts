@@ -8,9 +8,7 @@ import { AlumnosRoutingModule } from './alumnos-routing.module';
 
 // Importar componentes 
 import { AlumnoDashboardComponent } from './dashboard/dashboard-alumno';
-// import { AltaAlumno } from './alta-alumno/alta-alumno';
-// import { ListaAlumnos } from './lista-alumnos/lista-alumnos';
-// import { MisCursos } from './mis-cursos/mis-cursos';
+import { MisCursos } from './mis-cursos/mis-cursos';
 
 @NgModule({
     imports: [
@@ -20,9 +18,7 @@ import { AlumnoDashboardComponent } from './dashboard/dashboard-alumno';
         AlumnosRoutingModule,
 
         AlumnoDashboardComponent,
-        // ListaAlumnos,
-        // MisCursos,
-        // AltaAlumno
+        MisCursos,
     ]
 })
 

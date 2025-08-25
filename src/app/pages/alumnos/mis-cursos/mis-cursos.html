@@ -1,39 +1,55 @@
-<div class="container mt-4">
-
-  <div class="mb-4 fs-4 text-center text-md-end">
-  Hola, {{ alumno?.nombre }} 👋
-</div>
-    <p class="text-center text-md-start">Aquí puedes ver los cursos en los que estás inscrito, o en que estado se encuentran.</p>
-  <h2 class="mb-4">Mis cursos</h2>
-
-  <div class="row g-4">
-    <div *ngFor="let curso of cursosDelAlumno" class="col-12 col-md-6 col-lg-4">
-
-      <div class="card h-100 shadow-sm">
-        <div class="card-header">
-          <h5 class="card-title mb-0">{{ curso.nombre }}</h5>
-        </div>
-
-        <div class="card-body">
-          <p><strong>Descripción:</strong></p>
-          <p class="text-muted">{{ curso.descripcion }}</p>
-          <p><strong>Duración:</strong> {{ curso.duracion }} horas</p>
-        </div>
-
-        <div class="card-footer">
-          <span class="badge"
-            [ngClass]="{
-              'bg-success': curso.estado === 'activa',
-              'bg-danger': curso.estado === 'cancelada',
-              'bg-primary': curso.estado === 'finalizada',
-              'bg-secondary': curso.estado === 'sin inscripcion'
-            }">
-            {{ curso.estado | titlecase }}
-          </span>
-        </div>
+<div class="curso-form-container">
+  <!-- Header -->
+  <div class="curso-header">
+    <div class="header-content">
+      <div class="title-group">
+        <h2 class="curso-title">
+          <mat-icon class="title-icon">school</mat-icon>
+          Mis cursos
+        </h2>
+        <p class="curso-subtitle">
+          Listado de los cursos en los que estás inscrito y su estado.
+        </p>
       </div>
 
+      <button mat-raised-button color="primary" routerLink="/admin/dashboard" class="back-dashboard-btn">
+        <mat-icon>dashboard</mat-icon>
+        Volver al Dashboard
+      </button>
     </div>
   </div>
 
+  <mat-card>
+
+
+    <table mat-table [dataSource]="cursosDelAlumno" class="mat-elevation-z8 full-width">
+
+      <!-- Nombre del curso -->
+      <ng-container matColumnDef="curso">
+        <th mat-header-cell *matHeaderCellDef> Curso </th>
+        <td mat-cell *matCellDef="let curso"> {{ curso.nombre }} </td>
+      </ng-container>
+
+      <!-- Descripción -->
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef> Descripción </th>
+        <td mat-cell *matCellDef="let curso"> {{ curso.descripcion }} </td>
+      </ng-container>
+
+      <!-- Estado -->
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let curso">
+          <mat-chip [color]="curso.estado === 'activa' ? 'primary' : 
+                          curso.estado === 'finalizada' ? 'accent' : 
+                          curso.estado === 'cancelada' ? 'warn' : ''" selected>
+            {{ curso.estado }}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
 </div>

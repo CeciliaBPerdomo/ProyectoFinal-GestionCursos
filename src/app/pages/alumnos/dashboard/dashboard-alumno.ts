@@ -11,12 +11,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 // Redux
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 
 import { logout } from '../../../store/actions/auth.actions';
 import { selectUser } from '../../../store/selectors/auth.selectors';
 import { Usuarios } from '../../../models/usuario.model';
 import { AppState } from '../../../store/models/app-state';
+
+import { selectInscripcionesStatsPorAlumno } from '../../../store/selectors/inscripcion.selectors';
+import * as InscripcionActions from '../../../store/actions/inscripcion.actions';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-alumno-dashboard',
@@ -24,8 +28,8 @@ import { AppState } from '../../../store/models/app-state';
   imports: [
     CommonModule,
     RouterModule,
-    
-    // Material ui
+
+    // Material UI
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -36,8 +40,9 @@ import { AppState } from '../../../store/models/app-state';
   styleUrls: ['./dashboard-alumno.css']
 })
 export class AlumnoDashboardComponent implements OnInit {
+  currentDate = new Date();
   user$: Observable<Usuarios | null>;
-   currentDate = new Date();
+  stats$!: Observable<{ total: number; activos: number; finalizados: number; cancelados: number }>;
 
   constructor(
     private store: Store<AppState>,
@@ -47,7 +52,23 @@ export class AlumnoDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user$.subscribe(user => {
+  
+    // Cargar inscripciones del alumno logueado
+    const alumnoId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.usuarioId);
+  console.log('Alumno ID:', alumnoId);
+
+  if (alumnoId) {
+    this.store.dispatch(InscripcionActions.loadInscripcionesByAlumno({ alumnoId }));
+
+    this.stats$ = this.store.select(selectInscripcionesStatsPorAlumno(alumnoId));
+    this.stats$.subscribe(stats => {
+      console.log('Stats alumno:', stats);
+    });
+  }
+  
+
+    // Redirección si el rol no es 'alumno'
+    firstValueFrom(this.user$).then(user => {
       if (user?.rol !== 'alumno') {
         this.router.navigate(['/']);
       }
@@ -59,6 +80,6 @@ export class AlumnoDashboardComponent implements OnInit {
   }
 
   navigateTo(path: string): void {
-  this.router.navigate([`/${path}`]);
-}
+    this.router.navigate([`/${path}`]);
+  }
 }

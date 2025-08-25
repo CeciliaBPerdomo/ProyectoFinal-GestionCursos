@@ -89,7 +89,7 @@ export const inscripcionReducer = createReducer(
     loading: false
   })),
 
-  // Gestión de UI/estado
+  // Gestión de filtros
   on(InscripcionActions.setFilterByEstado, (state, { estado }) => ({
     ...state,
     filterEstado: estado,
@@ -110,5 +110,19 @@ export const inscripcionReducer = createReducer(
     inscripcionesFiltradas: alumnoId === 'todos' 
       ? state.inscripciones 
       : state.inscripciones.filter(i => i.alumnoId === alumnoId)
+  })),
+
+  // Cargar inscripciones por alumno
+  on(InscripcionActions.loadInscripcionesByAlumnoSuccess, (state, { inscripciones }) => ({
+    ...state,
+    inscripciones,              
+    inscripcionesFiltradas: inscripciones,
+    loading: false,
+    error: null
+  })),
+  on(InscripcionActions.loadInscripcionesByAlumnoFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error
   }))
 );

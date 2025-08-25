@@ -2,33 +2,25 @@
   <!-- Navbar -->
   <mat-toolbar color="primary" class="alumno-navbar">
     <span class="navbar-brand">Panel del Alumno</span>
-
     <span class="spacer"></span>
-
     <nav class="nav-menu">
-      <button mat-button (click)="navigateTo('cursos')">
-        <mat-icon>class</mat-icon>
-        Mis Cursos
+      <button mat-button (click)="navigateTo('/alumnos/mis-cursos')">
+        <mat-icon>class</mat-icon> Mis Cursos
       </button>
       <button mat-button (click)="navigateTo('inscripciones')">
-        <mat-icon>assignment</mat-icon>
-        Mis Inscripciones
+        <mat-icon>assignment</mat-icon> Alumnos
       </button>
     </nav>
-
     <span class="spacer"></span>
-
     <!-- User Menu -->
     <div class="user-section">
       <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
-        <mat-icon>account_circle</mat-icon>
-        {{ (user$ | async)?.nombre }}
+        <mat-icon>account_circle</mat-icon> {{ (user$ | async)?.nombre }}
         <mat-icon>arrow_drop_down</mat-icon>
       </button>
       <mat-menu #userMenu="matMenu">
         <button mat-menu-item (click)="onLogout()">
-          <mat-icon>logout</mat-icon>
-          Cerrar Sesión
+          <mat-icon>logout</mat-icon> Cerrar Sesión
         </button>
       </mat-menu>
     </div>
@@ -43,36 +35,52 @@
           <mat-icon class="welcome-icon">school</mat-icon>
           Bienvenido/a {{ (user$ | async)?.nombre }}
         </mat-card-title>
-        <mat-card-subtitle>
-          {{ currentDate | date:'fullDate' }}
-        </mat-card-subtitle>
+        <mat-card-subtitle>{{ currentDate | date:'fullDate' }}</mat-card-subtitle>
       </mat-card-header>
 
       <!-- Estadísticas -->
       <div class="stats-grid">
         <mat-card class="stat-card">
-          <mat-card-header>
-            <mat-card-title class="text-dark">
-              <mat-icon>class</mat-icon>
-              Cursos Inscriptos
+          <mat-card-header class="text-black">
+            <mat-card-title>
+              <mat-icon>class</mat-icon> Cursos Inscriptos
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <div class="stat-number">3</div>
-            <div class="stat-label">Totales</div>
+            <div class="stat-number">{{ (stats$ | async)?.total }}</div>
           </mat-card-content>
         </mat-card>
 
         <mat-card class="stat-card">
-          <mat-card-header>
-            <mat-card-title class="text-dark">
-              <mat-icon>check_circle</mat-icon>
-              Cursos Activos
+          <mat-card-header class="text-black">
+            <mat-card-title>
+              <mat-icon>check_circle</mat-icon> Cursos Activos
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <div class="stat-number">2</div>
-            <div class="stat-label">Actualmente</div>
+            <div class="stat-number">{{ (stats$ | async)?.activos }}</div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card">
+          <mat-card-header class="text-black">
+            <mat-card-title>
+              <mat-icon>done_all</mat-icon> Finalizados
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="stat-number">{{ (stats$ | async)?.finalizados }}</div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card">
+          <mat-card-header class="text-black">
+            <mat-card-title>
+              <mat-icon>cancel</mat-icon> Cancelados
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="stat-number">{{ (stats$ | async)?.cancelados }}</div>
           </mat-card-content>
         </mat-card>
       </div>

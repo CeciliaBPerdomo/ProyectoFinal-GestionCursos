@@ -12,7 +12,7 @@ import { reducers } from './store/reducers';
 // Effects
 import { UsuarioEffects } from './store/effects/usuario.effects';
 import { CursoEffects } from './store/effects/curso.effects';
-import { InscripcionEffects } from './store/effects/inscripcion.effects';
+import { InscripcionEffects } from "./store/effects/inscripcion.effects";
 import { AuthEffects } from './store/effects/auth.effects';
 
 

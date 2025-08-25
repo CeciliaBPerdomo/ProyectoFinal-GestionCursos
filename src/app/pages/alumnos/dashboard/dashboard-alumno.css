@@ -55,7 +55,7 @@
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(2, 250px);
+  grid-template-columns: repeat(4, 250px);
   gap: 20px;
   margin-top: 24px;
   justify-content: start; 
