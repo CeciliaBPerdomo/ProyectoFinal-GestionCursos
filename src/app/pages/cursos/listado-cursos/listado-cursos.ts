@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // NgRx
 import { Store } from '@ngrx/store';
@@ -38,6 +40,7 @@ declare var bootstrap: any;
   imports: [
     RouterModule,
     CommonModule,
+
     MatCardModule,
     MatIconModule,
     MatButtonModule,
@@ -46,6 +49,8 @@ declare var bootstrap: any;
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatTableModule,
+    MatTooltipModule,
   ],
   templateUrl: './listado-cursos.html',
   styleUrls: ['./listado-cursos.css']
@@ -54,6 +59,8 @@ export class ListadoCursos implements OnInit {
   cursos$: Observable<Curso[]>;
   loading$: Observable<boolean>;
   error$: Observable<string | null>;
+
+  displayedColumns: string[] = ['nombre', 'descripcion', 'cantHoras', 'cantClases', 'profesorId', 'acciones'];
 
   // Modal para borrar
   cursoIdAEliminar: number | null = null;

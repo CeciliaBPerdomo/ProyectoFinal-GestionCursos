@@ -1,113 +1,131 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-0">Listado de Cursos</h2>
-    <div>
-      <button mat-button color="primary" (click)="refrescar()" class="me-2">
-        <mat-icon>refresh</mat-icon> Actualizar
-      </button>
-      <button mat-raised-button color="primary" routerLink="/cursos/alta">
-        <mat-icon>add</mat-icon>
-        Nuevo Curso
+<div class="curso-form-container">
+  <!-- Header -->
+  <div class="curso-header">
+    <div class="header-content">
+      <div class="title-group">
+        <h2 class="curso-title">
+          <mat-icon class="title-icon">school</mat-icon>
+          Listado de Cursos
+        </h2>
+        <p class="curso-subtitle">
+          Consulta, edita o elimina cursos del sistema
+        </p>
+      </div>
+
+      <button mat-raised-button color="primary" routerLink="/admin/dashboard" class="back-dashboard-btn">
+        <mat-icon>dashboard</mat-icon>
+        Volver al Dashboard
       </button>
     </div>
   </div>
 
-  <!-- Loading spinner -->
-  <div *ngIf="loading$ | async" class="text-center py-4">
-    <mat-spinner diameter="40"></mat-spinner>
-    <p class="mt-2">Cargando cursos...</p>
+  <!-- Acciones sobre la tabla -->
+  <div class="header-actions-bot">
+    <button mat-raised-button color="accent" routerLink="/cursos/alta">
+      <mat-icon>add</mat-icon>
+      Nuevo Curso
+    </button>
+    <button mat-icon-button color="primary" (click)="refrescar()" matTooltip="Actualizar listado">
+      <mat-icon>refresh</mat-icon>
+    </button>
   </div>
 
-  <!-- Error message -->
-  <div *ngIf="error$ | async as error" class="alert alert-danger">
-    {{ error }}
-  </div>
+  <!-- Contenedor tabla -->
+  <div class="curso-form-card">
+    <!-- Loading -->
+    <div *ngIf="loading$ | async" class="text-center py-4">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p class="mt-2">Cargando cursos...</p>
+    </div>
 
-  <div class="row g-3" *ngIf="!(loading$ | async)">
-    <div class="col-md-6 col-lg-4" *ngFor="let curso of cursos$ | async">
-      <div class="card shadow-sm h-100">
-        <div class="card-body">
+    <!-- Error -->
+    <div *ngIf="error$ | async as error" class="alert alert-danger text-center">
+      {{ error }}
+    </div>
 
-          <!-- Título -->
-          <h5 class="card-title">
-            <ng-container *ngIf="cursoEditandoId !== curso.cursoId; else editandoTitulo">
+    <!-- Tabla -->
+    <div class="table-responsive" *ngIf="!(loading$ | async)">
+      <table mat-table [dataSource]="(cursos$ | async) || []" class="mat-elevation-z8 alumno-table">
+
+        <!-- Nombre -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let curso">
+            <ng-container *ngIf="cursoEditandoId !== curso.cursoId; else editandoNombre">
               {{ curso.nombre }}
             </ng-container>
-            <ng-template #editandoTitulo>
+            <ng-template #editandoNombre>
               <input [(ngModel)]="cursoEditado.nombre" class="form-control" placeholder="Nombre del curso" />
             </ng-template>
-          </h5>
+          </td>
+        </ng-container>
 
-          <!-- ID -->
-          <p class="mb-1"><strong>ID:</strong> {{ curso.cursoId }}</p>
+        <!-- Descripción -->
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let curso">
+            <ng-container *ngIf="cursoEditandoId !== curso.cursoId; else editandoDescripcion">
+              {{ curso.descripcion || 'Sin descripción' }}
+            </ng-container>
+            <ng-template #editandoDescripcion>
+              <textarea [(ngModel)]="cursoEditado.descripcion" class="form-control" rows="1"></textarea>
+            </ng-template>
+          </td>
+        </ng-container>
 
-          <!-- Descripción -->
-          <div *ngIf="cursoEditandoId !== curso.cursoId; else editandoDescripcion">
-            <p class="mb-0"><strong>Descripción:</strong> {{ curso.descripcion || 'Sin descripción' }}</p>
-          </div>
-          <ng-template #editandoDescripcion>
-            <div class="mb-2">
-              <label class="form-label">Descripción</label>
-              <textarea [(ngModel)]="cursoEditado.descripcion" class="form-control" rows="2"></textarea>
-            </div>
-          </ng-template>
+        <!-- Horas -->
+        <ng-container matColumnDef="cantHoras">
+          <th mat-header-cell *matHeaderCellDef> Horas </th>
+          <td mat-cell *matCellDef="let curso"> {{ curso.cantHoras }} </td>
+        </ng-container>
 
-          <!-- Información adicional -->
-          <div class="mt-2">
-            <p class="mb-1"><strong>Horas:</strong> {{ curso.cantHoras }}</p>
-            <p class="mb-1"><strong>Clases:</strong> {{ curso.cantClases }}</p>
-            <p class="mb-1"><strong>Profesor ID:</strong> {{ curso.profesorId }}</p>
-          </div>
-        </div>
+        <!-- Clases -->
+        <ng-container matColumnDef="cantClases">
+          <th mat-header-cell *matHeaderCellDef> Clases </th>
+          <td mat-cell *matCellDef="let curso"> {{ curso.cantClases }} </td>
+        </ng-container>
 
-        <!-- Botones -->
-        <div class="card-footer bg-white border-top d-flex justify-content-end gap-2">
-          <ng-container *ngIf="cursoEditandoId === curso.cursoId; else botonesNormales">
-            <button mat-icon-button color="primary" class="editar" (click)="guardarCursoEditado()">
-              <mat-icon>check</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" class="eliminar" (click)="cancelarEdicion()">
-              <mat-icon>close</mat-icon>
-            </button>
-          </ng-container>
+        <!-- Profesor ID -->
+        <ng-container matColumnDef="profesorId">
+          <th mat-header-cell *matHeaderCellDef> Profesor ID </th>
+          <td mat-cell *matCellDef="let curso"> {{ curso.profesorId }} </td>
+        </ng-container>
 
-          <ng-template #botonesNormales>
-            <button mat-icon-button color="accent" class="editar" (click)="editarCurso(curso)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" class="eliminar" (click)="mostrarModalEliminar(curso.cursoId!)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </ng-template>
-        </div>
-      </div>
+        <!-- Acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
+          <td mat-cell *matCellDef="let curso" class="text-center">
+            <ng-container *ngIf="cursoEditandoId === curso.cursoId; else botonesNormales">
+              <button mat-icon-button color="primary" (click)="guardarCursoEditado()">
+                <mat-icon>check</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="cancelarEdicion()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </ng-container>
+
+            <ng-template #botonesNormales>
+              <button mat-icon-button color="accent" (click)="editarCurso(curso)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="mostrarModalEliminar(curso.cursoId!)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
     </div>
-  </div>
 
-  <!-- Empty state -->
-  <div *ngIf="(cursos$ | async)?.length === 0 && !(loading$ | async) && !(error$ | async)" 
-       class="text-center py-5">
-    <mat-icon class="empty-icon">school</mat-icon>
-    <h4>No hay cursos registrados</h4>
-    <p>No se encontraron cursos en el sistema.</p>
-  </div>
-</div>
-
-<!-- Modal de confirmación de eliminación de curso -->
-<div class="modal fade" id="confirmDeleteCursoModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content shadow">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="modalLabel">Confirmar eliminación</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro que querés eliminar este curso? Esta acción no se puede deshacer.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button id="confirmDeleteCursoBtn" type="button" class="btn btn-danger">Eliminar</button>
-      </div>
+    <!-- Empty state -->
+    <div *ngIf="(cursos$ | async)?.length === 0 && !(loading$ | async) && !(error$ | async)" 
+         class="text-center py-5">
+      <mat-icon class="empty-icon">school</mat-icon>
+      <h4>No hay cursos registrados</h4>
+      <p>No se encontraron cursos en el sistema.</p>
     </div>
   </div>
 </div>
