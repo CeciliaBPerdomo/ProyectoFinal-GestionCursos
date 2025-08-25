@@ -52,20 +52,15 @@ export class AlumnoDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+
     // Cargar inscripciones del alumno logueado
     const alumnoId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.usuarioId);
-  console.log('Alumno ID:', alumnoId);
 
-  if (alumnoId) {
-    this.store.dispatch(InscripcionActions.loadInscripcionesByAlumno({ alumnoId }));
+    if (alumnoId) {
+      this.store.dispatch(InscripcionActions.loadInscripcionesByAlumno({ alumnoId }));
+      this.stats$ = this.store.select(selectInscripcionesStatsPorAlumno(alumnoId));
+    }
 
-    this.stats$ = this.store.select(selectInscripcionesStatsPorAlumno(alumnoId));
-    this.stats$.subscribe(stats => {
-      console.log('Stats alumno:', stats);
-    });
-  }
-  
 
     // Redirección si el rol no es 'alumno'
     firstValueFrom(this.user$).then(user => {
