@@ -2,9 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 
+// Material UI
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+// Redux
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -20,15 +25,19 @@ import { AppState } from '../../../store/models/app-state';
     CommonModule,
     RouterModule,
     
+    // Material ui
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule,
+    MatToolbarModule,
   ],
   templateUrl: './dashboard-alumno.html',
   styleUrls: ['./dashboard-alumno.css']
 })
 export class AlumnoDashboardComponent implements OnInit {
   user$: Observable<Usuarios | null>;
+   currentDate = new Date();
 
   constructor(
     private store: Store<AppState>,
@@ -48,4 +57,8 @@ export class AlumnoDashboardComponent implements OnInit {
   onLogout(): void {
     this.store.dispatch(logout());
   }
+
+  navigateTo(path: string): void {
+  this.router.navigate([`/${path}`]);
+}
 }

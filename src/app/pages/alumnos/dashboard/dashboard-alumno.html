@@ -1,35 +1,81 @@
 <div class="alumno-dashboard">
-  <!-- Header -->
-  <div class="dashboard-header">
+  <!-- Navbar -->
+  <mat-toolbar color="primary" class="alumno-navbar">
+    <span class="navbar-brand">Panel del Alumno</span>
+
+    <span class="spacer"></span>
+
+    <nav class="nav-menu">
+      <button mat-button (click)="navigateTo('cursos')">
+        <mat-icon>class</mat-icon>
+        Mis Cursos
+      </button>
+      <button mat-button (click)="navigateTo('inscripciones')">
+        <mat-icon>assignment</mat-icon>
+        Mis Inscripciones
+      </button>
+    </nav>
+
+    <span class="spacer"></span>
+
+    <!-- User Menu -->
+    <div class="user-section">
+      <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+        <mat-icon>account_circle</mat-icon>
+        {{ (user$ | async)?.nombre }}
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="onLogout()">
+          <mat-icon>logout</mat-icon>
+          Cerrar Sesión
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+
+  <!-- Main Content -->
+  <div class="dashboard-content">
+    <!-- Bienvenida -->
     <mat-card class="welcome-card">
       <mat-card-header>
         <mat-card-title>
           <mat-icon class="welcome-icon">school</mat-icon>
-          Panel del Estudiante
+          Bienvenido/a {{ (user$ | async)?.nombre }}
         </mat-card-title>
         <mat-card-subtitle>
-          Bienvenido/a {{ (user$ | async)?.nombre }}
+          {{ currentDate | date:'fullDate' }}
         </mat-card-subtitle>
       </mat-card-header>
-      <mat-card-actions>
-        <button mat-button color="warn" (click)="onLogout()">
-          <mat-icon>logout</mat-icon>
-          Cerrar Sesión
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
 
-  <!-- Content -->
-  <div class="dashboard-content">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Dashboard del Alumno</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Aquí podrás ver tus cursos, compañeros y tu información personal.</p>
-        <p>Funcionalidades en desarrollo...</p>
-      </mat-card-content>
+      <!-- Estadísticas -->
+      <div class="stats-grid">
+        <mat-card class="stat-card">
+          <mat-card-header>
+            <mat-card-title class="text-dark">
+              <mat-icon>class</mat-icon>
+              Cursos Inscriptos
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="stat-number">3</div>
+            <div class="stat-label">Totales</div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card">
+          <mat-card-header>
+            <mat-card-title class="text-dark">
+              <mat-icon>check_circle</mat-icon>
+              Cursos Activos
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="stat-number">2</div>
+            <div class="stat-label">Actualmente</div>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </mat-card>
   </div>
 </div>
