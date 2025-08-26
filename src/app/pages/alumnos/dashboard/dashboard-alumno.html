@@ -86,4 +86,50 @@
       </div>
     </mat-card>
   </div>
+
+  <!-- Información del Alumno -->
+  <mat-card class="alumno-info-card">
+    <mat-card-header class="info-header">
+      <mat-card-title class="mb-3">Mi Información</mat-card-title>
+
+      <div class="header-actions">
+      <button mat-raised-button *ngIf="!editMode" (click)="enableEdit()">
+        <mat-icon>edit</mat-icon> Editar
+      </button>
+      <button mat-raised-button *ngIf="editMode" (click)="saveChanges()">
+        <mat-icon>save</mat-icon> Guardar
+      </button>
+    </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="form-grid">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Nombre</mat-label>
+          <input matInput name="nombre" [(ngModel)]="userData.nombre" [readonly]="!editMode">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput name="email" [(ngModel)]="userData.email" [readonly]="!editMode">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Dirección</mat-label>
+          <input matInput name="direccion" [(ngModel)]="userData.direccion" [readonly]="!editMode">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Teléfono</mat-label>
+          <input matInput name="telefono" [(ngModel)]="userData.telefono" [readonly]="!editMode">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width full-width-double">
+          <mat-label>Perfil</mat-label>
+          <input matInput name="perfil" [(ngModel)]="userData.perfil" [readonly]="!editMode">
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
 </div>

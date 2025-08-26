@@ -16,7 +16,7 @@ import { MatChipsModule } from '@angular/material/chips';
 
 // Models y servicios
 import { Curso } from '../../../models/curso.model';
-import { EstadoInscripcion} from '../../../models/inscripcion.model';
+import { EstadoInscripcion } from '../../../models/inscripcion.model';
 import { Usuarios } from '../../../models/usuario.model';
 import { CursoService } from '../../../services/curso.service';
 import { InscripcionService } from '../../../services/inscripcion.service';
@@ -45,12 +45,14 @@ interface CursoConEstado extends Curso {
   templateUrl: './mis-cursos.html',
   styleUrls: ['./mis-cursos.css']
 })
+
+
 export class MisCursos implements OnInit {
 
   cursos$!: Observable<CursoConEstado[]>;
   loading = true;
   error: string | null = null;
-  displayedColumns: string[] = ['nombre', 'descripcion', 'profesor/a', 'estado'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'profesor', 'estado'];
 
   constructor(
     private store: Store<AppState>,

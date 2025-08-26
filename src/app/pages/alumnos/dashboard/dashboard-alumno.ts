@@ -8,6 +8,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 // Redux
 import { Store } from '@ngrx/store';
@@ -28,6 +31,7 @@ import { tap } from 'rxjs/operators';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
 
     // Material UI
     MatCardModule,
@@ -35,14 +39,20 @@ import { tap } from 'rxjs/operators';
     MatIconModule,
     MatMenuModule,
     MatToolbarModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './dashboard-alumno.html',
   styleUrls: ['./dashboard-alumno.css']
 })
+
 export class AlumnoDashboardComponent implements OnInit {
   currentDate = new Date();
   user$: Observable<Usuarios | null>;
   stats$!: Observable<{ total: number; activos: number; finalizados: number; cancelados: number }>;
+
+  editMode = false;
+  userData: Partial<Usuarios> = {};
 
   constructor(
     private store: Store<AppState>,
@@ -52,6 +62,12 @@ export class AlumnoDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.user$.subscribe(user => {
+      if (user) {
+        this.userData = { ...user };
+      }
+    });
 
     // Cargar inscripciones del alumno logueado
     const alumnoId = Number(JSON.parse(localStorage.getItem('user') || '{}')?.usuarioId);
@@ -77,4 +93,17 @@ export class AlumnoDashboardComponent implements OnInit {
   navigateTo(path: string): void {
     this.router.navigate([`/${path}`]);
   }
+
+  enableEdit(): void {
+    this.editMode = true;
+  }
+
+  saveChanges(): void {
+    this.editMode = false;
+    // Aquí puedes despachar un action para actualizar en el store o llamar al backend
+    // Ejemplo:
+    // this.store.dispatch(updateUsuario({ usuario: this.userData }));
+    console.log('Datos guardados:', this.userData);
+  }
+
 }
