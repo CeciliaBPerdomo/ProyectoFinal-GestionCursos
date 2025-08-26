@@ -15,8 +15,18 @@ export class CursoEffects {
       ofType(CursoActions.loadCursos),
       exhaustMap(() =>
         this.cursoService.getCursos().pipe(
-          map((cursos) => CursoActions.loadCursosSuccess({ cursos })),
-          catchError((error) => of(CursoActions.loadCursosFailure({ error: error.message })))
+          map((cursos) =>
+            CursoActions.loadCursosSuccess({
+              cursos: cursos.map((curso: any) => ({
+                ...curso,
+                // Solo normalizamos cursoId
+                cursoId: curso.cursoId ?? curso.CursoId ?? curso.id
+              }))
+            })
+          ),
+          catchError((error) =>
+            of(CursoActions.loadCursosFailure({ error: error.message }))
+          )
         )
       )
     )
@@ -27,8 +37,23 @@ export class CursoEffects {
       ofType(CursoActions.loadCursosByProfesor),
       exhaustMap((action) =>
         this.cursoService.getCursosPorProfesor(action.profesorId).pipe(
-          map((cursos) => CursoActions.loadCursosByProfesorSuccess({ cursos, profesorId: action.profesorId })),
-          catchError((error) => of(CursoActions.loadCursosByProfesorFailure({ error: error.message, profesorId: action.profesorId })))
+          map((cursos) =>
+            CursoActions.loadCursosByProfesorSuccess({
+              cursos: cursos.map((curso: any) => ({
+                ...curso,
+                cursoId: curso.cursoId ?? curso.CursoId ?? curso.id
+              })),
+              profesorId: action.profesorId
+            })
+          ),
+          catchError((error) =>
+            of(
+              CursoActions.loadCursosByProfesorFailure({
+                error: error.message,
+                profesorId: action.profesorId
+              })
+            )
+          )
         )
       )
     )
@@ -39,8 +64,17 @@ export class CursoEffects {
       ofType(CursoActions.addCurso),
       exhaustMap((action) =>
         this.cursoService.agregarCurso(action.curso).pipe(
-          map((curso) => CursoActions.addCursoSuccess({ curso })),
-          catchError((error) => of(CursoActions.addCursoFailure({ error: error.message })))
+          map((curso) =>
+            CursoActions.addCursoSuccess({
+              curso: {
+                ...curso,
+                cursoId: Number(curso.cursoId ?? curso.id)
+              }
+            })
+          ),
+          catchError((error) =>
+            of(CursoActions.addCursoFailure({ error: error.message }))
+          )
         )
       )
     )
@@ -52,20 +86,19 @@ export class CursoEffects {
       exhaustMap((action) =>
         this.cursoService.eliminarCurso(action.id).pipe(
           map(() => CursoActions.deleteCursoSuccess({ id: action.id })),
-          catchError((error) => of(CursoActions.deleteCursoFailure({ error: error.message })))
+          catchError((error) =>
+            of(CursoActions.deleteCursoFailure({ error: error.message }))
+          )
         )
       )
     )
   );
 
-  // Recargar cursos después de operaciones exitosas
   reloadAfterSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(
-        CursoActions.addCursoSuccess,
-        CursoActions.deleteCursoSuccess
-      ),
+      ofType(CursoActions.addCursoSuccess, CursoActions.deleteCursoSuccess),
       map(() => CursoActions.loadCursos())
     )
   );
 }
+

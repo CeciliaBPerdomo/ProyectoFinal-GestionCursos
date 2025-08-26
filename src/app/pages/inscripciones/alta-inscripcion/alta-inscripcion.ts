@@ -81,38 +81,16 @@ export class AltaInscripcionComponent implements OnInit {
     this.store.dispatch(loadUsuarios());
     this.store.dispatch(loadCursos());
 
-    // Debug: Verificar que se están cargando los datos
-    // this.cursos$.subscribe(cursos => {
-    //   console.log('Cursos cargados:', cursos);
-    // });
-
-    // this.alumnos$.subscribe(alumnos => {
-    //   console.log('Alumnos cargados:', alumnos);
-    // });
-
-    this.store.select(selectAllCursos).subscribe(cursos => {
-  console.log('Cursos crudos del store:', cursos);
-});
-this.cursos$ = this.store.select(selectAllCursos).pipe(
-  map(cursos => cursos.map(c => ({
-    ...c,
-    cursoId: Number((c as any).CursoId) // convertimos string a number y usamos cursoId
-  })))
-);
+    this.cursos$ = this.store.select(selectAllCursos).pipe(
+      map(cursos => cursos.map(c => ({
+        ...c,
+        cursoId: Number((c as any).CursoId)
+      })))
+    );
 
     this.alumnos$ = this.store.select(selectAllAlumnos).pipe(
       map(alumnos => alumnos.map(a => ({ ...a, id: Number(a.id) })))
     );
-
-    // 👇 Debug: ver qué valor y tipo se guarda en cursoId
-    this.inscripcionForm.get('cursoId')?.valueChanges.subscribe(val => {
-      console.log('cursoId seleccionado:', val, typeof val);
-    });
-
-    // 👇 Debug: lo mismo para alumnoId si querés
-    this.inscripcionForm.get('alumnoId')?.valueChanges.subscribe(val => {
-      console.log('alumnoId seleccionado:', val, typeof val);
-    });
   }
 
   private initForm(): void {

@@ -1,7 +1,7 @@
 // src/app/models/curso.model.ts
 export interface Curso {
-   id?: number;          
-  cursoId?: number;     
+  id?: number;
+  cursoId?: number;
   nombre: string;
   descripcion: string;
   cantHoras: string;
