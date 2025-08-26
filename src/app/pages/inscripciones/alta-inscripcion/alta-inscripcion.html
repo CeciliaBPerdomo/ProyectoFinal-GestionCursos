@@ -72,7 +72,7 @@
 
     <!-- Botones -->
     <div class="form-actions">
-      <button mat-raised-button color="primary" type="submit" 
+      <button mat-raised-button color="primary" type="submit"
         [disabled]="inscripcionForm.invalid || (loading$ | async) || (cursos$ | async)?.length === 0 || (alumnos$ | async)?.length === 0" 
         class="submit-btn">
         <mat-icon>save</mat-icon>

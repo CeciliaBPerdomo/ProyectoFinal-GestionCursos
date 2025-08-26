@@ -161,7 +161,7 @@ this.cursos$ = this.store.select(selectAllCursos).pipe(
               verticalPosition: 'top',
               panelClass: 'snackbar-success'
             });
-            this.router.navigate(['/inscripciones/admin']);
+            this.router.navigate(['/admin/dashboard']);
           }
         });
       }
