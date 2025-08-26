@@ -26,6 +26,7 @@ import { AppState } from '../../../store/models/app-state';
 interface CursoConEstado extends Curso {
   estado: EstadoInscripcion | 'sin inscripcion';
   profesorNombre: string;
+  alumnosInscritos: number;
 }
 
 @Component({
@@ -52,7 +53,7 @@ export class MisCursos implements OnInit {
   cursos$!: Observable<CursoConEstado[]>;
   loading = true;
   error: string | null = null;
-  displayedColumns: string[] = ['nombre', 'descripcion', 'profesor', 'estado'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'profesor', 'alumnosInscritos','estado'];
 
   constructor(
     private store: Store<AppState>,
@@ -90,12 +91,29 @@ export class MisCursos implements OnInit {
       })
     );
 
+    // Obtener todas las inscripciones para contar alumnos por curso
+    const todasLasInscripciones$ = this.inscripcionService.getInscripciones().pipe(
+      catchError(error => {
+        console.error('Error al cargar todas las inscripciones:', error);
+        return of([]);
+      })
+    );
+
     this.cursos$ = forkJoin({
       cursos: this.cursoService.getCursos().pipe(catchError(() => of([]))),
       inscripciones: this.inscripcionService.getInscripcionesPorAlumno(idUsuario).pipe(catchError(() => of([]))),
-      profesores: profesores$
+      profesores: profesores$,
+      todasInscripciones: todasLasInscripciones$
     }).pipe(
-      map(({ cursos, inscripciones, profesores }) => {
+      map(({ cursos, inscripciones, profesores, todasInscripciones }) => {
+
+        // Contar alumnos inscritos por curso
+        const alumnosPorCurso: { [cursoId: string]: number } = {};
+        todasInscripciones.forEach(insc => {
+          const cursoId = String(insc.cursoId);
+          alumnosPorCurso[cursoId] = (alumnosPorCurso[cursoId] || 0) + 1;
+        });
+
         const cursosConEstado: CursoConEstado[] = inscripciones
           .map(insc => {
             const curso = cursos.find(c => this.getCursoId(c) === String(insc.cursoId));
@@ -105,10 +123,15 @@ export class MisCursos implements OnInit {
             const cursoProfesorId = String(curso.profesorId);
             const profesor = profesores.find(p => String(p.usuarioId) === cursoProfesorId);
 
+             // Obtener cantidad de alumnos inscritos
+            const cursoId = this.getCursoId(curso);
+            const alumnosInscritos = alumnosPorCurso[cursoId] || 0;
+
             return {
               ...curso,
               estado: insc.estado ?? 'sin inscripcion',
-              profesorNombre: profesor ? profesor.nombre : 'Sin asignar'
+              profesorNombre: profesor ? profesor.nombre : 'Sin asignar',
+              alumnosInscritos: alumnosInscritos
             } as CursoConEstado;
           })
           .filter((c): c is CursoConEstado => c !== null);

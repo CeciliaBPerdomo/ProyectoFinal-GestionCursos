@@ -55,11 +55,21 @@
         </ng-container>
 
         <!-- Profesor -->
-<ng-container matColumnDef="profesor">
-  <th mat-header-cell *matHeaderCellDef> Profesor </th>
-  <td mat-cell *matCellDef="let curso"> {{ curso.profesorNombre }} </td>
-</ng-container>
+        <ng-container matColumnDef="profesor">
+          <th mat-header-cell *matHeaderCellDef> Profesor </th>
+          <td mat-cell *matCellDef="let curso"> {{ curso.profesorNombre }} </td>
+        </ng-container>
 
+         <!-- Alumnos Inscritos -->
+        <ng-container matColumnDef="alumnosInscritos">
+          <th mat-header-cell *matHeaderCellDef> Alumnos Inscritos </th>
+          <td mat-cell *matCellDef="let curso">
+            <span class="alumnos-count">
+              <mat-icon class="count-icon">people</mat-icon>
+              {{ curso.alumnosInscritos }}
+            </span>
+          </td>
+        </ng-container>
 
         <!-- Estado -->
         <ng-container matColumnDef="estado">
@@ -78,11 +88,11 @@
       </table>
     </div>
 
-  <!-- Empty state -->
-<div *ngIf="(cursos$ | async)?.length === 0 && !loading && !error" class="text-center py-5">
-  <h4>No tienes cursos asignados</h4>
-  <p>Aún no estás inscrito en ningún curso.</p>
-</div>
+    <!-- Empty state -->
+    <div *ngIf="(cursos$ | async)?.length === 0 && !loading && !error" class="text-center py-5">
+      <h4>No tienes cursos asignados</h4>
+      <p>Aún no estás inscrito en ningún curso.</p>
+    </div>
 
   </div>
 </div>

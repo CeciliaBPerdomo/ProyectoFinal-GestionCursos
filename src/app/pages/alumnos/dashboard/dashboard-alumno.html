@@ -7,9 +7,6 @@
       <button mat-button (click)="navigateTo('/alumnos/mis-cursos')">
         <mat-icon>class</mat-icon> Mis Cursos
       </button>
-      <button mat-button (click)="navigateTo('inscripciones')">
-        <mat-icon>assignment</mat-icon> Alumnos
-      </button>
     </nav>
     <span class="spacer"></span>
     <!-- User Menu -->
@@ -26,19 +23,20 @@
     </div>
   </mat-toolbar>
 
-  <!-- Main Content -->
   <div class="dashboard-content">
-    <!-- Bienvenida -->
     <mat-card class="welcome-card">
-      <mat-card-header>
-        <mat-card-title>
-          <mat-icon class="welcome-icon">school</mat-icon>
-          Bienvenido/a {{ (user$ | async)?.nombre }}
-        </mat-card-title>
-        <mat-card-subtitle>{{ currentDate | date:'fullDate' }}</mat-card-subtitle>
-      </mat-card-header>
+      <mat-card-content>
+        <div class="bienvenido-flex">
+          <div class="bienvenido-left">
+            <mat-icon class="welcome-icon">school</mat-icon>
+            Bienvenido/a {{ (user$ | async)?.nombre }}
+          </div>
+          <div class="bienvenido-right">
+            {{ currentDate | date:'fullDate' }}
+          </div>
+        </div>
+      </mat-card-content>
 
-      <!-- Estadísticas -->
       <div class="stats-grid">
         <mat-card class="stat-card">
           <mat-card-header class="text-black">
@@ -93,13 +91,13 @@
       <mat-card-title class="mb-3">Mi Información</mat-card-title>
 
       <div class="header-actions">
-      <button mat-raised-button *ngIf="!editMode" (click)="enableEdit()">
-        <mat-icon>edit</mat-icon> Editar
-      </button>
-      <button mat-raised-button *ngIf="editMode" (click)="saveChanges()">
-        <mat-icon>save</mat-icon> Guardar
-      </button>
-    </div>
+        <button mat-raised-button *ngIf="!editMode" (click)="enableEdit()">
+          <mat-icon>edit</mat-icon> Editar
+        </button>
+        <button mat-raised-button *ngIf="editMode" (click)="saveChanges()">
+          <mat-icon>save</mat-icon> Guardar
+        </button>
+      </div>
     </mat-card-header>
 
     <mat-card-content>
@@ -126,8 +124,21 @@
 
         <mat-form-field appearance="fill" class="full-width full-width-double">
           <mat-label>Perfil</mat-label>
-          <input matInput name="perfil" [(ngModel)]="userData.perfil" [readonly]="!editMode">
+          <mat-select [(ngModel)]="userData.perfil" [disabled]="!editMode">
+            <mat-option value="Desarrollador Web">Desarrollador Web</mat-option>
+            <mat-option value="Desarrollador IT">Desarrollador IT</mat-option>
+            <mat-option value="UX/UI">UX/UI</mat-option>
+            <mat-option value="FrontEnd">FrontEnd</mat-option>
+            <mat-option value="Backend">Backend</mat-option>
+            <mat-option value="FullStack">FullStack</mat-option>
+            <mat-option value="DevOps">DevOps</mat-option>
+            <mat-option value="QA">QA</mat-option>
+            <mat-option value="Usuario Final">Usuario Final</mat-option>
+            <mat-option value="Administrador">Administrador</mat-option>
+          </mat-select>
+          <mat-icon matSuffix>work</mat-icon>
         </mat-form-field>
+
       </div>
     </mat-card-content>
   </mat-card>

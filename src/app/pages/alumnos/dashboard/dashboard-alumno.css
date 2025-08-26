@@ -60,6 +60,32 @@
   overflow: hidden;
 }
 
+.bienvenido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bienvenido-flex {
+  display: flex;
+  justify-content: space-between; /* izquierda y derecha */
+  align-items: center;
+  width: 100%;
+}
+
+.bienvenido-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.bienvenido-right {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
 .welcome-icon {
   margin-right: 12px;
   font-size: 32px;

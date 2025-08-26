@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 // Material UI
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 // Redux
 import { Store } from '@ngrx/store';
@@ -23,7 +25,7 @@ import { AppState } from '../../../store/models/app-state';
 
 import { selectInscripcionesStatsPorAlumno } from '../../../store/selectors/inscripcion.selectors';
 import * as InscripcionActions from '../../../store/actions/inscripcion.actions';
-import { tap } from 'rxjs/operators';
+import { updateUsuario } from '../../../store/actions/usuario.actions';
 
 @Component({
   selector: 'app-alumno-dashboard',
@@ -41,6 +43,7 @@ import { tap } from 'rxjs/operators';
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
   ],
   templateUrl: './dashboard-alumno.html',
   styleUrls: ['./dashboard-alumno.css']
@@ -99,11 +102,16 @@ export class AlumnoDashboardComponent implements OnInit {
   }
 
   saveChanges(): void {
-    this.editMode = false;
-    // Aquí puedes despachar un action para actualizar en el store o llamar al backend
-    // Ejemplo:
-    // this.store.dispatch(updateUsuario({ usuario: this.userData }));
-    console.log('Datos guardados:', this.userData);
+   if (!this.userData.usuarioId) return;
+
+  // Desactivar edición
+  this.editMode = false;
+
+  // Despachar action para actualizar el usuario en el store y backend
+  this.store.dispatch(updateUsuario({ usuario: this.userData as Usuarios }));
+
+  // Opcional: mostrar un mensaje de confirmación
+  console.log('Datos enviados a actualizar:', this.userData);
   }
 
 }
