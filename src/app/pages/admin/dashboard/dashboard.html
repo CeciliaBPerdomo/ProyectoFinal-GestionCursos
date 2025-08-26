@@ -48,16 +48,18 @@
   <div class="dashboard-content">
     <div class="welcome-section">
       <mat-card class="welcome-card">
-        <mat-card-header>
-          <mat-card-title>
-            <mat-icon class="welcome-icon">dashboard</mat-icon>
-            Bienvenido al Panel de Control
-          </mat-card-title>
-          <mat-card-subtitle>
+        <mat-card-content>
+        <div class="bienvenido-flex">
+          <div class="bienvenido-left">
+            <mat-icon class="welcome-icon">person</mat-icon>
+            Bienvenido/a {{ (user$ | async)?.nombre }}
+          </div>
+          <div class="bienvenido-right">
             {{ currentDate | date:'fullDate' }}
-          </mat-card-subtitle>
-        </mat-card-header>
-        
+          </div>
+        </div>
+      </mat-card-content>
+    
         <mat-card-content>
           <div class="stats-grid">
             <mat-card class="stat-card">
