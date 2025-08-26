@@ -9,19 +9,20 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class AlumnoService {
-  private apiUrl = 'https://68a35265c5a31eb7bb1fe392.mockapi.io/api/alumnos';
+  private apiUrl = 'https://68a35265c5a31eb7bb1fe392.mockapi.io/api/usuarios';
   constructor(private http: HttpClient) { }
 
-  // Devuelve todos los alumnos
-  getAlumnos(): Observable<Alumno[]> {
-    return this.http.get<Alumno[]>(this.apiUrl).pipe(
-      map(res => res || []),
-      catchError(err => {
-        console.error('Error al traer alumnos', err);
-        return of([]);
-      })
-    );
-  }
+ // Devuelve todos los alumnos
+getAlumnos(): Observable<Alumno[]> {
+  return this.http.get<Alumno[]>(this.apiUrl).pipe(
+    map(res => (res || []).filter(u => u.rol === 'alumno')),
+    catchError(err => {
+      console.error('Error al traer alumnos', err);
+      return of([]);
+    })
+  );
+}
+
 
   // Devuelve un alumno por ID
   getAlumnoPorId(id: number): Observable<Alumno | undefined> {

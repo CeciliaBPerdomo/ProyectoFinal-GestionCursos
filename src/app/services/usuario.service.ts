@@ -9,7 +9,7 @@ import { Usuarios } from '../models/usuario.model';
 export class UsuarioService {
   private apiUrl = 'https://68a35265c5a31eb7bb1fe392.mockapi.io/api/usuarios';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Devuelve todos los usuarios
   getUsuarios(): Observable<Usuarios[]> {
@@ -39,10 +39,8 @@ export class UsuarioService {
   // Devuelve un usuario por ID
   getUsuarioPorId(id: number): Observable<Usuarios | undefined> {
     return this.http.get<Usuarios>(`${this.apiUrl}/${id}`).pipe(
-      catchError(err => {
-        console.error('Error al traer usuario', err);
-        return of(undefined);
-      })
+      map(u => ({ ...u, inscripciones: u.inscripciones ?? [] })),
+      catchError(err => of(undefined))
     );
   }
 
@@ -74,5 +72,9 @@ export class UsuarioService {
         return of(undefined);
       })
     );
+  }
+
+  getProfesores(): Observable<Usuarios[]> {
+    return this.http.get<Usuarios[]>(`${this.apiUrl}?rol=profesor`);
   }
 }

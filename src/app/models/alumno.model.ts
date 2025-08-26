@@ -14,5 +14,6 @@ export interface Alumno {
     email: string;
     cursoId: number | null;
     inscripciones?: InscripcionAlumno[];
+    rol: string;
 }
 

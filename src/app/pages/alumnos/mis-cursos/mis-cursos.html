@@ -29,13 +29,13 @@
   <!-- Contenedor tabla -->
   <div class="curso-form-card">
     <!-- Loading -->
-    <div *ngIf="loading$ | async" class="text-center py-4">
+    <div *ngIf="loading" class="text-center py-4">
       <mat-spinner diameter="40"></mat-spinner>
       <p class="mt-2">Cargando tus cursos...</p>
     </div>
 
     <!-- Error -->
-    <div *ngIf="error$ | async as error" class="alert alert-danger text-center">
+    <div *ngIf="error" class="alert alert-danger">
       {{ error }}
     </div>
 
@@ -54,6 +54,13 @@
           <td mat-cell *matCellDef="let curso"> {{ curso.descripcion || 'Sin descripción' }} </td>
         </ng-container>
 
+        <!-- Profesor -->
+<ng-container matColumnDef="profesor">
+  <th mat-header-cell *matHeaderCellDef> Profesor </th>
+  <td mat-cell *matCellDef="let curso"> {{ curso.profesorNombre }} </td>
+</ng-container>
+
+
         <!-- Estado -->
         <ng-container matColumnDef="estado">
           <th mat-header-cell *matHeaderCellDef> Estado </th>
@@ -71,11 +78,11 @@
       </table>
     </div>
 
-    <!-- Empty state -->
-    <div *ngIf="(cursos$ | async)?.length === 0 && !(loading$ | async) && !(error$ | async)" class="text-center py-5">
-      <mat-icon class="empty-icon">school</mat-icon>
-      <h4>No tienes cursos asignados</h4>
-      <p>Aún no estás inscrito en ningún curso.</p>
-    </div>
+  <!-- Empty state -->
+<div *ngIf="(cursos$ | async)?.length === 0 && !loading && !error" class="text-center py-5">
+  <h4>No tienes cursos asignados</h4>
+  <p>Aún no estás inscrito en ningún curso.</p>
+</div>
+
   </div>
 </div>
