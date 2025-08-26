@@ -61,7 +61,6 @@ interface CursoConProfesor extends Curso {
   templateUrl: './listado-cursos.html',
   styleUrls: ['./listado-cursos.css']
 })
-
 export class ListadoCursos implements OnInit {
   cursos$: Observable<CursoConProfesor[]>;
   loading$: Observable<boolean>;
@@ -75,7 +74,7 @@ export class ListadoCursos implements OnInit {
   modal: any;
 
   cursoEditandoId: number | null = null;
-  cursoEditado: Partial<Curso> = {};
+  cursosEditados: { [id: number]: Partial<Curso> } = {};
 
   constructor(
     private store: Store<AppState>,
@@ -105,17 +104,8 @@ export class ListadoCursos implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadCursos());
-    this.store.dispatch(loadUsuarios()); // Cargar usuarios para obtener nombres de profesores
+    this.store.dispatch(loadUsuarios());
 
-    // Debug: log the courses to see their structure
-    this.cursos$.subscribe(cursos => {
-     // console.log('Courses loaded:', cursos);
-      cursos.forEach(curso => {
-        console.log('Course ID:', curso.cursoId, 'Course:', curso);
-      });
-    });
-
-    // Manejar errores
     this.error$.subscribe(error => {
       if (error) {
         this.snackBar.open(`Error: ${error}`, 'Cerrar', {
@@ -126,19 +116,20 @@ export class ListadoCursos implements OnInit {
     });
   }
 
-  editarCurso(curso: Curso): void {
-     this.cursoEditandoId = curso.id!;
-    this.cursoEditado = { ...curso };
+  editarCurso(curso: CursoConProfesor): void {
+    console.log('Editando curso ID:', curso.id);
+    this.cursoEditandoId = curso.id!;
+    this.cursosEditados[curso.id!] = { ...curso };
   }
 
   guardarCursoEditado(): void {
-    if (this.cursoEditandoId !== null && this.cursoEditado) {
-    const cursoActualizado: Curso = {
-      ...this.cursoEditado,
-      id: this.cursoEditandoId 
-    } as Curso;
-    
-    this.store.dispatch(updateCurso({ curso: cursoActualizado }));
+    if (this.cursoEditandoId !== null && this.cursosEditados[this.cursoEditandoId]) {
+      const cursoActualizado: Curso = {
+        ...this.cursosEditados[this.cursoEditandoId],
+        id: this.cursoEditandoId
+      } as Curso;
+
+      this.store.dispatch(updateCurso({ curso: cursoActualizado }));
 
       this.snackBar.open('Curso actualizado correctamente', 'Cerrar', {
         duration: 3000,
@@ -152,8 +143,10 @@ export class ListadoCursos implements OnInit {
   }
 
   cancelarEdicion(): void {
+    if (this.cursoEditandoId !== null) {
+      delete this.cursosEditados[this.cursoEditandoId];
+    }
     this.cursoEditandoId = null;
-    this.cursoEditado = {};
   }
 
   ngAfterViewInit(): void {
@@ -167,15 +160,11 @@ export class ListadoCursos implements OnInit {
 
       const confirmBtn = document.getElementById('confirmDeleteCursoBtn');
       if (confirmBtn) {
-        // Remove any existing event listeners
         const newConfirmBtn = confirmBtn.cloneNode(true);
         confirmBtn.parentNode?.replaceChild(newConfirmBtn, confirmBtn);
 
-        // Add new event listener that uses a closure
         newConfirmBtn.addEventListener('click', () => {
-          // Use the current value of cursoIdAEliminar
           const currentId = this.cursoIdAEliminar;
-          console.log('Current ID:', currentId);
 
           if (currentId !== null && currentId !== undefined) {
             this.eliminarCursoConfirmado(currentId);
@@ -192,16 +181,12 @@ export class ListadoCursos implements OnInit {
     }
   }
 
-
   mostrarModalEliminar(id: number): void {
     this.cursoIdAEliminar = id;
-    console.log('Setting cursoIdAEliminar to:', id);
     this.modal?.show();
   }
 
   eliminarCursoConfirmado(id: number): void {
-    console.log('Deleting course with ID:', id);
-
     if (!id || id === undefined) {
       this.snackBar.open('Error: No se pudo obtener el ID del curso', 'Cerrar', {
         duration: 3000,

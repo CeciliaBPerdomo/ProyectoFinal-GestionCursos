@@ -55,7 +55,10 @@
               {{ curso.nombre }}
             </ng-container>
             <ng-template #editandoNombre>
-              <input [(ngModel)]="cursoEditado.nombre" class="form-control" placeholder="Nombre del curso" />
+              <input [ngModel]="cursosEditados[curso.id].nombre" 
+                     (ngModelChange)="cursosEditados[curso.id].nombre = $event" 
+                     class="form-control" 
+                     placeholder="Nombre del curso" />
             </ng-template>
           </td>
         </ng-container>
@@ -68,7 +71,10 @@
               {{ curso.descripcion || 'Sin descripción' }}
             </ng-container>
             <ng-template #editandoDescripcion>
-              <textarea [(ngModel)]="cursoEditado.descripcion" class="form-control" rows="1"></textarea>
+              <textarea [ngModel]="cursosEditados[curso.id].descripcion" 
+                        (ngModelChange)="cursosEditados[curso.id].descripcion = $event" 
+                        class="form-control" 
+                        rows="1"></textarea>
             </ng-template>
           </td>
         </ng-container>
@@ -76,20 +82,54 @@
         <!-- Horas -->
         <ng-container matColumnDef="cantHoras">
           <th mat-header-cell *matHeaderCellDef> Horas </th>
-          <td mat-cell *matCellDef="let curso"> {{ curso.cantHoras }} </td>
+          <td mat-cell *matCellDef="let curso">
+            <ng-container *ngIf="cursoEditandoId !== curso.id; else editandoHoras">
+              {{ curso.cantHoras }}
+            </ng-container>
+            <ng-template #editandoHoras>
+              <input type="number" 
+                     [ngModel]="cursosEditados[curso.id].cantHoras" 
+                     (ngModelChange)="cursosEditados[curso.id].cantHoras = $event" 
+                     class="form-control" 
+                     min="0" />
+            </ng-template>
+          </td>
         </ng-container>
 
         <!-- Clases -->
         <ng-container matColumnDef="cantClases">
           <th mat-header-cell *matHeaderCellDef> Clases </th>
-          <td mat-cell *matCellDef="let curso"> {{ curso.cantClases }} </td>
+          <td mat-cell *matCellDef="let curso">
+            <ng-container *ngIf="cursoEditandoId !== curso.id; else editandoClases">
+              {{ curso.cantClases }}
+            </ng-container>
+            <ng-template #editandoClases>
+              <input type="number" 
+                     [ngModel]="cursosEditados[curso.id].cantClases" 
+                     (ngModelChange)="cursosEditados[curso.id].cantClases = $event" 
+                     class="form-control" 
+                     min="0" />
+            </ng-template>
+          </td>
         </ng-container>
 
-        <!-- Profesor (Nombre en lugar de ID) -->
+        <!-- Profesor -->
         <ng-container matColumnDef="profesor">
           <th mat-header-cell *matHeaderCellDef> Profesor </th>
           <td mat-cell *matCellDef="let curso">
-            {{ curso.profesorNombre }}
+            <ng-container *ngIf="cursoEditandoId !== curso.id; else editandoProfesor">
+              {{ curso.profesorNombre }}
+            </ng-container>
+            <ng-template #editandoProfesor>
+              <select [ngModel]="cursosEditados[curso.id].profesorId" 
+                      (ngModelChange)="cursosEditados[curso.id].profesorId = $event" 
+                      class="form-control">
+                <option *ngFor="let usuario of usuarios$ | async" 
+                        [value]="usuario.id || usuario.usuarioId">
+                  {{ usuario.nombre }}
+                </option>
+              </select>
+            </ng-template>
           </td>
         </ng-container>
 
@@ -107,9 +147,9 @@
             </ng-container>
 
             <ng-template #botonesNormales>
-              <button mat-icon-button color="accent" (click)="editarCurso(curso)">
+              <!-- <button mat-icon-button color="accent" (click)="editarCurso(curso)">
                 <mat-icon>edit</mat-icon>
-              </button>
+              </button> -->
               <button mat-icon-button color="warn" (click)="mostrarModalEliminar(curso.cursoId!)">
                 <mat-icon>delete</mat-icon>
               </button>
