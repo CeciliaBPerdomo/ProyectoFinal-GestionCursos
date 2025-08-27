@@ -8,7 +8,7 @@
           Listado de Cursos
         </h2>
         <p class="curso-subtitle">
-          Consulta, edita o elimina cursos del sistema
+          Consulta, edita o elimina cursos del sistema.
         </p>
       </div>
 
@@ -150,7 +150,7 @@
               <!-- <button mat-icon-button color="accent" (click)="editarCurso(curso)">
                 <mat-icon>edit</mat-icon>
               </button> -->
-              <button mat-icon-button color="warn" (click)="mostrarModalEliminar(curso.cursoId!)">
+              <button mat-icon-button class="text-danger" (click)="mostrarModalEliminar(curso.cursoId!)">
                 <mat-icon>delete</mat-icon>
               </button>
             </ng-template>
@@ -175,7 +175,7 @@
     aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header bg-danger text-white">
           <h5 class="modal-title" id="confirmDeleteCursoModalLabel">Confirmar eliminación</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>

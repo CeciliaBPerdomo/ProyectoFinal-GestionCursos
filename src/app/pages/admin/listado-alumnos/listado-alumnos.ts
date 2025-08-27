@@ -23,8 +23,6 @@ import {
   selectUsuarioLoading,
   selectUsuarioError
 } from '../../../store/selectors/usuario.selectors';
-import * as UsuarioActions from '../../../store/actions/usuario.actions';
-import { map } from 'rxjs/operators';
 
 declare var bootstrap: any;
 

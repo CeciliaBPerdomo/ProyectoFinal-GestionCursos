@@ -223,15 +223,12 @@ export class ListadoInscripciones implements OnInit {
 
   eliminarInscripcion(id: number): void {
     if (id < 0) return;
+    this.store.dispatch(deleteInscripcion({ id }));
 
-    if (confirm('¿Seguro que querés eliminar esta inscripción?')) {
-      this.store.dispatch(deleteInscripcion({ id }));
-
-      this.snackBar.open('Inscripción eliminada correctamente', 'Cerrar', {
-        duration: 2000,
-        panelClass: 'snackbar-success'
-      });
-    }
+    this.snackBar.open('Inscripción eliminada correctamente', 'Cerrar', {
+      duration: 2000,
+      panelClass: 'snackbar-success'
+    });
   }
 
   filtrarPorEstado(estado: string): void {

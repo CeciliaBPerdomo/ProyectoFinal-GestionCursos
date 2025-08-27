@@ -43,7 +43,7 @@
   </div>
 
   <!-- Filtros -->
-  <div class="row mb-3" *ngIf="!(loading$ | async)">
+  <!-- <div class="row mb-3" *ngIf="!(loading$ | async)">
     <div class="col-md-4">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Filtrar por estado</mat-label>
@@ -56,7 +56,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-  </div>
+  </div> -->
 
   <!-- Table -->
   <div class="table-responsive tabla-contenedor" *ngIf="!(loading$ | async)">
@@ -132,12 +132,12 @@
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let inscripcion">
           <ng-container *ngIf="!esEstadoSinInscripcion(inscripcion.estado)">
-            <button mat-icon-button color="accent"
+            <!-- <button mat-icon-button color="accent"
               (click)="editarEstado(inscripcion.inscrId || inscripcion.id, inscripcion.estado)"
               *ngIf="estadoEditandoId !== (inscripcion.inscrId || inscripcion.id)">
               <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="mostrarModalEliminar(inscripcion.inscrId || inscripcion.id)">
+            </button> -->
+            <button mat-icon-button class="text-danger" (click)="mostrarModalEliminar(inscripcion.inscrId || inscripcion.id)">
               <mat-icon>delete</mat-icon>
             </button>
           </ng-container>
