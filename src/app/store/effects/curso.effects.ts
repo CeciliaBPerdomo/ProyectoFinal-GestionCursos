@@ -19,8 +19,8 @@ export class CursoEffects {
             CursoActions.loadCursosSuccess({
               cursos: cursos.map((curso: any) => ({
                 ...curso,
-                // Solo normalizamos cursoId
-                cursoId: curso.cursoId ?? curso.CursoId ?? curso.id
+                cursoId: curso.cursoId ?? curso.CursoId ?? curso.id,
+                profesorId: Number(curso.profesorId ?? curso.profesorID)
               }))
             })
           ),
@@ -37,22 +37,17 @@ export class CursoEffects {
       ofType(CursoActions.loadCursosByProfesor),
       exhaustMap((action) =>
         this.cursoService.getCursosPorProfesor(action.profesorId).pipe(
-          map((cursos) =>
-            CursoActions.loadCursosByProfesorSuccess({
-              cursos: cursos.map((curso: any) => ({
-                ...curso,
-                cursoId: curso.cursoId ?? curso.CursoId ?? curso.id
-              })),
+          map((cursosDelProfesor) => {
+            return CursoActions.loadCursosByProfesorSuccess({
+              cursos: cursosDelProfesor,
               profesorId: action.profesorId
-            })
-          ),
+            });
+          }),
           catchError((error) =>
-            of(
-              CursoActions.loadCursosByProfesorFailure({
-                error: error.message,
-                profesorId: action.profesorId
-              })
-            )
+            of(CursoActions.loadCursosByProfesorFailure({
+              error: error.message,
+              profesorId: action.profesorId
+            }))
           )
         )
       )
@@ -101,4 +96,3 @@ export class CursoEffects {
     )
   );
 }
-

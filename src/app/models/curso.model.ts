@@ -14,5 +14,5 @@ export interface Curso {
 
 // Interface temporal para compatibilidad
 export interface CursoConEstado extends Curso {
-  estado?: string;
+  estado: string;
 }

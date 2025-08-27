@@ -15,13 +15,18 @@ import { MatSelectModule } from '@angular/material/select';
 
 // Redux
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { logout } from '../../../store/actions/auth.actions';
 import { updateUsuario } from '../../../store/actions/usuario.actions';
 import { selectUser } from '../../../store/selectors/auth.selectors';
 import { Usuarios } from '../../../models/usuario.model';
 import { AppState } from '../../../store/models/app-state';
+
+// Estadísticas
+import { selectAllCursos, selectCursosStatsPorProfesor } from '../../../store/selectors/curso.selectors';
+import * as CursoActions from '../../../store/actions/curso.actions';
 
 @Component({
   selector: 'app-profesor-dashboard',
@@ -30,6 +35,8 @@ import { AppState } from '../../../store/models/app-state';
     CommonModule,
     RouterModule,
     FormsModule,
+
+    // Material UI
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -42,15 +49,11 @@ import { AppState } from '../../../store/models/app-state';
   templateUrl: './dashboard-profesores.html',
   styleUrls: ['./dashboard-profesores.css']
 })
+
 export class ProfesorDashboardComponent implements OnInit {
   currentDate = new Date();
   user$: Observable<Usuarios | null>;
-  stats$: Observable<{ 
-    total: number; 
-    activos: number; 
-    finalizados: number;
-    cancelados: number;
-  }>;
+   totalCursos$!: Observable<number>; 
 
   editMode = false;
   userData: Partial<Usuarios> = {};
@@ -60,22 +63,24 @@ export class ProfesorDashboardComponent implements OnInit {
     private router: Router
   ) {
     this.user$ = this.store.select(selectUser);
-    this.stats$ = of({
-      total: 8,
-      activos: 5,
-      finalizados: 2,
-      cancelados: 1
-    });
   }
 
   ngOnInit(): void {
     this.user$.subscribe(user => {
-      if (user) {
-        this.userData = { ...user };
-      }
-      if (user?.rol !== 'profesor') {
+      if (!user) return;
+
+      this.userData = { ...user };
+
+      if (user.rol !== 'profesor') {
         this.router.navigate(['/']);
+        return;
       }
+
+      const profesorId = Number(user.usuarioId);
+      this.store.dispatch(CursoActions.loadCursosByProfesor({ profesorId }));
+      this.totalCursos$ = this.store.select(selectCursosStatsPorProfesor(profesorId)).pipe(
+        map(stats => stats.total)
+      );
     });
   }
 
@@ -93,14 +98,7 @@ export class ProfesorDashboardComponent implements OnInit {
 
   saveChanges(): void {
     if (!this.userData.usuarioId) return;
-
-    // Desactivar edición
     this.editMode = false;
-
-    // Despachar action para actualizar el usuario en el store y backend
     this.store.dispatch(updateUsuario({ usuario: this.userData as Usuarios }));
-
-    // Opcional: mostrar un mensaje de confirmación
-    console.log('Datos enviados a actualizar:', this.userData);
   }
 }

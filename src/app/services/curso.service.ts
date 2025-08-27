@@ -6,6 +6,7 @@ import { Curso } from '../models/curso.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class CursoService {
   private apiUrl = 'https://68a35265c5a31eb7bb1fe392.mockapi.io/api/cursos';
 
@@ -15,7 +16,8 @@ export class CursoService {
     return {
       ...curso,
       cursoId: curso.id,
-      id: curso.id
+      id: curso.id,
+      profesorId: Number(curso.profesorId || curso.profesorID || 0)
     };
   }
 
@@ -46,8 +48,15 @@ export class CursoService {
   }
 
   getCursosPorProfesor(profesorId: number): Observable<Curso[]> {
-    return this.http.get<any[]>(`${this.apiUrl}?profesorId=${profesorId}`).pipe(
-      map(cursos => cursos.map(curso => this.mapCursoFromApi(curso))),
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map(cursos => {
+        const cursosFiltrados = cursos.filter(curso => {
+          const idCurso = Number(curso.profesorId || curso.profesorID || 0);
+          return idCurso === profesorId;
+        });
+
+        return cursosFiltrados.map(curso => this.mapCursoFromApi(curso));
+      }),
       map(res => res || []),
       catchError(err => {
         console.error(`Error al traer cursos del profesor ${profesorId}`, err);
@@ -69,7 +78,6 @@ export class CursoService {
 
   actualizarCurso(curso: Curso): Observable<Curso> {
     const cursoParaApi = this.mapCursoToApi(curso);
-    // Use curso.id instead of curso.cursoId since we mapped it
     return this.http.put<any>(`${this.apiUrl}/${curso.id}`, cursoParaApi).pipe(
       map(response => this.mapCursoFromApi(response)),
       catchError(err => {

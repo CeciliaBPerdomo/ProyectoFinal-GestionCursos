@@ -58,6 +58,6 @@ export const selectUsuariosStats = createSelector(
 );
 
 export const selectAllAlumnos = createSelector(
-  selectAllUsuarios,
-  (usuarios: Usuarios[]) => usuarios.filter(user => user.rol === 'alumno')
+    selectAllUsuarios,
+    (usuarios: Usuarios[]) => usuarios.filter(user => user.rol === 'alumno')
 );

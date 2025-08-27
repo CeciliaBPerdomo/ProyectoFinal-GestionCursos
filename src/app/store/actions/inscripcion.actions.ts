@@ -33,6 +33,7 @@ export const loadInscripcionesByAlumno = createAction(
   '[Inscripciones] Load Inscripciones By Alumno',
   props<{ alumnoId: number }>()
 );
+
 export const loadInscripcionesByAlumnoSuccess = createAction(
   '[Inscripciones] Load Inscripciones By Alumno Success',
   props<{ inscripciones: Inscripcion[], alumnoId: number }>()
@@ -40,6 +41,12 @@ export const loadInscripcionesByAlumnoSuccess = createAction(
 export const loadInscripcionesByAlumnoFailure = createAction(
   '[Inscripciones] Load Inscripciones By Alumno Failure',
   props<{ error: string, alumnoId: number }>()
+);
+
+// Cargar inscripciones por profesor
+export const loadInscripcionesByProfesor = createAction(
+  '[Inscripciones] Load Inscripciones By Profesor',
+  props<{ profesorId: number }>()
 );
 
 // Cargar inscripciones por curso

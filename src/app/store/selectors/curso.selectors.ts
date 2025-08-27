@@ -36,6 +36,14 @@ export const selectSearchTermCurso = createSelector(
 export const selectCursosStats = createSelector(
   selectAllCursos,
   (cursos) => ({
-    total: cursos.length
+    total: cursos.length,
+  })
+);
+
+// En curso.selectors.ts
+export const selectCursosStatsPorProfesor = (profesorId: number) => createSelector(
+ selectCursosFiltrados,
+  (cursos) => ({
+    total: cursos.filter(curso => Number(curso.profesorId) === profesorId).length
   })
 );

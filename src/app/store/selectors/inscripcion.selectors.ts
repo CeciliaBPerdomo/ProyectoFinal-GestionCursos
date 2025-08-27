@@ -53,3 +53,5 @@ export const selectInscripcionesStatsPorAlumno = (alumnoId: number) => createSel
     };
   }
 );
+
+

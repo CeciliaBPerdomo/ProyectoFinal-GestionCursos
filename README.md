@@ -1,6 +1,6 @@
 ![CeciliaPerdomo](image-3.png)
 
-# <img src="Angular.png" style="width: 3%"> Gestón de cursos <img src="Angular.png" style="width: 3%">
+# <img src="Angular.png" style="width: 3%"> Gestión de cursos <img src="Angular.png" style="width: 3%">
 **Proyecto final**: 
 - **Creación de un proyecto frontend basado en `Angular` para gestionar los asistentes a una serie de cursos.**
 

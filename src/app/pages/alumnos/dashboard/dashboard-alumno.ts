@@ -102,16 +102,9 @@ export class AlumnoDashboardComponent implements OnInit {
   }
 
   saveChanges(): void {
-   if (!this.userData.usuarioId) return;
-
-  // Desactivar edición
-  this.editMode = false;
-
-  // Despachar action para actualizar el usuario en el store y backend
-  this.store.dispatch(updateUsuario({ usuario: this.userData as Usuarios }));
-
-  // Opcional: mostrar un mensaje de confirmación
-  console.log('Datos enviados a actualizar:', this.userData);
+    if (!this.userData.usuarioId) return;
+    this.editMode = false;
+    this.store.dispatch(updateUsuario({ usuario: this.userData as Usuarios }));
   }
 
 }
