@@ -1,39 +1,82 @@
 <div class="cursos-profesor-table">
-  <h2>Mis Cursos</h2>
-  <table mat-table [dataSource]="(cursos$ | async) || []" class="mat-elevation-z8">
+    <!-- Header -->
+    <div class="curso-header">
+        <div class="header-content">
+            <div class="title-group">
+                <h2 class="curso-title">
+                    <mat-icon class="title-icon">school</mat-icon>
+                    Mis cursos
+                </h2>
+                <p class="curso-subtitle">
+                    Cursos en los que participas o dictaste como profesor.
+                </p>
+            </div>
 
-    <!-- ID -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let curso"> {{curso.id}} </td>
-    </ng-container>
+            <button mat-raised-button color="primary" routerLink="/profesores/dashboard-profesores"
+                class="back-dashboard-btn">
+                <mat-icon>dashboard</mat-icon>
+                Volver al Dashboard
+            </button>
+        </div>
+    </div>
 
-    <!-- Nombre -->
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell *matCellDef="let curso"> {{curso.nombre}} </td>
-    </ng-container>
-
-    <!-- Estado -->
-    <ng-container matColumnDef="estado">
-      <th mat-header-cell *matHeaderCellDef> Estado </th>
-      <td mat-cell *matCellDef="let curso"> {{curso.estado}} </td>
-    </ng-container>
-
-    <!-- Acciones -->
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef> Acciones </th>
-      <td mat-cell *matCellDef="let curso">
-        <button mat-icon-button color="primary" (click)="editarCurso(curso.id)">
-          <mat-icon>edit</mat-icon>
+    <!-- Acciones sobre la tabla -->
+    <div class="header-actions-bot">
+        <button mat-icon-button color="primary" (click)="refrescar()" matTooltip="Actualizar listado">
+            <mat-icon>refresh</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="eliminarCurso(curso.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+    </div>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</div>
+    <!-- Contenedor tabla -->
+    <div class="curso-form-card">
+        <!-- Loading -->
+        <div *ngIf="loading$ | async" class="text-center py-4">
+            <mat-spinner diameter="40"></mat-spinner>
+            <p class="mt-2">Cargando tus cursos...</p>
+        </div>
+
+        <!-- Error -->
+        <div *ngIf="error" class="alert alert-danger">
+            {{ error }}
+        </div>
+
+        <!-- Tabla -->
+        <table mat-table [dataSource]="(cursos$ | async) || []" class="mat-elevation-z8">
+
+            <!-- ID -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> ID </th>
+                <td mat-cell *matCellDef="let curso" class="text-center"> {{curso.CursoId}} </td>
+            </ng-container>
+
+            <!-- Nombre -->
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Nombre </th>
+                <td mat-cell *matCellDef="let curso" class="text-center"> {{curso.nombre}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="cantHoras">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Horas </th>
+                <td mat-cell *matCellDef="let curso" class="text-center"> {{curso.cantHoras}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cantClases">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Clases </th>
+                <td mat-cell *matCellDef="let curso" class="text-center"> {{curso.cantClases}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="comienzo">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Inicio </th>
+                <td mat-cell *matCellDef="let curso" class="text-center"> {{curso.comienzo | date}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fin">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Finaliza </th>
+                <td mat-cell *matCellDef="let curso" class="text-center"> {{curso.fin | date}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>

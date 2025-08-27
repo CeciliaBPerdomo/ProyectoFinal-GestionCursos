@@ -1,65 +1,72 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+
+//Material ui
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+// reducers
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { AppState } from '../../../store/models/app-state';
 import { selectUser } from '../../../store/selectors/auth.selectors';
 import { Usuarios } from '../../../models/usuario.model';
-import { selectAllCursos } from '../../../store/selectors/curso.selectors';
 import * as CursoActions from '../../../store/actions/curso.actions';
+import { selectCursosFiltrados } from '../../../store/selectors/curso.selectors';
+import { selectCursoLoading } from '../../../store/selectors/curso.selectors';
 
 @Component({
-  selector: 'app-cursos-profesor',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatTableModule,
-    MatButtonModule,
-    MatIconModule
-  ],
-  templateUrl: './cursos-profesor.html',
-  styleUrls: ['./cursos-profesor.css']
+    selector: 'app-cursos-profesor',
+    standalone: true,
+    imports: [
+        CommonModule,
+        RouterModule,
+
+        // Material ui
+        MatTableModule,
+        MatButtonModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+    ],
+    templateUrl: './cursos-profesor.html',
+    styleUrls: ['./cursos-profesor.css']
 })
+
 export class CursosProfesorComponent implements OnInit {
 
-  user$: Observable<Usuarios | null>;
-  cursos$!: Observable<any[]>; // Aquí van los cursos filtrados
-  displayedColumns: string[] = ['id', 'nombre', 'estado', 'acciones'];
+    user$: Observable<Usuarios | null>;
+    cursos$!: Observable<any[]>; // Aquí van los cursos filtrados
 
-  constructor(private store: Store<AppState>) {
-    this.user$ = this.store.select(selectUser);
-  }
+    loading$!: Observable<boolean>;
+    error: string | null = null;
+    displayedColumns: string[] = ['id', 'nombre', 'cantHoras', 'cantClases', 'comienzo', 'fin'];
 
-  ngOnInit(): void {
-    this.user$.subscribe(user => {
-      if (!user) return;
+    constructor(private store: Store<AppState>) {
+        this.user$ = this.store.select(selectUser);
+    }
 
-      const profesorId = Number(user.usuarioId);
+    ngOnInit(): void {
+        this.user$.subscribe(user => {
+            if (!user) return;
 
-      // Cargar cursos desde el backend
-      this.store.dispatch(CursoActions.loadCursosByProfesor({ profesorId }));
+            const profesorId = Number(user.usuarioId);
+            this.store.dispatch(CursoActions.loadCursosByProfesor({ profesorId }));
+            this.cursos$ = this.store.select(selectCursosFiltrados);
 
-      // Filtrar cursos del profesor
-      this.cursos$ = this.store.select(selectAllCursos).pipe(
-        map(cursos => cursos.filter(c => Number(c.profesorId) === profesorId))
-      );
-    });
-  }
+             this.loading$ = this.store.select(selectCursoLoading);
+        });
+    }
 
-  editarCurso(cursoId: number) {
-    console.log('Editar curso', cursoId);
-    // Podés redirigir o abrir modal de edición
-  }
+    refrescar() {
+        this.user$.subscribe(user => {
+            if (!user) return;
+            const profesorId = Number(user.usuarioId);
+            this.store.dispatch(CursoActions.loadCursosByProfesor({ profesorId }));
+        });
+    }
 
-  eliminarCurso(cursoId: number) {
-    console.log('Eliminar curso', cursoId);
-    // Dispatch de acción para eliminar curso
-  }
 }

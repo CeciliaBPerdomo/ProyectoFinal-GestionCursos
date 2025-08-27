@@ -30,13 +30,16 @@ export const cursoReducer = createReducer(
     loading: true,
     error: null
   })),
-  on(CursoActions.loadCursosByProfesorSuccess, (state, { cursos, profesorId }) => ({
+  on(CursoActions.loadCursosByProfesorSuccess, (state, { cursos, profesorId }) => {
+  console.log('📌 Cursos que llegan del servicio (reducer):', cursos);
+  return {
     ...state,
     cursosFiltrados: cursos,
     filterProfesor: profesorId,
     loading: false,
     error: null
-  })),
+  };
+}),
   on(CursoActions.loadCursosByProfesorFailure, (state, { error, profesorId }) => ({
     ...state,
     error,

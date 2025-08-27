@@ -51,42 +51,9 @@
           </mat-card-header>
           <mat-card-content class="text-black">
             <div class="stat-number">{{ (totalCursos$ | async) ?? 0 }}</div>
-            <div class="stat-label">Cursos que impartes</div>
+            <div class="stat-label">Cursos totales impartidos</div>
           </mat-card-content>
         </mat-card>
-
-        <!-- <mat-card class="stat-card">
-          <mat-card-header class="text-black">
-            <mat-card-title>
-              <mat-icon>check_circle</mat-icon> Cursos Activos
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="stat-number">{{ (stats$ | async)?.activos || 0 }}</div>
-          </mat-card-content>
-        </mat-card>
-
-        <mat-card class="stat-card">
-          <mat-card-header class="text-black">
-            <mat-card-title>
-              <mat-icon>done_all</mat-icon> Finalizados
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="stat-number">{{ (stats$ | async)?.finalizados || 0 }}</div>
-          </mat-card-content>
-        </mat-card> -->
-
-        <!-- <mat-card class="stat-card">
-          <mat-card-header class="text-black">
-            <mat-card-title>
-              <mat-icon>cancel</mat-icon> Cancelados
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="stat-number">{{ (stats$ | async)?.cancelados || 0 }}</div>
-          </mat-card-content>
-        </mat-card> -->
       </div>
     </mat-card>
 
