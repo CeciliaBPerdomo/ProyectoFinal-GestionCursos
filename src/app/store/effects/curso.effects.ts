@@ -38,7 +38,6 @@ export class CursoEffects {
       exhaustMap((action) =>
         this.cursoService.getCursosPorProfesor(action.profesorId).pipe(
           map((cursosDelProfesor) => {
-            console.log('📌 Cursos que llegan del servicio:', cursosDelProfesor);
             return CursoActions.loadCursosByProfesorSuccess({
               cursos: cursosDelProfesor,
               profesorId: action.profesorId

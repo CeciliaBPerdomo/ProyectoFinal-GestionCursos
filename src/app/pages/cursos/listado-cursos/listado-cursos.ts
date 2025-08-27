@@ -61,6 +61,7 @@ interface CursoConProfesor extends Curso {
   templateUrl: './listado-cursos.html',
   styleUrls: ['./listado-cursos.css']
 })
+
 export class ListadoCursos implements OnInit {
   cursos$: Observable<CursoConProfesor[]>;
   loading$: Observable<boolean>;
@@ -117,7 +118,6 @@ export class ListadoCursos implements OnInit {
   }
 
   editarCurso(curso: CursoConProfesor): void {
-    console.log('Editando curso ID:', curso.id);
     this.cursoEditandoId = curso.id!;
     this.cursosEditados[curso.id!] = { ...curso };
   }

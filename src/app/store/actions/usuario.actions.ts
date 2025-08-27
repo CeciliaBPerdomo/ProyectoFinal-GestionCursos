@@ -96,3 +96,5 @@ export const setFilterByRol = createAction(
   '[Usuarios] Set Filter By Rol',
   props<{ rol: string }>()
 );
+
+export const clearUsuarios = createAction('[Usuarios] Clear Usuarios');

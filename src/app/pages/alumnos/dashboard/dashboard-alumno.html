@@ -88,8 +88,11 @@
   <!-- Información del Alumno -->
   <mat-card class="alumno-info-card">
     <mat-card-header class="info-header">
-      <mat-card-title class="mb-3">Mi Información</mat-card-title>
-
+      <mat-card-title class="mb-3">
+        Mi Información
+      </mat-card-title>
+    </mat-card-header>
+    
       <div class="header-actions">
         <button mat-raised-button *ngIf="!editMode" (click)="enableEdit()">
           <mat-icon>edit</mat-icon> Editar
@@ -98,7 +101,7 @@
           <mat-icon>save</mat-icon> Guardar
         </button>
       </div>
-    </mat-card-header>
+
 
     <mat-card-content>
       <div class="form-grid">

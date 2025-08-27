@@ -1,4 +1,4 @@
-// store / selectors / usuario.selectors
+// store/selectors/usuario.selectors.ts
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UsuariosState } from '../models/app-state';
 import { Usuarios } from '../../models/usuario.model';
@@ -10,9 +10,18 @@ export const selectAllUsuarios = createSelector(
     (state: UsuariosState) => state.usuarios || []
 );
 
-export const selectUsuariosFiltrados = createSelector(
+export const selectFilterRol = createSelector(
     selectUsuariosState,
-    (state: UsuariosState) => state.usuariosFiltrados ?? []
+    (state: UsuariosState) => state.filterRol
+);
+
+export const selectUsuariosFiltrados = createSelector(
+  selectAllUsuarios,
+  selectFilterRol,
+  (usuarios, rolFiltro) => {
+    if (!rolFiltro) return usuarios;
+    return usuarios.filter(usuario => usuario.rol === rolFiltro);
+  }
 );
 
 export const selectUsuarioLoading = createSelector(
@@ -28,11 +37,6 @@ export const selectUsuarioError = createSelector(
 export const selectCurrentUsuario = createSelector(
     selectUsuariosState,
     (state: UsuariosState) => state.currentUsuario
-);
-
-export const selectFilterRol = createSelector(
-    selectUsuariosState,
-    (state: UsuariosState) => state.filterRol
 );
 
 export const selectSearchTerm = createSelector(

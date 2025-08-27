@@ -32,6 +32,7 @@ export const usuarioReducer = createReducer(
     })),
     on(UsuarioActions.loadUsuariosByRolSuccess, (state, { usuarios, rol }) => ({
         ...state,
+        usuarios: usuarios,   
         usuariosFiltrados: usuarios,
         filterRol: rol,
         loading: false,
@@ -172,5 +173,10 @@ export const usuarioReducer = createReducer(
                 ? state.usuarios
                 : state.usuarios.filter(u => u.rol === rol)
         };
-    })
+    }),
+    on(UsuarioActions.clearUsuarios, (state) => ({
+  ...state,
+  usuarios: [],
+  usuariosFiltrados: []
+})),
 );

@@ -20,6 +20,18 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
 }
 
+.info-header{
+   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+   margin-bottom: 8px;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 1rem;
+}
+
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;

@@ -23,7 +23,7 @@
   <div class="header-actions-bot">
     <button mat-raised-button color="accent" routerLink="/admin/registro">
       <mat-icon>person_add</mat-icon>
-      Nuevo Alumno
+      Nuevo Usuario
     </button>
     <button mat-icon-button color="primary" (click)="refrescar()" matTooltip="Actualizar listado">
       <mat-icon>refresh</mat-icon>
@@ -81,12 +81,12 @@
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
           <td mat-cell *matCellDef="let alumno" class="text-center">
-             <button mat-icon-button>
+            <!-- <button mat-icon-button>
               <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="eliminarAlumno(alumno.usuarioId!)"
+            </button> -->
+            <button mat-icon-button color="warn" (click)="mostrarModalEliminar(alumno.usuarioId!)"
               matTooltip="Eliminar alumno">
-              <mat-icon>delete</mat-icon>
+              <mat-icon class="text-danger">delete</mat-icon>
             </button>
           </td>
         </ng-container>
@@ -101,6 +101,27 @@
       <mat-icon class="empty-icon">group</mat-icon>
       <h4>No hay alumnos registrados</h4>
       <p>No se encontraron alumnos en el sistema.</p>
+    </div>
+  </div>
+
+
+  <!-- Modal de confirmación para eliminar -->
+  <div class="modal fade" id="confirmDeleteCursoModal" tabindex="-1" aria-labelledby="confirmDeleteCursoModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-danger">
+          <h5 class="modal-title" id="confirmDeleteCursoModalLabel">Confirmar eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro de que deseas eliminar este alumno? Esta acción no se puede deshacer.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirmDeleteCursoBtn">Eliminar</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
