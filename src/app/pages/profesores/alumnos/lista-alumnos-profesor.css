@@ -1,5 +1,4 @@
-/* Contenedor principal */
-.cursos-profesor-table {
+.alumnos-table {
     padding: 2rem;
     width: 85%;
     margin: 0 auto;
@@ -11,7 +10,7 @@
     scrollbar-width: none;
 }
 
-.cursos-profesor-table::-webkit-scrollbar {
+.alumnos-table::-webkit-scrollbar {
     display: none;
 }
 
@@ -74,29 +73,34 @@
     transform: translateY(-1px);
 }
 
-/* Acciones sobre la tabla */
+/* Acciones en el header */
 .header-actions-bot {
     display: flex;
     justify-content: flex-end;
     gap: 0.75rem;
     margin-bottom: 1.5rem;
+
+    button {
+        border-radius: 12px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
 }
 
-.header-actions-bot button {
-    border-radius: 12px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.2s ease-in-out;
+.table-responsive {
+    background-color: white;
+    padding: 1rem;
 }
 
-.header-actions-bot button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Card contenedor tabla */
+/* Tabla */
 .curso-form-card {
     border-radius: 16px;
     padding: 1rem;
@@ -108,20 +112,19 @@
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
-    background-color: #fff;
-    border-collapse: separate;
-    border-spacing: 0;
 }
 
 .alumno-table th {
     background-color: #f4f6f9;
+    font-size: 18px;
+    text-align: center;
     font-weight: 600;
-    text-align: left;
     padding: 1rem;
 }
 
 .alumno-table td {
     padding: 1rem;
+    text-align: center;
 }
 
 .alumno-table td.text-center {
@@ -135,12 +138,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-/* Chips */
-mat-chip {
-    font-weight: 500;
-    text-transform: capitalize;
 }
 
 /* Empty state */
@@ -180,35 +177,6 @@ mat-chip {
     border: 1px solid #f5c6cb;
 }
 
-.alumnos-count {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    gap: 8px;
-    font-weight: 500;
-    color: #666;
-}
-
-.count-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-    color: #1976d2;
-}
-
-/* Animaciones suaves */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* Responsive */
 @media (max-width: 768px) {
     .curso-form-container {
@@ -226,6 +194,10 @@ mat-chip {
         font-size: 1.8rem;
     }
 
+    .curso-form-card {
+        padding: 1.5rem;
+    }
+
     .header-actions-bot {
         justify-content: center;
         flex-wrap: wrap;
@@ -234,5 +206,18 @@ mat-chip {
     .back-dashboard-btn {
         width: 100%;
         justify-content: center;
+    }
+}
+
+/* Animaciones suaves */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

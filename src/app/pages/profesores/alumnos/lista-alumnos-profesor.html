@@ -1,0 +1,68 @@
+<div class="alumnos-table">
+    <!-- Header -->
+    <div class="curso-header">
+        <div class="header-content">
+            <div class="title-group">
+                <h2 class="curso-title">
+                    <mat-icon class="title-icon">school</mat-icon>
+                    Alumnos
+                </h2>
+                <p class="curso-subtitle">
+                    Listado de alumnos activos.
+                </p>
+            </div>
+
+            <button mat-raised-button color="primary" routerLink="/profesores/dashboard-profesores"
+                class="back-dashboard-btn">
+                <mat-icon>dashboard</mat-icon>
+                Volver al Dashboard
+            </button>
+        </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="table-responsive" *ngIf="!(loading$ | async)">
+        <table mat-table [dataSource]="(alumnos$ | async) || []" class="mat-elevation-z8 alumno-table">
+
+            <!-- Nombre -->
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let alumno"> {{ alumno.nombre }} </td>
+            </ng-container>
+
+            <!-- Email -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Email </th>
+                <td mat-cell *matCellDef="let alumno"> {{ alumno.email }} </td>
+            </ng-container>
+
+            <!-- Teléfono -->
+            <ng-container matColumnDef="telefono">
+                <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+                <td mat-cell *matCellDef="let alumno"> {{ alumno.telefono }} </td>
+            </ng-container>
+
+            <!-- Dirección -->
+            <ng-container matColumnDef="direccion">
+                <th mat-header-cell *matHeaderCellDef> Dirección </th>
+                <td mat-cell *matCellDef="let alumno"> {{ alumno.direccion }} </td>
+            </ng-container>
+
+            <!-- Perfil -->
+            <ng-container matColumnDef="perfil">
+                <th mat-header-cell *matHeaderCellDef> Perfil </th>
+                <td mat-cell *matCellDef="let alumno"> {{ alumno.perfil }} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+    <!-- Estado vacío -->
+    <div *ngIf="(alumnos$ | async)?.length === 0 && !(loading$ | async) && !(error$ | async)" class="text-center py-5">
+        <mat-icon class="empty-icon">group</mat-icon>
+        <h4>No hay alumnos registrados</h4>
+        <p>No se encontraron alumnos en el sistema.</p>
+    </div>
+</div>

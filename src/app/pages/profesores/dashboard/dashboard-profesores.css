@@ -124,9 +124,7 @@
 
 .stat-card mat-card-header {
   background: white !important;
-  /* Fondo blanco para los headers de stat cards */
   color: #333 !important;
-  /* Texto negro */
   padding: 16px;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
