@@ -2,11 +2,12 @@
   padding: 2rem;
   width: 85%;
   margin: 0 auto;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   box-sizing: border-box;
   animation: fadeIn 0.6s ease-in-out;
   overflow-y: auto;
-  scrollbar-width: none;
+   scrollbar-width: none; 
   -ms-overflow-style: none;
 }
 
