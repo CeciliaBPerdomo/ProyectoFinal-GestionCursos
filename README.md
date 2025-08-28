@@ -98,6 +98,8 @@ npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 - Puedes ver la versión en vivo en: `https://proyecto-final-gestion-cursos.vercel.app/`
 
 ## Jasmine & Karma test
+![alt text](image-1.png)
+
 
 
 ## 👩‍💻 Desarrollo

@@ -68,17 +68,17 @@ describe('AltaAlumno', () => {
   });
 
   it('should not call agregarAlumno if form is invalid', () => {
-    component.alumnoForm.setValue({
-    nombre: '', 
-    email: 'invalid-email', 
-    cursoId: null
+  component.alumnoForm.setValue({
+    nombre: '',               
+    email: 'invalid-email',
+    cursoId: null             
   });
 
-    component.alumnoForm.markAllAsTouched();
-    component.alumnoForm.updateValueAndValidity();
+  component.alumnoForm.markAllAsTouched();
+  component.alumnoForm.updateValueAndValidity();
+  expect(component.alumnoForm.invalid).toBeTrue();
+  component.onSubmit();
+  expect(mockAlumnoService.agregarAlumno).not.toHaveBeenCalled();
+});
 
-    component.onSubmit();
-
-    expect(mockAlumnoService.agregarAlumno).not.toHaveBeenCalled();
-  });
 });
