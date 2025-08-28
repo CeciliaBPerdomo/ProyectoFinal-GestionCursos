@@ -1,14 +1,24 @@
 <div class="alumno-dashboard">
   <!-- Navbar -->
   <mat-toolbar color="primary" class="alumno-navbar">
+    <!-- Botón hamburguesa -->
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
     <span class="navbar-brand">Panel del Alumno</span>
-    <span class="spacer"></span>
+    
+    <!-- Menú original (oculto en móviles) -->
     <nav class="nav-menu">
       <button mat-button (click)="navigateTo('/alumnos/mis-cursos')">
         <mat-icon>class</mat-icon> Mis Cursos
       </button>
     </nav>
+    
     <span class="spacer"></span>
+    
     <!-- User Menu -->
     <div class="user-section">
       <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
@@ -22,6 +32,13 @@
       </mat-menu>
     </div>
   </mat-toolbar>
+
+  <!-- Menú móvil (se muestra al hacer clic en hamburguesa) -->
+  <nav class="nav-menu mobile-menu" [class.active]="isMenuOpen">
+    <button mat-button (click)="navigateTo('/alumnos/mis-cursos'); toggleMenu()">
+      <mat-icon>class</mat-icon> Mis Cursos
+    </button>
+  </nav>
 
   <div class="dashboard-content">
     <mat-card class="welcome-card">

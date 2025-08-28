@@ -1,3 +1,4 @@
+/* ===== ESTILOS BASE ===== */
 .alumno-dashboard {
   min-height: 100vh;
   background-color: #f5f5f5;
@@ -18,11 +19,13 @@
   padding: 0 24px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  position: relative;
+  z-index: 1000;
 }
 
-.info-header{
-   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-   margin-bottom: 8px;
+.info-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  margin-bottom: 8px;
 }
 
 .header-actions {
@@ -35,15 +38,22 @@
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
+  color: white;
 }
 
 .spacer {
   flex: 1 1 auto;
 }
 
-.nav-menu {
+/* Menú de navegación DESKTOP (visible solo en pantallas grandes) */
+.nav-menu:not(.mobile-menu) {
   display: flex;
   gap: 8px;
+}
+
+/* Menú móvil (oculto por defecto) */
+.nav-menu.mobile-menu {
+  display: none;
 }
 
 .user-section {
@@ -55,6 +65,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  color: white;
 }
 
 .dashboard-content {
@@ -73,17 +84,12 @@
   overflow: hidden;
 }
 
-.bienvenido {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .bienvenido-flex {
   display: flex;
-  justify-content: space-between; /* izquierda y derecha */
+  justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding: 16px;
 }
 
 .bienvenido-left {
@@ -150,7 +156,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: black;
+  color: white;
   padding: 24px;
   border-bottom: 1px solid #e9ecef;
 }
@@ -165,20 +171,12 @@
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
+  color: white;
 }
 
 .alumno-info-card .mat-card-content {
   padding: 32px;
   background: white;
-}
-
-.alumno-info-card .mat-card-actions {
-  padding: 24px;
-  background: #f8f9fa;
-  border-top: 1px solid #e9ecef;
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
 }
 
 /* Contenedor de formulario con grid de 2 columnas */
@@ -192,7 +190,6 @@
   width: 100%;
   margin-bottom: 0;
 }
-
 
 .full-width-double {
   grid-column: span 2;
@@ -236,94 +233,252 @@
 
 .mat-raised-button[color="primary"] {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
 }
 
-.mat-raised-button[color="accent"] {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+/* Botón hamburguesa (oculto por defecto) */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 16px;
 }
 
-/* Responsive */
+.menu-toggle span {
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s linear;
+}
+
+/* ===== RESPONSIVE PARA CELULARES ===== */
 @media (max-width: 768px) {
+  .alumno-dashboard {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
+    padding-bottom: 1rem;
+  }
+
+  /* Navbar responsive */
   .alumno-navbar {
-    flex-direction: column;
-    padding: 16px;
+    padding: 0.5rem 1rem;
+    min-height: 64px;
   }
 
-  .nav-menu {
-    flex-direction: column;
+  /* Mostrar botón hamburguesa */
+  .menu-toggle {
+    display: flex;
+  }
+
+  /* Ocultar menú desktop */
+  .nav-menu:not(.mobile-menu) {
+    display: none;
+  }
+
+  /* Mostrar menú móvil cuando está activo */
+  .nav-menu.mobile-menu.active {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
     width: 100%;
-    margin: 16px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    flex-direction: column;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    gap: 0;
   }
 
+  .nav-menu.mobile-menu button {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 1rem;
+    margin: 0.25rem 0;
+    border-radius: 8px;
+    color: white;
+  }
+
+  .nav-menu.mobile-menu button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+  }
+
+  .spacer {
+    display: none;
+  }
+
+  /* User section en móviles */
+  .user-section {
+    margin-left: auto;
+  }
+
+  .user-button {
+    font-size: 0.9rem;
+    gap: 4px;
+  }
+
+  /* Dashboard content */
+  .dashboard-content {
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+  .welcome-card {
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .bienvenido-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .bienvenido-left {
+    font-size: 1.1rem;
+    gap: 0.5rem;
+  }
+
+  .bienvenido-right {
+    font-size: 0.9rem;
+    align-self: flex-end;
+  }
+
+  .welcome-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Stats grid */
   .stats-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 1rem;
+    padding: 1rem 0.5rem;
+    margin-top: 1rem;
   }
 
-  .dashboard-content {
-    padding: 16px;
+  .stat-card {
+    padding: 1rem;
   }
 
+  .stat-number {
+    font-size: 2rem;
+    margin: 0.75rem 0;
+  }
+
+  /* Alumno info card */
   .alumno-info-card {
-    margin: 16px;
+    width: 95%;
+    margin: 1rem auto;
     border-radius: 12px;
   }
 
-  .alumno-info-card .mat-card-content {
-    padding: 20px;
-  }
-
-  .alumno-info-card .mat-card-actions {
-    padding: 20px;
+  .info-header {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
   }
 
-  /* En móviles, volver a 1 columna */
+  .header-actions {
+    width: 100%;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+
+  .alumno-info-card .mat-card-content {
+    padding: 1rem;
+  }
+
+  /* Form grid */
   .form-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 1rem;
   }
 
   .full-width-double {
     grid-column: span 1;
   }
 
+  .mat-form-field {
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Botones */
   .mat-raised-button {
     width: 100%;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
+    justify-content: center;
   }
 }
 
+/* ===== ANIMACIÓN HAMBURGUESA ===== */
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* ===== AJUSTES PARA PANTALLAS MUY PEQUEÑAS ===== */
 @media (max-width: 480px) {
+  .alumno-navbar {
+    padding: 0.5rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+
+  .user-button {
+    font-size: 0.8rem;
+  }
+
+  .user-button mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .bienvenido-left {
+    font-size: 1rem;
+  }
+
   .stat-number {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
-  .alumno-info-card .mat-card-header {
-    padding: 16px;
+  .alumno-info-card {
+    width: 100%;
+    margin: 0.5rem 0;
+    border-radius: 8px;
   }
 
-  .alumno-info-card .mat-card-content {
-    padding: 16px;
+  .info-header {
+    padding: 0.75rem;
   }
-}
 
-/* Efectos de hover y focus */
-.mat-form-field:hover {
-  background: #e9ecef;
-}
-
-.mat-raised-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Animaciones suaves */
-.alumno-info-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.alumno-info-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  .alumno-info-card .mat-card-title {
+    font-size: 1.25rem;
+  }
 }

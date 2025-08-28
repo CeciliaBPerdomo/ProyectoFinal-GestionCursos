@@ -1,9 +1,17 @@
 <div class="profesor-dashboard">
   <!-- Navbar -->
   <mat-toolbar color="primary" class="profesor-navbar">
+    <!-- Botón hamburguesa -->
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
     <span class="navbar-brand">Panel del Profesor</span>
-    <span class="spacer"></span>
-    <nav class="nav-menu">
+    
+    <!-- Menú original (oculto en móviles) -->
+    <nav class="nav-menu desktop-menu">
       <button mat-button (click)="navigateTo('/profesores/cursos-profesor')">
         <mat-icon>class</mat-icon> Mis Cursos
       </button>
@@ -11,8 +19,9 @@
         <mat-icon>people</mat-icon> Alumnos
       </button>
     </nav>
+    
     <span class="spacer"></span>
-
+    
     <!-- User Menu -->
     <div class="user-section">
       <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
@@ -26,6 +35,16 @@
       </mat-menu>
     </div>
   </mat-toolbar>
+
+  <!-- Menú móvil (se muestra al hacer clic en hamburguesa) -->
+  <nav class="nav-menu mobile-menu" [class.active]="isMenuOpen">
+    <button mat-button (click)="navigateTo('/profesores/cursos-profesor'); toggleMenu()">
+      <mat-icon>class</mat-icon> Mis Cursos
+    </button>
+    <button mat-button (click)="navigateTo('/profesores/lista-alumnos'); toggleMenu()">
+      <mat-icon>people</mat-icon> Alumnos
+    </button>
+  </nav>
 
   <!-- Content -->
   <div class="dashboard-content">
@@ -57,7 +76,7 @@
       </div>
     </mat-card>
 
-    <!-- Tarjeta de información personal  -->
+    <!-- Tarjeta de información personal -->
     <mat-card class="info-personal-card">
       <mat-card-header>
         <mat-card-title>Información personal</mat-card-title>

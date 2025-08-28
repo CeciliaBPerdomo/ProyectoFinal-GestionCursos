@@ -31,7 +31,6 @@ export const cursoReducer = createReducer(
     error: null
   })),
   on(CursoActions.loadCursosByProfesorSuccess, (state, { cursos, profesorId }) => {
-  console.log('📌 Cursos que llegan del servicio (reducer):', cursos);
   return {
     ...state,
     cursosFiltrados: cursos,

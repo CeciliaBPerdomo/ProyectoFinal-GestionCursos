@@ -25,7 +25,7 @@ import { Usuarios } from '../../../models/usuario.model';
 import { AppState } from '../../../store/models/app-state';
 
 // Estadísticas
-import { selectAllCursos, selectCursosStatsPorProfesor } from '../../../store/selectors/curso.selectors';
+import { selectCursosStatsPorProfesor } from '../../../store/selectors/curso.selectors';
 import * as CursoActions from '../../../store/actions/curso.actions';
 
 @Component({
@@ -53,7 +53,8 @@ import * as CursoActions from '../../../store/actions/curso.actions';
 export class ProfesorDashboardComponent implements OnInit {
   currentDate = new Date();
   user$: Observable<Usuarios | null>;
-   totalCursos$!: Observable<number>; 
+  totalCursos$!: Observable<number>;
+  isMenuOpen = false;
 
   editMode = false;
   userData: Partial<Usuarios> = {};
@@ -89,6 +90,7 @@ export class ProfesorDashboardComponent implements OnInit {
   }
 
   navigateTo(path: string): void {
+    this.isMenuOpen = false;
     this.router.navigate([path]);
   }
 
@@ -100,5 +102,9 @@ export class ProfesorDashboardComponent implements OnInit {
     if (!this.userData.usuarioId) return;
     this.editMode = false;
     this.store.dispatch(updateUsuario({ usuario: this.userData as Usuarios }));
+  }
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }

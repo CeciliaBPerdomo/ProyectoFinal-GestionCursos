@@ -57,6 +57,8 @@ export class AlumnoDashboardComponent implements OnInit {
   editMode = false;
   userData: Partial<Usuarios> = {};
 
+  isMenuOpen = false;
+
   constructor(
     private store: Store<AppState>,
     private router: Router
@@ -94,6 +96,7 @@ export class AlumnoDashboardComponent implements OnInit {
   }
 
   navigateTo(path: string): void {
+    this.isMenuOpen = false;
     this.router.navigate([`/${path}`]);
   }
 
@@ -107,4 +110,7 @@ export class AlumnoDashboardComponent implements OnInit {
     this.store.dispatch(updateUsuario({ usuario: this.userData as Usuarios }));
   }
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 }
