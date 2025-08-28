@@ -69,10 +69,10 @@ describe('AltaAlumno', () => {
 
   it('should not call agregarAlumno if form is invalid', () => {
     component.alumnoForm.setValue({
-      nombre: '',
-      email: 'mal',
-      cursoId: null
-    });
+    nombre: '', 
+    email: 'invalid-email', 
+    cursoId: null
+  });
 
     component.alumnoForm.markAllAsTouched();
     component.alumnoForm.updateValueAndValidity();

@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { CursoService } from '../curso.service';
-import { Curso } from '../../models/curso.model';
+import { CursoService } from './curso.service';
+import { Curso } from '../models/curso.model';
 
 describe('CursoService', () => {
     let service: CursoService;

@@ -7,6 +7,7 @@ import * as InscripcionActions from '../actions/inscripcion.actions';
 import { InscripcionService } from '../../services/inscripcion.service';
 
 @Injectable()
+
 export class InscripcionEffects {
   private actions$ = inject(Actions);
   private inscripcionService = inject(InscripcionService);

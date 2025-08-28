@@ -97,6 +97,9 @@ npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 - Para compilar el proyecto, ejecutá: `ng build`
 - Puedes ver la versión en vivo en: `https://proyecto-final-gestion-cursos.vercel.app/`
 
+## Jasmine & Karma test
+
+
 ## 👩‍💻 Desarrollo
 <p>Hecho con 💻, 🧉 y un toque de magia por <a href="https://www.linkedin.com/in/cecilia-perdomo/" style="color: black; text-decoration: none;">Cecilia Perdomo</a>.</p>
 🗓️ Proyecto iniciado el <strong>16 de julio de 2025</strong>.
