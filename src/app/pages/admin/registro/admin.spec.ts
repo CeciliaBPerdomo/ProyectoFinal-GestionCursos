@@ -1,18 +1,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AdminComponent } from './admin';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
-import { Admin } from '../admin';
-
-describe('Admin', () => {
-  let component: Admin;
-  let fixture: ComponentFixture<Admin>;
+describe('AdminComponent', () => {
+  let component: AdminComponent;
+  let fixture: ComponentFixture<AdminComponent>;
+  let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Admin]
-    })
-    .compileComponents();
+      imports: [AdminComponent],
+      providers: [
+        provideMockStore({ initialState: {} }),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({}),        
+            snapshot: { paramMap: { get: () => null } } 
+          }
+        }
+      ]
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(Admin);
+    store = TestBed.inject(MockStore);
+    fixture = TestBed.createComponent(AdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

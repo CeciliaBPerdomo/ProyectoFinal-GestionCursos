@@ -41,6 +41,7 @@ import { Observable } from 'rxjs';
   templateUrl: './admin.html',
   styleUrls: ['./admin.css']
 })
+
 export class AdminComponent implements OnInit {
   usuarioForm!: FormGroup;
   loading$!: Observable<boolean>;

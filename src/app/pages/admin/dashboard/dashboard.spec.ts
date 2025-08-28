@@ -1,18 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AdminDashboardComponent } from './dashboard';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
-import { Dashboard } from './dashboard';
-
-describe('Dashboard', () => {
-  let component: Dashboard;
-  let fixture: ComponentFixture<Dashboard>;
+describe('AdminDashboardComponent', () => {
+  let component: AdminDashboardComponent;
+  let fixture: ComponentFixture<AdminDashboardComponent>;
+  let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Dashboard]
-    })
-    .compileComponents();
+      imports: [AdminDashboardComponent],
+      providers: [
+        provideMockStore({ initialState: {} }) 
+      ]
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(Dashboard);
+    store = TestBed.inject(MockStore);
+    fixture = TestBed.createComponent(AdminDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
