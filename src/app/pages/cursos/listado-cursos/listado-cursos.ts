@@ -18,6 +18,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map } from 'rxjs';
 import { AppState } from '../../../store/models/app-state';
+
+// Cursos
 import {
   loadCursos,
   deleteCurso,
@@ -28,6 +30,8 @@ import {
   selectCursoLoading,
   selectCursoError
 } from '../../../store/selectors/curso.selectors';
+
+// Profes
 import { selectAllUsuarios } from '../../../store/selectors/usuario.selectors';
 import { loadUsuarios } from '../../../store/actions/usuario.actions';
 
@@ -47,6 +51,8 @@ interface CursoConProfesor extends Curso {
   imports: [
     RouterModule,
     CommonModule,
+
+    // ui
     MatCardModule,
     MatIconModule,
     MatButtonModule,
@@ -87,9 +93,13 @@ export class ListadoCursos implements OnInit {
     ]).pipe(
       map(([cursos, usuarios]) => {
         return cursos.map(curso => {
+          const profesorIdNumero = Number(curso.profesorId);
+
           const profesor = usuarios.find(u =>
-            u.usuarioId === curso.profesorId || u.id === curso.profesorId
+            Number(u.usuarioId) === profesorIdNumero ||
+            Number(u.id) === profesorIdNumero
           );
+
           return {
             ...curso,
             profesorNombre: profesor ? profesor.nombre : 'Sin asignar'
