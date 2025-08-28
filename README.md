@@ -75,6 +75,8 @@ npm install @ngrx/store @ngrx/effects @ngrx/store-devtools
 ## Mobile+
 ![MobileFirst](image-2.png)
 
+---
+
 ### 📦 Modelo
 ![ModeladoBaseDatos](image-8.png)
 

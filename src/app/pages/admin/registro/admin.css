@@ -1,10 +1,10 @@
 .curso-form-container {
-  padding: 2rem;
+  padding: 1rem;
   max-width: 1000px;
   margin: 0 auto;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   min-height: 100vh;
-  height: 100vh;
+  height: auto;
   overflow-y: auto;
   box-sizing: border-box;
   scrollbar-width: none;
@@ -17,44 +17,50 @@
 
 .curso-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 16px;
-  padding: 2rem;
-  margin-bottom: 2rem;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  margin-bottom: 1.5rem;
   color: white;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
+  text-align: center;
 }
 
 .title-group {
   flex: 1;
+  width: 100%;
 }
 
 .curso-title {
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin: 0 0 0.5rem 0;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .title-icon {
-  font-size: 2.2rem;
-  width: 2.2rem;
-  height: 2.2rem;
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .curso-subtitle {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   opacity: 0.9;
   margin: 0;
   font-weight: 300;
+  line-height: 1.4;
 }
 
 .back-dashboard-btn {
@@ -62,32 +68,31 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: white !important;
-  border-radius: 12px;
-  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
   font-weight: 500;
-  white-space: nowrap;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .curso-form-card {
   background: white;
-  border-radius: 16px;
-  padding: 2.5rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-.curso-form-card .col-12 {
-  grid-column: span 2;
-}
-
-.curso-form-card .col-md-6 {
-  grid-column: span 1;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .form-row {
-  display: contents;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 }
 
 mat-form-field {
@@ -95,85 +100,106 @@ mat-form-field {
 }
 
 mat-form-field.mat-form-field-appearance-outline .mat-form-field-outline {
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 mat-form-field.mat-form-field-appearance-outline .mat-form-field-wrapper {
   padding-bottom: 0;
+  margin: 0;
 }
 
 mat-form-field .mat-form-field-label {
   font-weight: 500;
   color: #6c757d;
+  font-size: 0.9rem;
 }
 
 mat-form-field .mat-input-element {
-  padding: 0.75rem 0;
+  padding: 0.5rem 0;
+  font-size: 1rem;
 }
 
 mat-icon.mat-suffix {
   color: #667eea;
-  margin-right: 0.5rem;
+  margin-right: 0.25rem;
+  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .rol-option {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 0;
+  padding: 0.25rem 0;
 }
 
 .form-actions {
-  grid-column: span 2;
   display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: stretch;
   margin-top: 1rem;
   padding-top: 1.5rem;
-  border-top: 2px solid #f1f3f4;
+  border-top: 1px solid #f1f3f4;
+  width: 100%;
 }
 
 .submit-btn {
-  padding: 0.75rem 2rem;
-  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .cancel-btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .feedback-message {
-  grid-column: span 2;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 8px;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   background: #f8f9fa;
   border-left: 4px solid;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .success-text {
   color: #28a745;
   font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .error-text {
   color: #dc3545;
   font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .message-icon {
-  font-size: 1.25rem;
-  width: 1.25rem;
-  height: 1.25rem;
+  font-size: 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
 }
 
 /* Efectos hover */
@@ -185,51 +211,7 @@ mat-icon.mat-suffix {
 .submit-btn:hover,
 .cancel-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .curso-form-container {
-    padding: 1rem;
-  }
-
-  .header-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-
-  .curso-title {
-    justify-content: center;
-    font-size: 1.8rem;
-  }
-
-  .curso-form-card {
-    grid-template-columns: 1fr;
-    padding: 1.5rem;
-    gap: 1rem;
-  }
-
-  .curso-form-card .col-12,
-  .curso-form-card .col-md-6 {
-    grid-column: span 1;
-  }
-
-  .form-actions {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .submit-btn,
-  .cancel-btn {
-    width: 100%;
-  }
-
-  .back-dashboard-btn {
-    width: 100%;
-    justify-content: center;
-  }
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Animaciones suaves */
@@ -240,7 +222,7 @@ mat-icon.mat-suffix {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -248,10 +230,17 @@ mat-icon.mat-suffix {
   }
 }
 
-/* Mejora para los selects */
+/* Mejora para los selects en móviles */
 .mat-select-panel {
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-height: 300px !important;
+}
+
+.mat-option {
+  font-size: 0.9rem;
+  min-height: 48px;
+  line-height: 1.4;
 }
 
 /* Estados de validación */
@@ -261,4 +250,87 @@ mat-form-field.ng-invalid.ng-touched .mat-form-field-outline-thick {
 
 mat-form-field.ng-valid.ng-touched .mat-form-field-outline-thick {
   color: #28a745;
+}
+
+/* Ajustes específicos para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .curso-form-container {
+    padding: 0.75rem;
+  }
+  
+  .curso-header {
+    padding: 1rem 0.75rem;
+  }
+  
+  .curso-title {
+    font-size: 1.3rem;
+  }
+  
+  .curso-subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .curso-form-card {
+    padding: 1rem 0.75rem;
+  }
+  
+  .submit-btn, 
+  .cancel-btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.75rem;
+  }
+}
+
+/* Ajustes para orientación horizontal en móviles */
+@media (max-width: 768px) and (orientation: landscape) {
+  .curso-form-container {
+    height: auto;
+    min-height: auto;
+    padding-bottom: 2rem;
+  }
+  
+  .header-content {
+    flex-direction: row;
+    text-align: left;
+  }
+  
+  .title-group {
+    text-align: left;
+    align-items: flex-start;
+  }
+  
+  .curso-title {
+    justify-content: flex-start;
+  }
+  
+  .back-dashboard-btn {
+    width: auto;
+    min-width: 140px;
+  }
+}
+
+/* Mejoras de accesibilidad para dispositivos táctiles */
+@media (max-width: 768px) {
+  mat-form-field .mat-form-field-flex {
+    min-height: 56px;
+  }
+  
+  .mat-form-field-infix {
+    padding: 0.5em 0;
+  }
+  
+  button {
+    min-height: 44px;
+  }
+  
+  .mat-option {
+    min-height: 44px;
+  }
+}
+
+/* Optimización para Safari iOS */
+@supports (-webkit-touch-callout: none) {
+  .curso-form-container {
+    min-height: -webkit-fill-available;
+  }
 }
