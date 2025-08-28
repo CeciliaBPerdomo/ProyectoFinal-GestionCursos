@@ -1,47 +1,50 @@
 <div class="admin-dashboard">
   <!-- Navbar -->
   <mat-toolbar color="primary" class="admin-navbar">
-    <span class="navbar-brand">Panel de Administración</span>
+    <div class="navbar-header">
+      <button class="menu-toggle" (click)="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <span class="navbar-brand">Panel de Administración</span>
 
-    <span class="spacer"></span>
+      <div class="user-section">
+        <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+          <mat-icon>account_circle</mat-icon>
+          {{ (user$ | async)?.nombre }}
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item (click)="onLogout()">
+            <mat-icon>logout</mat-icon>
+            Cerrar Sesión
+          </button>
+        </mat-menu>
+      </div>
+    </div>
 
     <!-- Navigation Menu -->
-    <nav class="nav-menu">
-      <button mat-button (click)="navigateTo('admin/alumnos')">
+    <nav class="nav-menu" [class.active]="isMenuOpen">
+      <button mat-button (click)="navigateTo('admin/alumnos'); toggleMenu()">
         <mat-icon>people</mat-icon>
         Alumnos
       </button>
-      <button mat-button (click)="navigateTo('admin/profesores')">
+      <button mat-button (click)="navigateTo('admin/profesores'); toggleMenu()">
         <mat-icon>person</mat-icon>
         Profesores
       </button>
-      <button mat-button (click)="navigateTo('cursos')">
+      <button mat-button (click)="navigateTo('cursos'); toggleMenu()">
         <mat-icon>class</mat-icon>
         Cursos
       </button>
-      <button mat-button (click)="navigateTo('inscripciones')">
+      <button mat-button (click)="navigateTo('inscripciones'); toggleMenu()">
         <mat-icon>assignment</mat-icon>
         Inscripciones
       </button>
     </nav>
-
-    <span class="spacer"></span>
-
-    <!-- User Menu -->
-    <div class="user-section">
-      <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
-        <mat-icon>account_circle</mat-icon>
-        {{ (user$ | async)?.nombre }}
-        <mat-icon>arrow_drop_down</mat-icon>
-      </button>
-      
-      <mat-menu #userMenu="matMenu">
-        <button mat-menu-item (click)="onLogout()">
-          <mat-icon>logout</mat-icon>
-          Cerrar Sesión
-        </button>
-      </mat-menu>
-    </div>
   </mat-toolbar>
 
   <!-- Main Content -->
@@ -49,17 +52,17 @@
     <div class="welcome-section">
       <mat-card class="welcome-card">
         <mat-card-content>
-        <div class="bienvenido-flex">
-          <div class="bienvenido-left">
-            <mat-icon class="welcome-icon">person</mat-icon>
-            Bienvenido/a {{ (user$ | async)?.nombre }}
+          <div class="bienvenido-flex">
+            <div class="bienvenido-left">
+              <mat-icon class="welcome-icon">person</mat-icon>
+              Bienvenido/a {{ (user$ | async)?.nombre }}
+            </div>
+            <div class="bienvenido-right">
+              {{ currentDate | date:'fullDate' }}
+            </div>
           </div>
-          <div class="bienvenido-right">
-            {{ currentDate | date:'fullDate' }}
-          </div>
-        </div>
-      </mat-card-content>
-    
+        </mat-card-content>
+      
         <mat-card-content>
           <div class="stats-grid">
             <mat-card class="stat-card">

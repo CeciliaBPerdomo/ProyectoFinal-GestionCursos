@@ -50,13 +50,15 @@ export class AdminDashboardComponent implements OnInit {
   cursosStats$!: Observable<{ total: number }>;
   inscripcionesStats$!: Observable<{ total: number }>;
 
+  isMenuOpen = false;
+
   constructor(private store: Store<AppState>, private router: Router) {
     this.user$ = this.store.select(selectUser);
     this.usuariosStats$ = this.store.select(selectUsuariosStats);
     this.cursosStats$ = this.store.select(selectCursosStats);
     this.inscripcionesStats$ = this.store.select(selectInscripcionesStats);
   }
-  
+
   ngOnInit(): void {
     this.user$.subscribe(user => {
       if (user?.rol !== 'administrador') {
@@ -74,5 +76,9 @@ export class AdminDashboardComponent implements OnInit {
 
   navigateTo(route: string): void {
     this.router.navigate([`/${route}`]);
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }
