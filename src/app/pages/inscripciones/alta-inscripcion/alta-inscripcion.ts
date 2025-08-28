@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, filter, take } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 
 // Material UI
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,8 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
 
 // NgRx
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { AppState } from '../../../store/models/app-state';
+
+// Acciones y selectores
 import { addInscripcion } from '../../../store/actions/inscripcion.actions';
 import { selectInscripcionLoading, selectInscripcionError } from '../../../store/selectors/inscripcion.selectors';
 import { selectAllCursos } from '../../../store/selectors/curso.selectors';
@@ -38,6 +40,8 @@ import { Usuarios as Alumno } from '../../../models/usuario.model';
   imports: [
     RouterModule,
     CommonModule,
+
+    //ui
     ReactiveFormsModule,
     MatButtonModule,
     MatSnackBarModule,
@@ -53,13 +57,18 @@ import { Usuarios as Alumno } from '../../../models/usuario.model';
   templateUrl: './alta-inscripcion.html',
   styleUrls: ['./alta-inscripcion.css']
 })
+
 export class AltaInscripcionComponent implements OnInit {
   inscripcionForm!: FormGroup;
+
   estados: EstadoInscripcion[] = ['activa', 'cancelada', 'finalizada'];
   cursos$: Observable<Curso[]>;
   alumnos$: Observable<Alumno[]>;
+
   loading$: Observable<boolean>;
   error$: Observable<string | null>;
+
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -128,22 +137,28 @@ export class AltaInscripcionComponent implements OnInit {
     };
 
     this.store.dispatch(addInscripcion({ inscripcion: nuevaInscripcion }));
+    this.subscription.unsubscribe();
+    this.subscription = new Subscription();
 
-    this.loading$.subscribe(loading => {
-      if (!loading) {
-        this.error$.subscribe(error => {
-          if (!error) {
-            this.snackBar.open('Inscripción creada con éxito 🎉', 'Cerrar', {
-              duration: 3000,
-              horizontalPosition: 'center',
-              verticalPosition: 'top',
-              panelClass: 'snackbar-success'
-            });
-            this.router.navigate(['/admin/dashboard']);
-          }
-        });
-      }
-    });
+    this.subscription.add(
+      this.loading$.pipe(
+        filter(loading => !loading),
+        take(1)
+      ).subscribe(() => {
+        this.subscription.add(
+          this.error$.pipe(take(1)).subscribe(error => {
+            if (!error) {
+              this.snackBar.open('Inscripción creada con éxito 🎉', 'Cerrar', {
+                duration: 1500,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                panelClass: 'snackbar-success'
+              });
+            }
+          })
+        );
+      })
+    );
   }
 
   campoInvalido(campo: string): boolean {
@@ -153,5 +168,9 @@ export class AltaInscripcionComponent implements OnInit {
 
   getUsuarioId(alumno: any): number {
     return alumno.usuarioId || alumno.id;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
